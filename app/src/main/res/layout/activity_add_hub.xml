@@ -22,20 +22,32 @@
         android:drawablePadding="5dp"
         />
 
+    <TextView
+        android:id="@+id/explanation"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/titleView"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:text="Enter your Hub's IP address to get started!"
+        />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titleView"
+        android:layout_below="@id/explanation"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="55dp"
         >
 
-        <!--    One textview for each 8bit number in IPv4 address    -->
+        <!--    One EditText element for each 8bit number in IPv4 address    -->
         <EditText
             android:id="@+id/hubAddress1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="2"
+            android:hint="255"
             android:inputType="numberDecimal"
             />
         <TextView
@@ -49,7 +61,8 @@
             android:id="@+id/hubAddress2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="2"
+            android:hint="255"
             android:inputType="numberDecimal"
             />
         <TextView
@@ -63,7 +76,8 @@
             android:id="@+id/hubAddress3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="2"
+            android:hint="255"
             android:inputType="numberDecimal"
             />
         <TextView
@@ -77,8 +91,19 @@
             android:id="@+id/hubAddress4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="2"
+            android:hint="255"
             android:inputType="numberDecimal"
+            />
+
+        <!--    connection button    -->
+        <Button
+            android:id="@+id/hubConnectionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:text="Connect"
             />
 
     </LinearLayout>
