@@ -3,7 +3,7 @@ An Android application for controlling Helio blinds
 
 ### Things not to do
 - Do not directly edit the main branch, only use GitHub pull requests
-- Do not merge any branches directly into the main branch without using a GitHub pull reuqest
+- Do not merge any branches directly into the main branch without using a GitHub pull request
 - Do not push the main branch to GitHub (there should be no reason to if previous steps are followed)
 - Do not merge pull requests without a reviewer approving it
 
