@@ -34,6 +34,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/connectionForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/explanation"
@@ -107,5 +108,32 @@
             />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginBottom="15dp"
+        android:layout_above="@id/connectionStatus"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:text="Connection status"
+        />
+
+    <TextView
+        android:id="@+id/connectionStatus"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="45dp"
+        android:layout_alignParentBottom="true"
+        android:textSize="18sp"
+        android:text="not connected"
+        app:drawableLeftCompat="@android:drawable/ic_delete"
+        android:drawablePadding="2dp"
+        android:gravity="start|center_vertical"
+        />
+
+
 
 </RelativeLayout>
