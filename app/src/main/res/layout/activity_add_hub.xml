@@ -30,7 +30,7 @@
         android:layout_height="20dp"
         android:layout_marginTop="50dp"
         android:textSize="16sp"
-        android:text="Enter your Hub's IP address to get started!"
+        android:text="Enter your Hub's IP address to get started:"
         />
 
     <LinearLayout
