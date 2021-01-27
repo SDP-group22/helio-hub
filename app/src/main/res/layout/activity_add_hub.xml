@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="75dp"
         android:textSize="22sp"
         android:textStyle="bold"
         android:text="Connect to your Helio Hub device"
@@ -28,7 +28,7 @@
         android:layout_below="@id/titleView"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:textSize="16sp"
         android:text="Enter your Hub's IP address to get started!"
         />
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/explanation"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="50dp"
         >
 
         <!--    One EditText element for each 8bit number in IPv4 address    -->
