@@ -12,7 +12,7 @@ An Android application for controlling Helio blinds
 2. Switch to the main branch with `git checkout main` then `git pull` from console or use Android studio to do the same, to make sure your main branch is up to date.
 3. On console, `git checkout main` then `git checkout -b short_descriptive_name` to create a new branch to work on your task. Or, in Studio, in the Git tab, right click on main and select New Branch from Selected and call it short_descriptive_name. Name examples: homepage_mockup, readme_workflow_guide.
 4. Complete your task, adding files and committing whenever you want
-5. If main has been updated on GitHub since you started, `git fetch`, `git merge origin/main`, and fix any merge errors if you need to.
+5. If main has been updated on GitHub since you started, `git fetch`, then either merge `git merge origin/main` or rebase (right click on remote/origin/main and click Rebase current onto selected), and fix any merge errors if you need to.
 6. Push your changes with `git push`.
 7. Create a pull request on GitHub, add any descriptions or explanations as necessary, and mention the team with @SDP-group22/app to request a review. Link the pull request to the issue it is for.
 8. Move the card to Review on the kanban board.
