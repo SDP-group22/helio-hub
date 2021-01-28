@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">HelioApp</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_schedule">Schedule</string>
+    <string name="title_hub">Hub</string>
+    <string name="set_time_message">Time set!</string>
 </resources>
