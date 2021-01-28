@@ -4,27 +4,36 @@
     android:layout_height="match_parent"
     >
 
-    <Button
-        android:id="@+id/button"
-
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
+    <TextView
+        android:id="@+id/textControlBlinds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Control all of your blinds"
+        android:textSize="30sp"
+        android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="204dp"
-        android:text="Up"
+        />
+
+    <Button
+        android:id="@+id/buttonRaise"
+        android:layout_below="@+id/textControlBlinds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Raise"
         android:textSize="30sp" />
 
 
-
     <Button
-        android:id="@+id/button2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/buttonLower"
+        android:layout_below="@+id/buttonRaise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="145dp"
-        android:text="Down"
+        android:layout_marginTop="10dp"
+        android:text="Lower"
         android:textSize="30sp" />
 
 </RelativeLayout>
