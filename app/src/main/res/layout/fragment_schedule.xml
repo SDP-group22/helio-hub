@@ -9,7 +9,7 @@
         android:id="@+id/tv_current_setting"
         android:text="Current settings:"
         android:textSize="30sp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +41,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/block"
-            android:inputType="number"
             app:layout_constraintTop_toTopOf="@+id/tv_opening"
             app:layout_constraintBottom_toBottomOf="@+id/tv_opening"
             app:layout_constraintStart_toEndOf="@+id/tv_opening" />
@@ -62,7 +61,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/block"
-            android:inputType="number"
             app:layout_constraintTop_toTopOf="@+id/tv_open_colon"
             app:layout_constraintBottom_toBottomOf="@+id/tv_open_colon"
             app:layout_constraintStart_toEndOf="@+id/tv_open_colon" />
@@ -94,7 +92,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/block"
-            android:inputType="number"
             app:layout_constraintTop_toTopOf="@+id/tv_closing"
             app:layout_constraintBottom_toBottomOf="@+id/tv_closing"
             app:layout_constraintStart_toEndOf="@+id/tv_closing" />
@@ -115,7 +112,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/block"
-            android:inputType="number"
             app:layout_constraintTop_toTopOf="@+id/tv_close_colon"
             app:layout_constraintBottom_toBottomOf="@+id/tv_close_colon"
             app:layout_constraintStart_toEndOf="@+id/tv_close_colon" />
@@ -137,7 +133,7 @@
     <Button
         android:id="@+id/btn_SetClosingTime"
         android:text="Change closing time"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="40dp"
