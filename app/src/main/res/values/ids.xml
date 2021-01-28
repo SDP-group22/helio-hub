@@ -1,13 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="reg_number1" type="id">1</item>
-    <item name="reg_username" type="id">1</item>
-    <item name="reg_number2" type="id">1</item>
-    <item name="reg_password" type="id">1</item>
-    <item name="reg_number3" type="id">2</item>
-    <item name="reg_password2" type="id">2</item>
-    <item name="reg_number4" type="id">3</item>
-    <item name="reg_mail" type="id">3</item>
-    <item name="reg_btn_sure" type="id">4</item>
-    <item name="reg_btn_login" type="id">4</item>
 </resources>
