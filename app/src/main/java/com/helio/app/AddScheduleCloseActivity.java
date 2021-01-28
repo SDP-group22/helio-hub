@@ -43,43 +43,7 @@ public class AddScheduleCloseActivity extends AppCompatActivity {
             }
         });
 
-        //Record the input number for et_hour
-        mEtHour = (EditText) findViewById(R.id.et_hour);
-        mEtHour.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        //Record the input number for et_minute
-        mEtMinute = (EditText) findViewById(R.id.et_minute);
-        mEtMinute.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
     }
 }

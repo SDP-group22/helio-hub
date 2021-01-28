@@ -3,77 +3,157 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    //Title
+    <!--Title-->
     <TextView
         android:id="@+id/tv_text1"
-        android:text="Add schedule"
+        android:text="Set schedule"
         android:textSize="50dp"
         android:layout_marginLeft="40dp"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    //Clock
-    <TextView
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:background="@drawable/clock"
-        android:layout_below="@id/tv_text1"
-        android:layout_marginTop="130dp"
-        android:layout_marginLeft="80dp"
-        />
+    <!--Clock-->
+<!--    &lt;!&ndash;Clock&ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:layout_width="240dp"-->
+<!--        android:layout_height="240dp"-->
+<!--        android:background="@drawable/clock"-->
+<!--        android:layout_below="@id/tv_text1"-->
+<!--        android:layout_marginLeft="70dp"-->
+<!--        />-->
 
-    //Add schedule for opening blinds
+
+    <!--Set opening time-->
     <Button
-        android:id="@+id/btn_AddScheduleOpen"
-        android:text="Add schedule for opening blinds"
+        android:id="@+id/btn_SetOpeningTime"
+        android:text="set opening time"
         android:textSize="17dp"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_below="@+id/tv_text1"
         android:layout_marginTop="350dp"/>
 
-    //Add schedule for closing blinds
+    <!--Set closing time-->
     <Button
-        android:id="@+id/btn_AddScheduleClose"
-        android:text="Add schedule for closing blinds"
+        android:id="@+id/btn_SetClosingTime"
+        android:text="set closing time"
         android:textSize="17dp"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_below="@+id/tv_text1"
         android:layout_marginTop="500dp"/>
 
-    //Homepage
-    <Button
-        android:id="@+id/btn_HomePage"
-        android:layout_width="125dp"
-        android:layout_height="80dp"
-        android:text="Home Page"
-        android:layout_below="@+id/tv_text1"
-        android:layout_marginTop="10dp"
+    <!--Hour1-->
+    <TextView
+        android:id="@+id/tv_hour1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:background="@drawable/block"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="90dp"
+        android:inputType="number"
         />
 
-    //AddSchedule
-    <Button
-        android:id="@+id/btn_AddSchedule"
-        android:layout_width="150dp"
-        android:layout_height="80dp"
-        android:text="Add Schedule"
-        android:layout_toRightOf="@+id/btn_HomePage"
-        android:layout_below="@+id/tv_text1"
-        android:layout_marginTop="10dp"
+    <!--Colon1-->
+    <TextView
+        android:id="@+id/tv_text2"
+        android:text=":"
+        android:paddingLeft="40dp"
+        android:textSize="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:layout_toRightOf="@id/tv_hour1"
+        android:layout_marginTop="90dp"
         />
 
-    //AddHub
-    <Button
-        android:id="@+id/btn_AddHub"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
-        android:text="Add Hub"
-        android:layout_toRightOf="@+id/btn_AddSchedule"
-        android:layout_below="@+id/tv_text1"
-        android:layout_marginTop="10dp"
+    <!--Minute1-->
+    <TextView
+        android:id="@+id/tv_minute1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:layout_toRightOf="@+id/tv_text2"
+        android:background="@drawable/block"
+        android:layout_marginTop="90dp"
+        android:inputType="number"
         />
+
+    <!--Hour2-->
+    <TextView
+        android:id="@+id/tv_hour2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:background="@drawable/block"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="220dp"
+        android:inputType="number"
+        />
+
+    <!--Colon2-->
+    <TextView
+        android:id="@+id/tv_text3"
+        android:text=":"
+        android:paddingLeft="40dp"
+        android:textSize="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:layout_toRightOf="@id/tv_hour2"
+        android:layout_marginTop="220dp"
+        />
+
+    <!--Minute2-->
+    <TextView
+        android:id="@+id/tv_minute2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:layout_toRightOf="@+id/tv_text2"
+        android:background="@drawable/block"
+        android:layout_marginTop="220dp"
+        android:inputType="number"
+        />
+
+    <!--Current setting-->
+    <TextView
+        android:id="@+id/tv_text4"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Current setting:"
+        android:textColor="@color/black"
+        android:textSize="40dp"
+        android:layout_marginTop="80dp"
+        />
+
+    <!--Current opening time-->
+    <TextView
+        android:id="@+id/tv_text5"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Opening:"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginTop="140dp"
+        />
+
+    <!--Current closing time-->
+    <TextView
+        android:id="@+id/tv_text6"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Closing:"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginTop="270dp"
+        />
+
+
+
+
 
 
 

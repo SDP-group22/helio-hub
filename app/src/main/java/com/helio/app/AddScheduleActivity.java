@@ -18,8 +18,8 @@ public class AddScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
 
-        //To activate the "Add schedule for opening blinds" button
-        mBtnButton1 = (Button) findViewById(R.id.btn_AddScheduleOpen);
+        //To activate the "Set opening time" button
+        mBtnButton1 = (Button) findViewById(R.id.btn_SetOpeningTime);
         mBtnButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,8 +29,8 @@ public class AddScheduleActivity extends AppCompatActivity {
             }
         });
 
-        //To activate the "Add schedule for closing blinds" button
-        mBtnButton2 = (Button) findViewById(R.id.btn_AddScheduleClose);
+        //To activate the "Set closing time" button
+        mBtnButton2 = (Button) findViewById(R.id.btn_SetClosingTime);
         mBtnButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
