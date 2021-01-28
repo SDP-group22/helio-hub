@@ -7,7 +7,7 @@
     <!--Current setting-->
     <TextView
         android:id="@+id/tv_current_setting"
-        android:text="Current setting:"
+        android:text="Current settings:"
         android:textSize="30sp"
         android:layout_marginLeft="40dp"
         android:textColor="@color/black"
