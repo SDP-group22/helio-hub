@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    //Title
+    <TextView
+        android:id="@+id/tv_text1"
+        android:text="Add schedule for opening"
+        android:textSize="30dp"
+        android:layout_marginLeft="25dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    //Hour
+    <EditText
+        android:id="@+id/et_hour"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:background="@drawable/block"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="200dp"
+        android:inputType="number"
+        />
+
+    //Colon
+    <TextView
+        android:id="@+id/tv_text2"
+        android:text=":"
+        android:paddingLeft="40dp"
+        android:textSize="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:layout_toRightOf="@id/et_hour"
+        android:layout_marginTop="200dp"
+        />
+
+    //Minute
+    <EditText
+        android:id="@+id/et_minute"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_text1"
+        android:layout_toRightOf="@+id/tv_text2"
+        android:background="@drawable/block"
+        android:layout_marginTop="200dp"
+        android:inputType="number"
+        />
+
+    //Submit
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:text="submit"
+        android:textSize="20dp"
+        android:layout_below="@id/tv_text1"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="50dp"/>
+
+    //Back
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:text="back to add schedule"
+        android:textSize="20dp"
+        android:layout_below="@id/tv_text1"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="50dp"/>
+
+
+
+
+</RelativeLayout>

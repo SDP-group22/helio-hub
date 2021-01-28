@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    //Title
+    <TextView
+        android:id="@+id/tv_text1"
+        android:text="Add schedule"
+        android:textSize="50dp"
+        android:layout_marginLeft="40dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    //Clock
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:background="@drawable/clock"
+        android:layout_below="@id/tv_text1"
+        android:layout_marginTop="130dp"
+        android:layout_marginLeft="80dp"
+        />
+
+    //Add schedule for opening blinds
+    <Button
+        android:id="@+id/btn_AddScheduleOpen"
+        android:text="Add schedule for opening blinds"
+        android:textSize="17dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/tv_text1"
+        android:layout_marginTop="350dp"/>
+
+    //Add schedule for closing blinds
+    <Button
+        android:id="@+id/btn_AddScheduleClose"
+        android:text="Add schedule for closing blinds"
+        android:textSize="17dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/tv_text1"
+        android:layout_marginTop="500dp"/>
+
+    //Homepage
+    <Button
+        android:id="@+id/btn_HomePage"
+        android:layout_width="125dp"
+        android:layout_height="80dp"
+        android:text="Home Page"
+        android:layout_below="@+id/tv_text1"
+        android:layout_marginTop="10dp"
+        />
+
+    //AddSchedule
+    <Button
+        android:id="@+id/btn_AddSchedule"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:text="Add Schedule"
+        android:layout_toRightOf="@+id/btn_HomePage"
+        android:layout_below="@+id/tv_text1"
+        android:layout_marginTop="10dp"
+        />
+
+    //AddHub
+    <Button
+        android:id="@+id/btn_AddHub"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:text="Add Hub"
+        android:layout_toRightOf="@+id/btn_AddSchedule"
+        android:layout_below="@+id/tv_text1"
+        android:layout_marginTop="10dp"
+        />
+
+
+
+</RelativeLayout>
