@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddHubActivity">
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/titleView"
@@ -50,7 +50,7 @@
             android:ems="2"
             android:hint="255"
             android:inputType="numberDecimal"
-            />
+            android:importantForAutofill="no" />
         <TextView
             android:gravity="start|center_vertical"
             android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
             android:ems="2"
             android:hint="255"
             android:inputType="numberDecimal"
-            />
+            android:importantForAutofill="no" />
         <TextView
             android:gravity="start|center_vertical"
             android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
             android:ems="2"
             android:hint="255"
             android:inputType="numberDecimal"
-            />
+            android:importantForAutofill="no" />
         <TextView
             android:gravity="start|center_vertical"
             android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
             android:ems="2"
             android:hint="255"
             android:inputType="numberDecimal"
-            />
+            android:importantForAutofill="no" />
 
         <!--    connection button    -->
         <Button
@@ -103,7 +103,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:backgroundTint="@color/design_default_color_primary"
             android:text="Connect"
             />
 
@@ -133,7 +132,5 @@
         android:drawablePadding="2dp"
         android:gravity="start|center_vertical"
         />
-
-
 
 </RelativeLayout>

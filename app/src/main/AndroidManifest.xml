@@ -11,8 +11,6 @@
         android:theme="@style/Theme.HelioApp">
         <activity android:name=".AddScheduleCloseActivity" />
         <activity android:name=".AddScheduleOpenActivity" />
-        <activity android:name=".AddScheduleActivity" />
-        <activity android:name=".AddHubActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
