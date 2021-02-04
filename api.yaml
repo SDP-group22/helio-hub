@@ -33,6 +33,25 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         '500':
           $ref: '#/components/responses/500InternalError'
+  /motor/get_all:
+    get:
+      tags:
+      - motor
+      summary: Get all motor information
+      operationId: getAllMotors
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Motor'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
   /motor/unregister:
     delete:
       tags:
@@ -51,7 +70,6 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-    
   /motor/register:
     post:
       tags:
@@ -290,7 +308,6 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-
   /motion/activate:
     patch:
       tags:
@@ -581,6 +598,26 @@ paths:
         400:
           $ref: '#/components/responses/400InvalidInput'
         500:
+          $ref: '#/components/responses/500InternalError'
+  
+  /schedule/get_all:
+    get:
+      tags:
+      - schedule
+      summary: Get all schedule information
+      operationId: getAllSchedules
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
           $ref: '#/components/responses/500InternalError'
   /schedule/register:
     post:
