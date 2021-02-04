@@ -152,7 +152,7 @@ paths:
     patch:
       tags:
       - "motor"
-      summary: "Activate or deactivate a motor"
+      summary: "Activate a motor"
       operationId: "activateMotor"
       requestBody:
         content:
@@ -161,12 +161,36 @@ paths:
               type: "object"
               required:
                 - id
-                - active
               properties:
                 id:
                   type: "integer"
-                active:
-                  type: "boolean"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motor"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motor/deactivate:
+    patch:
+      tags:
+      - "motor"
+      summary: "Deactivate a motor"
+      operationId: "deactivateMotor"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+              properties:
+                id:
+                  type: "integer"
       responses:
         200:
           description: OK
@@ -272,12 +296,11 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-
   /motion/activate:
     patch:
       tags:
       - "motion"
-      summary: "Activate or deactivate a motion sensor"
+      summary: "Activate a motion sensor"
       operationId: "activateMotion"
       requestBody:
         content:
@@ -286,12 +309,36 @@ paths:
               type: object
               required:
                 - id
-                - active
               properties:
                 id:
                   type: "integer"
-                active:
-                  type: "boolean"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/deactivate:
+    patch:
+      tags:
+      - "motion"
+      summary: "Deactivate a motion sensor"
+      operationId: "deactivateMotion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: "integer"
       responses:
         200:
           description: OK
@@ -470,12 +517,36 @@ paths:
               type: "object"
               required:
                 - id
-                - active
               properties:
                 id:
                   type: "integer"
-                active:
-                  type: "boolean"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/deactivate:
+    patch:
+      tags:
+      - "light"
+      summary: "Deactivate a light sensor"
+      operationId: "deactivateLight"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+              properties:
+                id:
+                  type: "integer"
       responses:
         200:
           description: OK
@@ -789,7 +860,7 @@ paths:
     patch:
       tags:
         - "schedule"
-      summary: "activate or deactivate chedule"
+      summary: "Activate schedule"
       operationId: "activateSchedule"
       requestBody:
         content:
@@ -798,12 +869,36 @@ paths:
               type: "object"
               required:
                 - id
-                - active
               properties:
                 id:
                   type: integer
-                active:
-                  type: boolean
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/deactivate:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Deactivate schedule"
+      operationId: "deactivateSchedule"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
       responses:
         200:
           description: OK
