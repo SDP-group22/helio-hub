@@ -644,17 +644,7 @@ paths:
                 id: 
                   type: integer
                 days: 
-                  type: array
-                  items: 
-                    type: string
-                    enum:
-                      - Mo
-                      - Tu
-                      - We
-                      - Th
-                      - Fr
-                      - Sa
-                      - Su
+                  $ref: "#/components/schemas/days"
       responses:
         200:
           description: OK
@@ -876,17 +866,7 @@ components:
         active:
           type: "boolean"
         days: 
-          type: "array"
-          items: 
-            type: string
-            enum:
-              - Mo
-              - Tu
-              - We
-              - Th
-              - Fr
-              - Sa
-              - Su
+          $ref: "#/components/schemas/days"
         target-level:
           type: integer
           minimum: 0
@@ -907,6 +887,18 @@ components:
       properties:
         id:
           type: "integer"
+    days:
+      type: "array"
+      items:
+        type: string
+        enum:
+          - Mo
+          - Tu
+          - We
+          - Th
+          - Fr
+          - Sa
+          - Su
   responses:
     200OK:
       description: Operation completed successfully
