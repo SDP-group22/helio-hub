@@ -842,6 +842,10 @@ components:
           maximum: 100
         length:
           type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
     Motion:
       type: "object"
       required:
@@ -867,6 +871,10 @@ components:
           type: array
           items:
             type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
     Light:
       type: "object"
       required:
@@ -890,6 +898,10 @@ components:
           type: array
           items:
             type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
     Schedule:
       type: "object"
       required:
