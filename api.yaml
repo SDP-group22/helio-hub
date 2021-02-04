@@ -592,56 +592,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-                - name
-                - active
-                - days
-                - action
-                - motor-ids
-                - time
-              properties:
-                id:
-                  type: "integer"
-                name:
-                  type: "string"
-                  example: "weekday mornings"
-                active:
-                  type: "boolean"
-                days: 
-                  type: "array"
-                  items: 
-                    type: string
-                    enum:
-                      - M
-                      - T
-                      - W
-                      - TH
-                      - F
-                      - S
-                      - SU
-                action:
-                  type: string
-                  enum:
-                    - open
-                    - close
-                gradient:
-                  type: integer
-                  enum:
-                    - 5
-                    - 10
-                    - 15
-                    - 20
-                    - 30
-                    - 45
-                    - 60
-                motor-ids:
-                  type: array
-                  items:
-                    type: integer
-                time:
-                  type: string # format hh:mm
+                $ref: "#/components/schemas/Schedule"
       responses:
         200:
           description: "Ok"
@@ -697,13 +648,13 @@ paths:
                   items: 
                     type: string
                     enum:
-                      - M
-                      - T
-                      - W
-                      - TH
-                      - F
-                      - S
-                      - SU
+                      - Mo
+                      - Tu
+                      - We
+                      - Th
+                      - Fr
+                      - Sa
+                      - Su
       responses:
         200:
           description: OK
