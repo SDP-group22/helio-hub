@@ -929,28 +929,20 @@ components:
           items: 
             type: string
             enum:
-              - M
-              - T
-              - W
-              - TH
-              - F
-              - S
-              - SU
-        action:
-          type: string
-          enum:
-            - open
-            - close
-        gradient:
+              - Mo
+              - Tu
+              - We
+              - Th
+              - Fr
+              - Sa
+              - Su
+        target-level:
           type: integer
-          enum:
-            - 5
-            - 10
-            - 15
-            - 20
-            - 30
-            - 45
-            - 60
+          minimum: 0
+          maximum: 100
+        gradient:
+          type: integer # number of minutes before that it starts moving
+          minimum: 0
         motor-ids:
           type: array
           items:
