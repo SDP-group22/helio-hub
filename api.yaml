@@ -290,6 +290,25 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  /motion/get_all:
+    get:
+      tags:
+      - motion
+      summary: Get all motion sensor information
+      operationId: getAllMotions
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Motion'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
   /motion/unregister:
     delete:
       tags:
@@ -476,6 +495,25 @@ paths:
         400:
           $ref: '#/components/responses/400InvalidInput'
         500:
+          $ref: '#/components/responses/500InternalError'
+  /light/get_all:
+    get:
+      tags:
+      - light
+      summary: Get all light sensor information
+      operationId: getAllLights
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Light'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
           $ref: '#/components/responses/500InternalError'
   /light/unregister:
     delete:
