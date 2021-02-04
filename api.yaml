@@ -178,21 +178,20 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/start_calibrate/{motor_id}:
+  /motor/start_calibrate:
     # the user has manually moved the blinds to the top
     # this request triggers the blinds to drop down and waits for user
     # to send stop_calibrate request
-    get:
+    patch:
       tags:
       - "motor"
       summary: "Start calibration process"
       operationId: "startCalibrateMotor"
-      parameters:
-        - name: motor_id
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -204,21 +203,20 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/stop_calibrate/{motor_id}:
+  /motor/stop_calibrate:
     # this request tells motor to stop dropping blinds and
     # completes the calibration process. The motor will record
     # the length of the blinds (the number of motor rotations) from this
-    get:
+    patch:
       tags:
       - "motor"
       summary: "Stop calibration process"
       operationId: "stopCalibrateMotor"
-      parameters:
-        - name: motor_id
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -943,8 +941,6 @@ components:
       type: integer
       format: int64
       minimum: 0
-      required:
-        - "id"
   responses:
     200OK:
       description: Operation completed successfully
