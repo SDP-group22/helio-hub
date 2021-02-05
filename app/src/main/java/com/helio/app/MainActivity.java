@@ -29,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         // This makes the fragment change when you press the navigation buttons
         NavigationUI.setupWithNavController(navView, navController);
-        System.out.println("HELLO WORLD");
+
         setupApi();
     }
 
     private void setupApi() {
-        HubClient client = new HubClient();
+        HubClient client = new HubClient("http://10.0.2.2:8000/");
     }
 }

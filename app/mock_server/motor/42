@@ -1,0 +1,10 @@
+{
+  "id": 0,
+  "name": "bedroom-1",
+  "ip": "198.51.100.42",
+  "active": true,
+  "level": 0,
+  "battery": 0,
+  "length": 0,
+  "style": "string"
+}
