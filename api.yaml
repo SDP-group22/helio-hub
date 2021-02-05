@@ -27,6 +27,25 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         '500':
           $ref: '#/components/responses/500InternalError'
+  /motor/get_all:
+    get:
+      tags:
+      - motor
+      summary: Get all motor information
+      operationId: getAllMotors
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Motor'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
   /motor/unregister/{motor_id}:
     delete:
       tags:
@@ -46,7 +65,6 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-
   /motor/register:
     post:
       tags:
@@ -277,6 +295,25 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  /motion/get_all:
+    get:
+      tags:
+      - motion
+      summary: Get all motion sensor information
+      operationId: getAllMotions
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Motion'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
   /motion/unregister/{motion_sensor_id}:
     delete:
       tags:
@@ -370,6 +407,38 @@ paths:
                 name:
                   type: "string"
                   example: "hallway-1"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/change_motors:
+    patch:
+      tags:
+      - "motion"
+      summary: "Change the motors the sensor controls"
+      operationId: "changeMotorsMotion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - motor-ids
+              properties:
+                id:
+                  type: "integer"
+                motor-ids:
+                  type: array
+                  items:
+                    type: integer
       responses:
         200:
           description: OK
@@ -485,6 +554,25 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  /light/get_all:
+    get:
+      tags:
+      - light
+      summary: Get all light sensor information
+      operationId: getAllLights
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Light'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
   /light/unregister/{light_sensor_id}:
     delete:
       tags:
@@ -589,6 +677,38 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  /light/change_motors:
+    patch:
+      tags:
+      - "light"
+      summary: "Change the motors a sensor controls"
+      operationId: "changeMotorsLight"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - motor-ids
+              properties:
+                id:
+                  type: "integer"
+                motor-ids:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
   /light/register:
     post:
       tags:
@@ -632,6 +752,26 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  
+  /schedule/get_all:
+    get:
+      tags:
+      - schedule
+      summary: Get all schedule information
+      operationId: getAllSchedules
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
   /schedule/register:
     post:
       tags:
@@ -642,56 +782,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-                - name
-                - active
-                - days
-                - action
-                - motor-ids
-                - time
-              properties:
-                id:
-                  type: "integer"
-                name:
-                  type: "string"
-                  example: "weekday mornings"
-                active:
-                  type: "boolean"
-                days:
-                  type: "array"
-                  items:
-                    type: string
-                    enum:
-                      - M
-                      - T
-                      - W
-                      - TH
-                      - F
-                      - S
-                      - SU
-                action:
-                  type: string
-                  enum:
-                    - open
-                    - close
-                gradient:
-                  type: integer
-                  enum:
-                    - 5
-                    - 10
-                    - 15
-                    - 20
-                    - 30
-                    - 45
-                    - 60
-                motor-ids:
-                  type: array
-                  items:
-                    type: integer
-                time:
-                  type: string # format hh:mm
+                $ref: "#/components/schemas/Schedule"
       responses:
         200:
           description: "Ok"
@@ -743,18 +834,8 @@ paths:
               properties:
                 id:
                   type: integer
-                days:
-                  type: array
-                  items:
-                    type: string
-                    enum:
-                      - M
-                      - T
-                      - W
-                      - TH
-                      - F
-                      - S
-                      - SU
+                days: 
+                  $ref: "#/components/schemas/days"
       responses:
         200:
           description: OK
@@ -939,6 +1020,10 @@ components:
           maximum: 100
         length:
           type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
     Motion:
       type: "object"
       required:
@@ -964,6 +1049,10 @@ components:
           type: array
           items:
             type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
     Light:
       type: "object"
       required:
@@ -987,6 +1076,10 @@ components:
           type: array
           items:
             type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
     Schedule:
       type: "object"
       required:
@@ -999,33 +1092,15 @@ components:
           example: "weekday mornings"
         active:
           type: "boolean"
-        days:
-          type: "array"
-          items:
-            type: string
-            enum:
-              - Monday
-              - Tuesday
-              - Wednesday
-              - Thursday
-              - Friday
-              - Saturday
-              - Sunday
-        action:
-          type: string
-          enum:
-            - open
-            - close
-        gradient:
+        days: 
+          $ref: "#/components/schemas/days"
+        target-level:
           type: integer
-          enum:
-            - 5
-            - 10
-            - 15
-            - 20
-            - 30
-            - 45
-            - 60
+          minimum: 0
+          maximum: 100
+        gradient:
+          type: integer # number of minutes before that it starts moving
+          minimum: 0
         motor-ids:
           type: array
           items:
@@ -1033,9 +1108,24 @@ components:
         time:
           type: string # format hh:mm
     id:
-      type: integer
-      format: int64
-      minimum: 0
+      type: "object"
+      required:
+        - id
+      properties:
+        id:
+          type: "integer"
+    days:
+      type: "array"
+      items:
+        type: string
+        enum:
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
+          - Sunday
   responses:
     200OK:
       description: Operation completed successfully
