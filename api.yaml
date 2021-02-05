@@ -4,24 +4,18 @@ info:
   version: 1.0.0
   title: Helio API
 paths:
-  /motor:
+  /motor/{motor_id}:
     get:
       tags:
       - motor
       summary: Get motor state
       operationId: getMotor
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: "integer"
-                  minimum: 0
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         '200':
           description: "OK"
@@ -33,17 +27,18 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         '500':
           $ref: '#/components/responses/500InternalError'
-  /motor/unregister:
+  /motor/unregister/{motor_id}:
     delete:
       tags:
         - "motor"
       summary: "Delete motor"
       operationId: "deleteMotor"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id'
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: "Ok"
@@ -51,7 +46,7 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-    
+
   /motor/register:
     post:
       tags:
@@ -157,7 +152,7 @@ paths:
     patch:
       tags:
       - "motor"
-      summary: "Activate or deactivate a motor"
+      summary: "Activate a motor"
       operationId: "activateMotor"
       requestBody:
         content:
@@ -166,12 +161,36 @@ paths:
               type: "object"
               required:
                 - id
-                - active
               properties:
                 id:
                   type: "integer"
-                active:
-                  type: "boolean"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motor"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motor/deactivate:
+    patch:
+      tags:
+      - "motor"
+      summary: "Deactivate a motor"
+      operationId: "deactivateMotor"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+              properties:
+                id:
+                  type: "integer"
       responses:
         200:
           description: OK
@@ -187,7 +206,7 @@ paths:
     # the user has manually moved the blinds to the top
     # this request triggers the blinds to drop down and waits for user
     # to send stop_calibrate request
-    get:
+    patch:
       tags:
       - "motor"
       summary: "Start calibration process"
@@ -196,12 +215,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-              properties:
-                id:
-                  type: "integer"
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -214,24 +228,19 @@ paths:
         500:
           $ref: '#/components/responses/500InternalError'
   /motor/stop_calibrate:
-    # this request tells motor to stop dropping blinds and 
+    # this request tells motor to stop dropping blinds and
     # completes the calibration process. The motor will record
     # the length of the blinds (the number of motor rotations) from this
-    get:
+    patch:
       tags:
       - "motor"
       summary: "Stop calibration process"
       operationId: "stopCalibrateMotor"
       requestBody:
-              content:
-                application/json:
-                  schema:
-                    type: "object"
-                    required:
-                      - id
-                    properties:
-                      id:
-                        type: "integer"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -245,22 +254,18 @@ paths:
           $ref: '#/components/responses/500InternalError'
 
 # Motion Sensor
-  /motion:
+  /motion/{motion_sensor_id}:
     get:
       tags:
       - motion
       summary: Get motion sensor state
       operationId: getMotionSensor
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: integer
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -272,17 +277,18 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motion/unregister:
+  /motion/unregister/{motion_sensor_id}:
     delete:
       tags:
         - "motion"
       summary: "Delete motion sensor"
       operationId: "deleteMotion"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id'
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: "Ok"
@@ -290,12 +296,11 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-
   /motion/activate:
     patch:
       tags:
       - "motion"
-      summary: "Activate or deactivate a motion sensor"
+      summary: "Activate a motion sensor"
       operationId: "activateMotion"
       requestBody:
         content:
@@ -304,12 +309,36 @@ paths:
               type: object
               required:
                 - id
-                - active
               properties:
                 id:
                   type: "integer"
-                active:
-                  type: "boolean"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/deactivate:
+    patch:
+      tags:
+      - "motion"
+      summary: "Deactivate a motion sensor"
+      operationId: "deactivateMotion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: "integer"
       responses:
         200:
           description: OK
@@ -419,7 +448,7 @@ paths:
                   type: array
                   items:
                     type: integer
-                  
+
       responses:
         201:
           description: Registered new motion sensor
@@ -433,22 +462,18 @@ paths:
           $ref: '#/components/responses/500InternalError'
 
 # Light sensor
-  /light:
+  /light/{light_sensor_id}:
     get:
       tags:
       - "light"
       summary: "Get light sensor state"
       operationId: "getLightSensor"
-      requestBody:
-              content:
-                application/json:
-                  schema:
-                    type: "object"
-                    required:
-                      - id
-                    properties:
-                      id:
-                        type: "integer"
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -460,17 +485,18 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /light/unregister:
+  /light/unregister/{light_sensor_id}:
     delete:
       tags:
         - "light"
       summary: "Delete light sensor"
       operationId: "deleteLight"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id'
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: "Ok"
@@ -491,12 +517,36 @@ paths:
               type: "object"
               required:
                 - id
-                - active
               properties:
                 id:
                   type: "integer"
-                active:
-                  type: "boolean"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/deactivate:
+    patch:
+      tags:
+      - "light"
+      summary: "Deactivate a light sensor"
+      operationId: "deactivateLight"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+              properties:
+                id:
+                  type: "integer"
       responses:
         200:
           description: OK
@@ -609,9 +659,9 @@ paths:
                   example: "weekday mornings"
                 active:
                   type: "boolean"
-                days: 
+                days:
                   type: "array"
-                  items: 
+                  items:
                     type: string
                     enum:
                       - M
@@ -653,17 +703,18 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /schedule/unregister:
+  /schedule/unregister/{schedule_id}:
     delete:
       tags:
         - "schedule"
       summary: "Delete schedule"
       operationId: "deleteSchedule"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id'
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -690,11 +741,11 @@ paths:
                 - id
                 - days
               properties:
-                id: 
+                id:
                   type: integer
-                days: 
+                days:
                   type: array
-                  items: 
+                  items:
                     type: string
                     enum:
                       - M
@@ -730,9 +781,9 @@ paths:
                 - id
                 - time
               properties:
-                id: 
+                id:
                   type: integer
-                time: 
+                time:
                   type: string # pattern hh:mm
       responses:
         200:
@@ -760,9 +811,9 @@ paths:
                 - id
                 - time
               properties:
-                id: 
+                id:
                   type: integer
-                time: 
+                time:
                   type: string # pattern hh:mm
       responses:
         200:
@@ -790,9 +841,9 @@ paths:
                 - id
                 - name
               properties:
-                id: 
+                id:
                   type: integer
-                name: 
+                name:
                   type: string
       responses:
         200:
@@ -809,7 +860,7 @@ paths:
     patch:
       tags:
         - "schedule"
-      summary: "activate or deactivate chedule"
+      summary: "Activate schedule"
       operationId: "activateSchedule"
       requestBody:
         content:
@@ -818,12 +869,36 @@ paths:
               type: "object"
               required:
                 - id
-                - active
               properties:
-                id: 
+                id:
                   type: integer
-                active: 
-                  type: boolean
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/deactivate:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Deactivate schedule"
+      operationId: "deactivateSchedule"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
       responses:
         200:
           description: OK
@@ -924,18 +999,18 @@ components:
           example: "weekday mornings"
         active:
           type: "boolean"
-        days: 
+        days:
           type: "array"
-          items: 
+          items:
             type: string
             enum:
-              - M
-              - T
-              - W
-              - TH
-              - F
-              - S
-              - SU
+              - Monday
+              - Tuesday
+              - Wednesday
+              - Thursday
+              - Friday
+              - Saturday
+              - Sunday
         action:
           type: string
           enum:
@@ -958,12 +1033,9 @@ components:
         time:
           type: string # format hh:mm
     id:
-      type: "object"
-      required:
-        - id
-      properties:
-        id:
-          type: "integer"
+      type: integer
+      format: int64
+      minimum: 0
   responses:
     200OK:
       description: Operation completed successfully
