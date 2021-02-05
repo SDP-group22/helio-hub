@@ -1084,6 +1084,13 @@ components:
       type: "object"
       required:
         - id
+        - name
+        - active
+        - days
+        - target-level
+        - gradient
+        - motor-ids
+        - time
       properties:
         id:
           type: "integer"
