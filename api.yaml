@@ -83,13 +83,12 @@ paths:
                 - active
               properties:
                 id:
-                  type: integer
+                  $ref: '#/components/schemas/id-type'
                 name:
                   type: string
                   example: bedroom-1
                 ip:
-                  type: string
-                  format: ipv4
+                  $ref: '#/components/schemas/ip'
                 active:
                   type: boolean
       responses:
@@ -119,11 +118,9 @@ paths:
                 - level
               properties:
                 id:
-                  type: integer
+                  $ref: '#/components/schemas/id-type'
                 level:
-                  type: integer
-                  minimum: 0
-                  maximum: 100
+                  $ref: '#/components/schemas/level'
       responses:
         200:
           description: OK
@@ -151,7 +148,7 @@ paths:
                 - name
               properties:
                 id:
-                  type: integer
+                  $ref: '#/components/schemas/id-type'
                 name:
                   type: string
                   example: bedroom-1
@@ -176,12 +173,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-              properties:
-                id:
-                  type: "integer"
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -203,12 +195,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-              properties:
-                id:
-                  type: "integer"
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -343,12 +330,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: "integer"
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -370,12 +352,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: "integer"
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -403,7 +380,7 @@ paths:
                 - name
               properties:
                 id:
-                  type: "integer"
+                  $ref: '#/components/schemas/id-type'
                 name:
                   type: "string"
                   example: "hallway-1"
@@ -434,7 +411,7 @@ paths:
                 - motor-ids
               properties:
                 id:
-                  type: "integer"
+                  $ref: '#/components/schemas/id-type'
                 motor-ids:
                   type: array
                   items:
@@ -466,7 +443,7 @@ paths:
                 - durationSensitivity
               properties:
                 id:
-                  type: "integer"
+                  $ref: '#/components/schemas/id-type'
                 durationSensitivity:
                   type: "string"
                   # pattern: hh:mm
@@ -491,32 +468,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-                - ip
-                - name
-                - active
-                - durationSensitivity
-                - motor-ids
-              properties:
-                id:
-                  type: "integer"
-                name:
-                  type: "string"
-                  example: "bedroom-1"
-                ip:
-                  type: "string"
-                  format: "ipv4"
-                active:
-                  type: "boolean"
-                durationSensitivity:
-                  type: "string"
-                  # pattern: hh:mm
-                motor-ids:
-                  type: array
-                  items:
-                    type: integer
+              $ref: '#/components/schemas/Motion'
 
       responses:
         201:
@@ -602,12 +554,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-              properties:
-                id:
-                  type: "integer"
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -629,12 +576,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-              properties:
-                id:
-                  type: "integer"
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -662,7 +604,7 @@ paths:
                 - name
               properties:
                 id:
-                  type: "integer"
+                  $ref: '#/components/schemas/id-type'
                 name:
                   type: "string"
                   example: "hallway-1"
@@ -693,7 +635,7 @@ paths:
                 - motor-ids
               properties:
                 id:
-                  type: "integer"
+                  $ref: '#/components/schemas/id-type'
                 motor-ids:
                   type: array
                   items:
@@ -719,28 +661,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-                - ip
-                - name
-                - active
-                - motor-ids
-              properties:
-                id:
-                  type: "integer"
-                name:
-                  type: "string"
-                  example: "bedroom-1"
-                ip:
-                  type: "string"
-                  format: "ipv4"
-                active:
-                  type: "boolean"
-                motor-ids:
-                  type: array
-                  items:
-                    type: integer
+              $ref: '#/components/schemas/Light'
       responses:
         200:
           description: OK
@@ -833,7 +754,7 @@ paths:
                 - days
               properties:
                 id:
-                  type: integer
+                  $ref: '#/components/schemas/id'
                 days: 
                   $ref: "#/components/schemas/days"
       responses:
@@ -863,9 +784,9 @@ paths:
                 - time
               properties:
                 id:
-                  type: integer
+                  $ref: '#/components/schemas/id-type'
                 time:
-                  type: string # pattern hh:mm
+                  $ref: '#/components/schemas/time'
       responses:
         200:
           description: OK
@@ -890,12 +811,12 @@ paths:
               type: "object"
               required:
                 - id
-                - time
+                - gradient
               properties:
                 id:
-                  type: integer
-                time:
-                  type: string # pattern hh:mm
+                  $ref: '#/components/schemas/id-type'
+                gradient:
+                  $ref: '#/components/schemas/gradient'
       responses:
         200:
           description: OK
@@ -923,7 +844,7 @@ paths:
                 - name
               properties:
                 id:
-                  type: integer
+                  $ref: '#/components/schemas/id-type'
                 name:
                   type: string
       responses:
@@ -947,12 +868,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-              properties:
-                id:
-                  type: integer
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -974,12 +890,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - id
-              properties:
-                id:
-                  type: integer
+              $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -999,21 +910,25 @@ components:
       type: object
       required:
         - id
+        - name
+        - ip
+        - active
+        - level
+        - battery
+        - length
+        - style
       properties:
         id:
-          type: integer
+          $ref: '#/components/schemas/id-type'
         name:
           type: string
           example: bedroom-1
         ip:
-          type: string
-          format: ipv4
+          $ref: '#/components/schemas/ip'
         active:
           type: boolean
         level:
-          type: integer
-          minimum: 0
-          maximum: 100
+          $ref: '#/components/schemas/level'
         battery:
           type: integer
           minimum: 0
@@ -1028,15 +943,21 @@ components:
       type: "object"
       required:
         - id
+        - name
+        - ip
+        - active
+        - battery
+        - durationSensitivity
+        - motor-ids
+        - style
       properties:
         id:
-          type: "integer"
+          $ref: '#/components/schemas/id-type'
         name:
           type: "string"
           example: "hallway"
         ip:
-          type: "string"
-          format: "ipv4"
+          $ref: '#/components/schemas/ip'
         active:
           type: "boolean"
         battery:
@@ -1057,15 +978,20 @@ components:
       type: "object"
       required:
         - id
+        - name
+        - ip
+        - active
+        - battery
+        - motor-ids
+        - style
       properties:
         id:
-          type: "integer"
+          $ref: '#/components/schemas/id-type'
         name:
           type: "string"
           example: "hallway"
         ip:
-          type: "string"
-          format: "ipv4"
+          $ref: '#/components/schemas/ip'
         active:
           type: "boolean"
         battery:
@@ -1093,7 +1019,7 @@ components:
         - time
       properties:
         id:
-          type: "integer"
+          $ref: '#/components/schemas/id-type'
         name:
           type: "string"
           example: "weekday mornings"
@@ -1102,25 +1028,36 @@ components:
         days: 
           $ref: "#/components/schemas/days"
         target-level:
-          type: integer
-          minimum: 0
-          maximum: 100
+          $ref: '#/components/schemas/level'
         gradient:
-          type: integer # number of minutes before that it starts moving
-          minimum: 0
+          $ref: '#/components/schemas/gradient'
         motor-ids:
           type: array
           items:
             type: integer
         time:
-          type: string # format hh:mm
+          $ref: "#/components/schemas/time"
     id:
       type: "object"
       required:
         - id
       properties:
         id:
-          type: "integer"
+          $ref: "#/components/schemas/id-type"
+    id-type:
+      type: integer
+    ip:
+      type: string
+      format: ipv4
+    level:
+      type: integer
+      minimum: 0
+      maximum: 100
+    time:
+      type: string # pattern hh:mm
+    gradient:
+      type: integer # number of minutes before that it starts moving
+      minimum: 0
     days:
       type: "array"
       items:
