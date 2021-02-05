@@ -418,6 +418,38 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  /motion/change_motors:
+    patch:
+      tags:
+      - "motion"
+      summary: "Change the motors the sensor controls"
+      operationId: "changeMotorsMotion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - motor-ids
+              properties:
+                id:
+                  type: "integer"
+                motor-ids:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
   /motion/duration_sensitivity:
     patch:
       tags:
@@ -634,6 +666,38 @@ paths:
                 name:
                   type: "string"
                   example: "hallway-1"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/change_motors:
+    patch:
+      tags:
+      - "light"
+      summary: "Change the motors a sensor controls"
+      operationId: "changeMotorsLight"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - motor-ids
+              properties:
+                id:
+                  type: "integer"
+                motor-ids:
+                  type: array
+                  items:
+                    type: integer
       responses:
         200:
           description: OK
