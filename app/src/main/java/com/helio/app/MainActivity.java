@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.helio.app.networking.HubClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,5 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         // This makes the fragment change when you press the navigation buttons
         NavigationUI.setupWithNavController(navView, navController);
+        System.out.println("HELLO WORLD");
+        setupApi();
+    }
+
+    private void setupApi() {
+        HubClient client = new HubClient();
     }
 }
