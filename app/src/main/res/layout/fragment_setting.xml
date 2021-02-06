@@ -24,6 +24,9 @@
         android:textSize="30dp"
         app:drawableLeftCompat="@drawable/blinds_icon" />
 
+
+
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,11 +103,64 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginBottom="211dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginBottom="48dp"
         android:gravity="center"
         android:text="Connect to your Helio Hub device"
         app:drawableRightCompat="@drawable/hub" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="340dp"
+        android:text="Sensor Center"
+        android:textSize="30dp"
+        />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+        android:layout_alignParentEnd="true"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="333dp"
+        android:text="Edit" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="333dp"
+        android:text="+" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="400dp"
+        android:drawableLeft="@drawable/sensor"
+        android:text="Sensor 1" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="470dp"
+        android:drawableLeft="@drawable/sensor"
+        android:text="Sensor 2" />
 </RelativeLayout>
