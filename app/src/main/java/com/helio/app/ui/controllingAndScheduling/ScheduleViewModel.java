@@ -1,4 +1,4 @@
-package com.helio.app.ui.schedule;
+package com.helio.app.ui.controllingAndScheduling;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
