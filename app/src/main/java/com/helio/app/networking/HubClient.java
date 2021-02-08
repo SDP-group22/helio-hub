@@ -13,14 +13,20 @@ public class HubClient {
         service = ServiceGenerator.createService(HubService.class, baseAddress);
     }
 
-    public void addMotor(Map<Integer, Motor> motors, AddMotorRequest newMotor) {
-        int motorId = newMotor.getId();
-        Call<Motor> call = service.addMotor(newMotor);
+    public void addMotor(Map<Integer, Motor> motors, RegisterMotorRequest registerMotorRequest) {
+        int motorId = registerMotorRequest.getId();
+        Call<Motor> call = service.addMotor(registerMotorRequest);
         call.enqueue(new MotorCallback(motors, motorId));
     }
 
     public void activateMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.activateMotor(motorId);
+        call.enqueue(new MotorCallback(motors, motorId));
+    }
+
+    public void renameMotor(Map<Integer, Motor> motors, RenameMotorRequest renameMotorRequest) {
+        int motorId = renameMotorRequest.getId();
+        Call<Motor> call = service.renameMotor(renameMotorRequest);
         call.enqueue(new MotorCallback(motors, motorId));
     }
 
