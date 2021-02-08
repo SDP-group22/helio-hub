@@ -30,6 +30,12 @@ public class HubClient {
         call.enqueue(new MotorCallback(motors, motorId));
     }
 
+    public void moveMotor(Map<Integer, Motor> motors, MoveMotorRequest moveMotorRequest) {
+        int motorId = moveMotorRequest.getId();
+        Call<Motor> call = service.moveMotor(moveMotorRequest);
+        call.enqueue(new MotorCallback(motors, motorId));
+    }
+
     public void getMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.getMotor(motorId);
         call.enqueue(new MotorCallback(motors, motorId));

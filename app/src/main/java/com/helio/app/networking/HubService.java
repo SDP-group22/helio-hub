@@ -21,6 +21,9 @@ public interface HubService {
     @GET("/motor/{motor_id}")
     Call<Motor> getMotor(@Path("motor_id") int motorId);
 
+    @PATCH("/motor/move")
+    Call<Motor> moveMotor(@Body MoveMotorRequest moveMotorRequest);
+
     @DELETE("/motor/unregister/{motor_id}")
     void deleteMotor(@Path("motor_id") int motorId);
 }

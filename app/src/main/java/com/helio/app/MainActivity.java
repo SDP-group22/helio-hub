@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.helio.app.networking.MoveMotorRequest;
 import com.helio.app.networking.RegisterMotorRequest;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.Motor;
@@ -42,23 +43,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchState() {
         HubClient client = new HubClient("http://10.0.2.2:8000/");
-        RegisterMotorRequest newMotorParameters = new RegisterMotorRequest(
+        RegisterMotorRequest registerMotorRequest = new RegisterMotorRequest(
                 42,
                 "bedroom",
                 "1.2.3.4",
                 false
         );
-        RenameMotorRequest renameMotorParameters = new RenameMotorRequest(42, "kitchen");
+        RenameMotorRequest renameMotorRequest = new RenameMotorRequest(42, "kitchen");
+        MoveMotorRequest moveMotorRequest = new MoveMotorRequest(42, 25);
         // use Handler to force the actions to happen in order
         Handler handler = new Handler();
-        handler.postDelayed(() -> client.addMotor(motors, newMotorParameters), 0);
+        handler.postDelayed(() -> client.addMotor(motors, registerMotorRequest), 0);
         handler.postDelayed(() -> client.activateMotor(motors, 42), 250);
-        handler.postDelayed(() -> client.renameMotor(motors, renameMotorParameters), 500);
+        handler.postDelayed(() -> client.renameMotor(motors, renameMotorRequest), 500);
         handler.postDelayed(() -> client.getMotor(motors, 42), 750);
-        handler.postDelayed(() -> client.deleteMotor(motors, 42), 1000);
-        handler.postDelayed(() -> client.moveMotor(motors, 42, 25), 1250);
-        handler.postDelayed(() -> client.startMotorCalibration(motors, 42), 1500);
-        handler.postDelayed(() -> client.endMotorCalibration(motors, 42), 1750);
-        handler.postDelayed(() -> client.deactivateMotor(motors, 42), 2000);
+        handler.postDelayed(() -> client.moveMotor(motors, moveMotorRequest), 1000);
+        handler.postDelayed(() -> client.startMotorCalibration(motors, 42), 1250);
+        handler.postDelayed(() -> client.endMotorCalibration(motors, 42), 1500);
+        handler.postDelayed(() -> client.deactivateMotor(motors, 42), 1750);
+        handler.postDelayed(() -> client.deleteMotor(motors, 42), 2000);
     }
 }
