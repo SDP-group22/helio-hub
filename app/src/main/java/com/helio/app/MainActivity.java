@@ -10,8 +10,12 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.helio.app.networking.HubClient;
+import com.helio.app.networking.Motor;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    private Map<Integer, Motor> motors;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +34,14 @@ public class MainActivity extends AppCompatActivity {
         // This makes the fragment change when you press the navigation buttons
         NavigationUI.setupWithNavController(navView, navController);
 
-        setupApi();
+        fetchState();
     }
 
-    private void setupApi() {
+    private void fetchState() {
         HubClient client = new HubClient("http://10.0.2.2:8000/");
+//        client.addMotor(42, motors);
+        client.getMotor(42, motors);
+//        client.deleteMotor(42, motors);
+//        client.moveMotor(42, motors);
     }
 }
