@@ -24,6 +24,12 @@ public interface HubService {
     @PATCH("/motor/move")
     Call<Motor> moveMotor(@Body MoveMotorRequest moveMotorRequest);
 
+    @PATCH("/motor/start_calibrate")
+    Call<Motor> startMotorCalibration(@Body int motorId);
+
+    @PATCH("/motor/stop_calibrate")
+    Call<Motor> stopMotorCalibration(@Body int motorId);
+
     @DELETE("/motor/unregister/{motor_id}")
     void deleteMotor(@Path("motor_id") int motorId);
 }

@@ -15,6 +15,7 @@ import com.helio.app.networking.RegisterMotorRequest;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.Motor;
 import com.helio.app.networking.RenameMotorRequest;
+import com.helio.app.networking.StartCalibrationRequest;
 
 import java.util.Map;
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(() -> client.getMotor(motors, 42), 750);
         handler.postDelayed(() -> client.moveMotor(motors, moveMotorRequest), 1000);
         handler.postDelayed(() -> client.startMotorCalibration(motors, 42), 1250);
-        handler.postDelayed(() -> client.endMotorCalibration(motors, 42), 1500);
+        handler.postDelayed(() -> client.stopMotorCalibration(motors, 42), 1500);
         handler.postDelayed(() -> client.deactivateMotor(motors, 42), 1750);
         handler.postDelayed(() -> client.deleteMotor(motors, 42), 2000);
     }

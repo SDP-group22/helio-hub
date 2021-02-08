@@ -36,6 +36,16 @@ public class HubClient {
         call.enqueue(new MotorCallback(motors, motorId));
     }
 
+    public void startMotorCalibration(Map<Integer, Motor> motors, int motorId) {
+        Call<Motor> call = service.startMotorCalibration(motorId);
+        call.enqueue(new MotorCallback(motors, motorId));
+    }
+
+    public void stopMotorCalibration(Map<Integer, Motor> motors, int motorId) {
+        Call<Motor> call = service.stopMotorCalibration(motorId);
+        call.enqueue(new MotorCallback(motors, motorId));
+    }
+
     public void getMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.getMotor(motorId);
         call.enqueue(new MotorCallback(motors, motorId));
