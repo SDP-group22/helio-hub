@@ -15,7 +15,6 @@ import com.helio.app.networking.RegisterMotorRequest;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.Motor;
 import com.helio.app.networking.RenameMotorRequest;
-import com.helio.app.networking.StartCalibrationRequest;
 
 import java.util.Map;
 

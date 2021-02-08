@@ -34,5 +34,5 @@ public interface HubService {
     Call<Motor> stopMotorCalibration(@Body int motorId);
 
     @DELETE("/motor/unregister/{motor_id}")
-    void deleteMotor(@Path("motor_id") int motorId);
+    Call<Motor> deleteMotor(@Path("motor_id") int motorId);
 }
