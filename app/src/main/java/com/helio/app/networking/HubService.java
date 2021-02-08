@@ -15,6 +15,9 @@ public interface HubService {
     @PATCH("/motor/activate")
     Call<Motor> activateMotor(@Body int motorId);
 
+    @PATCH("/motor/deactivate")
+    Call<Motor> deactivateMotor(@Body int motorId);
+
     @PATCH("/motor/rename")
     Call<Motor> renameMotor(@Body RenameMotorRequest renameMotorRequest);
 

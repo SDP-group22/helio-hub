@@ -24,6 +24,11 @@ public class HubClient {
         call.enqueue(new MotorCallback(motors, motorId));
     }
 
+    public void deactivateMotor(Map<Integer, Motor> motors, int motorId) {
+        Call<Motor> call = service.deactivateMotor(motorId);
+        call.enqueue(new MotorCallback(motors, motorId));
+    }
+
     public void renameMotor(Map<Integer, Motor> motors, RenameMotorRequest renameMotorRequest) {
         int motorId = renameMotorRequest.getId();
         Call<Motor> call = service.renameMotor(renameMotorRequest);
