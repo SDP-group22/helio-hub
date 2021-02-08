@@ -1,6 +1,5 @@
 package com.helio.app.networking;
 
-import java.io.IOException;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -14,23 +13,48 @@ public class HubClient {
         service = ServiceGenerator.createService(HubService.class, baseAddress);
     }
 
-    public void getMotor(int motorId, Map<Integer, Motor> motors) {
+    public void addMotor(Map<Integer, Motor> motors, AddMotorRequest newMotor) {
+        int motorId = newMotor.getId();
+        Call<Motor> call = service.addMotor(newMotor);
+        call.enqueue(new MotorCallback(motors, motorId));
+    }
+
+    public void activateMotor(Map<Integer, Motor> motors, int motorId) {
+        Call<Motor> call = service.activateMotor(motorId);
+        call.enqueue(new MotorCallback(motors, motorId));
+    }
+
+    public void getMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.getMotor(motorId);
+        call.enqueue(new MotorCallback(motors, motorId));
+    }
+}
 
-        call.enqueue(new Callback<Motor>() {
-            @Override
-            public void onResponse(Call<Motor> call, Response<Motor> response) {
-                Motor m = response.body();
-                if(m != null) {
-                    System.out.println(call + " succeeded: " + m);
-                    motors.put(motorId, m);
-                }
-            }
+class MotorCallback implements Callback<Motor> {
+    private final Map<Integer, Motor> motors;
+    private final int motorId;
 
-            @Override
-            public void onFailure(Call<Motor> call, Throwable t) {
-                System.out.println(call + " failed: " + t);
-            }
-        });
+    MotorCallback(Map<Integer, Motor> motors, int motorId) {
+        this.motors = motors;
+        this.motorId = motorId;
+    }
+
+    private void updateLocalMotorState(Motor m) {
+        motors.put(motorId, m);
+        System.out.println("Updated local state for " + m);
+    }
+
+    @Override
+    public void onResponse(Call<Motor> call, Response<Motor> response) {
+        Motor m = response.body();
+        if(m != null) {
+            System.out.println(call + " succeeded: " + m);
+            updateLocalMotorState(m);
+        }
+    }
+
+    @Override
+    public void onFailure(Call<Motor> call, Throwable t) {
+        System.out.println(call + " failed: " + t);
     }
 }

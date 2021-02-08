@@ -3,17 +3,24 @@ package com.helio.app.networking;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface HubService {
-    @GET("/motor/{motor_id}")
-    public Call<Motor> getMotor(@Path("motor_id") int motorId);
+    @POST("/motor/register")
+    Call<Motor> addMotor(@Body AddMotorRequest newMotorParameters);
 
-    @GET("/motor/get_all")
-    public Call<List<Motor>> getMotors();
+    @PATCH("/motor/activate")
+    Call<Motor> activateMotor(@Body int motorId);
+
+    @GET("/motor/{motor_id}")
+    Call<Motor> getMotor(@Path("motor_id") int motorId);
 
     @DELETE("/motor/unregister/{motor_id}")
-    public void deleteMotor(@Path("motor_id") int motorId);
+    void deleteMotor(@Path("motor_id") int motorId);
 }

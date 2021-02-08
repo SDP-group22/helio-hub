@@ -17,4 +17,8 @@ public class Motor {
     public String toString() {
         return "Motor w/ id=" + id;
     }
+
+    public int getId() {
+        return id;
+    }
 }
