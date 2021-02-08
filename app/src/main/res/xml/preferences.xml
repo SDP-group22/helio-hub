@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:andriod="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        andriod:key="blind_category"
+        andriod:title="Blind">
+
+        <EditTextPreference
+            andriod:key="ip"
+            andriod:title="IP of blind:"
+            />
+
+        <EditTextPreference
+            andriod:key="name"
+            andriod:title="Name of blind:"
+            />
+
+        <DropDownPreference
+            andriod:key="changeIcon"
+            andriod:title="change icon"
+            andriod:dialogLayout="@layout/layout_dropdownmenu"
+            />
+
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        andriod:key="control_category"
+        andriod:title="Control">
+
+        <Preference
+            andriod:key="calibration"
+            andriod:title="Calibration"
+            />
+
+        <Preference
+            andriod:key="openNow"
+            andriod:title="Open Now"
+            />
+
+        <Preference
+            andriod:key="closeNow"
+            andriod:title="Close Now"
+            />
+
+        <Preference
+            andriod:key="createSchedule"
+            andriod:title="Create schedule"
+            />
+
+        <Preference
+            andriod:key="seeSchedule"
+            andriod:title="See schedule"
+            />
+
+        <Preference
+            andriod:key="sensors"
+            andriod:title="Sensors"
+            />
+
+    </PreferenceCategory>
+
+
+
+
+
+
+</PreferenceScreen>
