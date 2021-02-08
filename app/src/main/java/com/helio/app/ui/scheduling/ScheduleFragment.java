@@ -1,4 +1,4 @@
-package com.helio.app.ui.controllingAndScheduling;
+package com.helio.app.ui.scheduling;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -27,18 +27,12 @@ public class ScheduleFragment extends Fragment {
     private TextView openingMinute;
     private TextView closingHour;
     private TextView closingMinute;
-    private EditText IP;
-    private EditText name;
-    private EditText currentState;
     private Button setOpeningTime;
     private Button cancelOpeningTime;
     private Button setClosingTime;
     private Button cancelClosingTime;
     private Button raise;
     private Button lower;
-    private Button sensors;
-    private Button changeIcon;
-    private Button calibration;
     private TimePickerDialog timePickerDialog;
     private Calendar calendar;
     private int currentHour;
@@ -91,12 +85,6 @@ public class ScheduleFragment extends Fragment {
         cancelClosingTime = returnView.findViewById(R.id.btn_cancelClosingTime);
         raise = returnView.findViewById(R.id.btn_raise);
         lower = returnView.findViewById(R.id.btn_lower);
-        changeIcon = returnView.findViewById(R.id.btn_changeIcon);
-        calibration = returnView.findViewById(R.id.btn_calibration);
-        IP = returnView.findViewById(R.id.et_IPTextBox);
-        name = returnView.findViewById(R.id.et_nameTextBox);
-        sensors = returnView.findViewById(R.id.btn_sensors);
-        currentState = returnView.findViewById(R.id.et_currentState);
 
 
 
