@@ -8,7 +8,7 @@ paths:
     get:
       tags:
       - motor
-      summary: Get motor state u cunt
+      summary: Get motor state
       operationId: motor.get
       parameters:
         - name: motor_id
