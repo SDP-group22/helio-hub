@@ -58,22 +58,27 @@ public class HubClient {
 
     public void deleteMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.deleteMotor(motorId);
-        call.enqueue(new MotorCallback(motors, motorId));
+        call.enqueue(new MotorDeletionCallback(motors, motorId));
     }
 }
 
 class MotorCallback implements Callback<Motor> {
-    private final Map<Integer, Motor> motors;
-    private final int motorId;
+    protected final Map<Integer, Motor> motors;
+    protected final int motorId;
 
     MotorCallback(Map<Integer, Motor> motors, int motorId) {
         this.motors = motors;
         this.motorId = motorId;
     }
 
-    private void updateLocalMotorState(Motor m) {
+    protected void updateLocalMotorState(Motor m) {
         motors.put(motorId, m);
         System.out.println("Updated local state for " + m);
+    }
+
+    protected void unregisterFromLocalMotorState() {
+        motors.remove(motorId);
+        System.out.println(motorId + " was removed from local state");
     }
 
     @Override
@@ -88,5 +93,17 @@ class MotorCallback implements Callback<Motor> {
     @Override
     public void onFailure(Call<Motor> call, Throwable t) {
         System.out.println(call + " failed: " + t);
+    }
+}
+
+class MotorDeletionCallback extends MotorCallback {
+
+    MotorDeletionCallback(Map<Integer, Motor> motors, int motorId) {
+        super(motors, motorId);
+    }
+
+    @Override
+    public void onResponse(Call<Motor> call, Response<Motor> response) {
+        unregisterFromLocalMotorState();
     }
 }
