@@ -1,6 +1,8 @@
 package com.helio.app.networking;
 
-// helper class, serialized to be used as the body for /motor/register requests
+/**
+ * retrofit serialises these objects to be passed to the Hub for /motor/register/ requests
+ */
 public class RegisterMotorRequest {
     private final int id;
     private final String name;

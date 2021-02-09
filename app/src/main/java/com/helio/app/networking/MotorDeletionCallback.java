@@ -9,6 +9,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * A MotorDeletionCallback instance allows for code to be run after deleting a motor on the Hub.
+ * To remain in sync with the Hub, we also remove that motor from our local state.
+ *
+ * @see MotorCallback
+ * @see HubClient
+ */
 class MotorDeletionCallback implements Callback<ResponseBody> {
     private final Map<Integer, Motor> motors;
     private final int motorId;

@@ -7,6 +7,16 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
+/**
+ * HubClient is the client-side code we use to communicate with the Hub.
+ * Using retrofit and an interface that matches our OpenAPI specification, sending requests becomes
+ * quite easy to do.<br/>
+ * The following methods abstract this away further, by automatically updating our local state after
+ * we receive a response.
+ *
+ * @see HubService
+ */
 public class HubClient {
     private final HubService service;
 

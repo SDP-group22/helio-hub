@@ -2,6 +2,10 @@ package com.helio.app.networking;
 
 import androidx.annotation.NonNull;
 
+
+/**
+ * Motor objects represent motor controllers in the user's home environment.
+ */
 public class Motor {
     private final int id;
     private final String name;

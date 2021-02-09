@@ -9,6 +9,11 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * This interface matches the OpenAPI specification we came up with as a group.
+ *
+ * @see HubClient
+ */
 public interface HubService {
     @POST("/motor/register")
     Call<Motor> addMotor(@Body RegisterMotorRequest registerMotorRequest);
