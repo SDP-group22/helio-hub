@@ -6,18 +6,18 @@ import com.helio.app.R;
  * Represents an icon for identifying blinds (selected by the user)
  */
 public enum BlindIcon {
-    WINDOW("window", R.drawable.ic_window),
-    BEDROOM("bedroom", R.drawable.ic_bed),
-    BATHROOM("bathroom", R.drawable.ic_wash),
-    KITCHEN("kitchen", R.drawable.ic_fridge),
-    SQUARE("square", R.drawable.ic_square),
-    STAR("star", R.drawable.ic_star),
-    CIRCLE("circle", R.drawable.ic_circle),
-    BOOK("book", R.drawable.ic_book),
-    CHAIR("chair", R.drawable.ic_chair),
-    COMPUTER("computer", R.drawable.ic_computer),
-    HOUSE("house", R.drawable.ic_house),
-    TV("tv", R.drawable.ic_tv);
+    WINDOW("Window", R.drawable.ic_window),
+    BEDROOM("Bedroom", R.drawable.ic_bed),
+    BATHROOM("Bathroom", R.drawable.ic_wash),
+    KITCHEN("Kitchen", R.drawable.ic_fridge),
+    SQUARE("Square", R.drawable.ic_square),
+    STAR("Star", R.drawable.ic_star),
+    CIRCLE("Circle", R.drawable.ic_circle),
+    BOOK("Book", R.drawable.ic_book),
+    CHAIR("Chair", R.drawable.ic_chair),
+    COMPUTER("Computer", R.drawable.ic_computer),
+    HOUSE("House", R.drawable.ic_house),
+    TV("Tv", R.drawable.ic_tv);
 
     /**
      * Friendly name of the icon
@@ -31,6 +31,14 @@ public enum BlindIcon {
     BlindIcon(String name, int id) {
         this.name = name;
         this.id = id;
+    }
+
+    public static String[] getNames() {
+        String[] names = new String[values().length];
+        for (int i = 0; i < values().length; i++) {
+            names[i] = values()[i].name;
+        }
+        return names;
     }
 
 }

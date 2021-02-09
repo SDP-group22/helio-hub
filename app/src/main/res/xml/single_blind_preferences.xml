@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:andriod="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditTextPreference
+        andriod:key="ip"
+        andriod:title="@string/settingsIP"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        andriod:key="name"
+        andriod:title="@string/settingsName"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        andriod:entries="@array/icons"
+        andriod:entryValues="@array/iconsValues"
+        andriod:key="changeIcon"
+        andriod:title="@string/settingsIcon"
+        app:useSimpleSummaryProvider="true" />
+
+    <Preference
+        andriod:key="seeSchedule"
+        andriod:title="@string/settingsViewSchedules" />
+
+    <Preference
+        andriod:key="sensors"
+        andriod:title="@string/settingsViewSensors" />
+
+    <Preference
+        andriod:key="calibration"
+        andriod:title="@string/settingsCalibration" />
+
+    <PreferenceCategory
+        andriod:key="control_category"
+        andriod:title="@string/settingsControlCat">
+
+        <Preference
+            andriod:key="openNow"
+            andriod:title="@string/settingsOpenNow" />
+
+        <Preference
+            andriod:key="closeNow"
+            andriod:title="@string/settingsCloseNow" />
+    </PreferenceCategory>
+</PreferenceScreen>
