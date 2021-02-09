@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_ic1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_baseline_access_time_24"/>
+
+    <TextView
+        android:id="@+id/tv_ic2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:background="@drawable/ic_baseline_wifi_24"/>
+
+    <TextView
+        android:id="@+id/tv_ic3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:background="@drawable/ic_bed"/>
+
+    <TextView
+        android:id="@+id/tv_ic4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:background="@drawable/ic_book"/>
+
+    <TextView
+        android:id="@+id/tv_ic5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="96dp"
+        android:background="@drawable/ic_chair"/>
+
+    <TextView
+        android:id="@+id/tv_ic6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:background="@drawable/ic_circle"/>
+
+    <TextView
+        android:id="@+id/tv_ic7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="144dp"
+        android:background="@drawable/ic_computer"/>
+
+    <TextView
+        android:id="@+id/tv_ic8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/ic_home_black_24dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_ic9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:background="@drawable/ic_house"/>
+
+    <TextView
+        android:id="@+id/tv_ic10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="48dp"
+        android:background="@drawable/ic_square"/>
+
+    <TextView
+        android:id="@+id/tv_ic11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="72dp"
+        android:background="@drawable/ic_star"/>
+
+    <TextView
+        android:id="@+id/tv_ic12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="96dp"
+        android:background="@drawable/ic_tv"/>
+
+    <TextView
+        android:id="@+id/tv_ic13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="120dp"
+        android:background="@drawable/ic_wash"/>
+
+    <TextView
+        android:id="@+id/tv_ic14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="144dp"
+        android:background="@drawable/ic_window"/>
+
+</RelativeLayout>
