@@ -11,8 +11,11 @@ Linux : `source venv\bin\activate`
 3. install requirements \
 `pip install -r requirements.txt`
 
-4. run server \
+4. create 'database' folder \
+`mkdir database`
+
+5. run server \
 `python api.py`
 
-5. Swagger UI can be found on your browser at `localhost:{4310}/ui`
+6. Swagger UI can be found on your browser at `localhost:{4310}/ui`
 
