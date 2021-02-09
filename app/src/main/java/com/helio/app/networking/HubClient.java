@@ -4,12 +4,18 @@ import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HubClient {
     private final HubService service;
 
     public HubClient(String baseAddress) {
-        service = ServiceGenerator.createService(HubService.class, baseAddress);
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseAddress)
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+        service = retrofit.create(HubService.class);
     }
 
     public void addMotor(Map<Integer, Motor> motors, RegisterMotorRequest registerMotorRequest) {
