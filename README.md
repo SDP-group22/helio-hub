@@ -25,3 +25,10 @@ An Android application for controlling Helio blinds
 3. Go to files changed and review the changes, making comments and requesting changes if necessary. Consider if the goal has been achieved, code style, clarity, comments, etc.
 4. When you approve a review, move the issue card to Reviewer approved.
 5. If you request changes, move the issue to In progress and add the rework label.
+
+### Mock Server
+For the time being, `mock_server` contains files that can be used to mock up `GET` responses.
+NB: I also tried this with `POST` and `PATCH` requests, but these are not supported.
+
+1. `cd app/mock_server`
+2. `python3 -m http.server`
