@@ -2,33 +2,28 @@
 <PreferenceScreen xmlns:andriod="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        andriod:key="blind_category"
-        andriod:title="Blind">
 
         <EditTextPreference
             andriod:key="ip"
             andriod:title="IP of blind:"
+            app:useSimpleSummaryProvider="true"
             />
 
         <EditTextPreference
             andriod:key="name"
             andriod:title="Name of blind:"
+            app:useSimpleSummaryProvider="true"
             />
 
-        <DropDownPreference
+
+        <ListPreference
             andriod:key="changeIcon"
-            andriod:title="change icon"
-            andriod:dialogLayout="@layout/layout_dropdownmenu"
+            andriod:title="Change icon of blind"
+            app:useSimpleSummaryProvider="true"
+            andriod:entries="@array/icons"
+            andriod:entryValues="@array/iconsValues"
             />
 
-
-    </PreferenceCategory>
-
-
-    <PreferenceCategory
-        andriod:key="control_category"
-        andriod:title="Control">
 
         <Preference
             andriod:key="calibration"
@@ -37,12 +32,12 @@
 
         <Preference
             andriod:key="openNow"
-            andriod:title="Open Now"
+            andriod:title="Open blind now"
             />
 
         <Preference
             andriod:key="closeNow"
-            andriod:title="Close Now"
+            andriod:title="Close blind now"
             />
 
         <Preference
@@ -55,12 +50,11 @@
             andriod:title="See schedule"
             />
 
-        <Preference
+        <SwitchPreference
             andriod:key="sensors"
             andriod:title="Sensors"
             />
 
-    </PreferenceCategory>
 
 
 

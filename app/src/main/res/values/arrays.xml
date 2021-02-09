@@ -1,0 +1,48 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <array name="icons">
+        <item>Wash</item>
+        <item>Window</item>
+        <item>Tv</item>
+        <item>Star</item>
+        <item>Square</item>
+        <item>House</item>
+        <item>Computer</item>
+        <item>Circle</item>
+        <item>Chair</item>
+        <item>Book</item>
+        <item>Bed</item>
+        <item>Fridge</item>
+        <item>No icon</item>
+    </array>
+
+    <array name="iconsValues">
+        <item>@drawable/ic_wash</item>
+        <item>@drawable/ic_window</item>
+        <item>@drawable/ic_tv</item>
+        <item>@drawable/ic_star</item>
+        <item>@drawable/ic_square</item>
+        <item>@drawable/ic_house</item>
+        <item>@drawable/ic_computer</item>
+        <item>@drawable/ic_circle</item>
+        <item>@drawable/ic_chair</item>
+        <item>@drawable/ic_book</item>
+        <item>@drawable/ic_bed</item>
+        <item>@drawable/ic_fridge</item>
+        <item></item>
+    </array>
+
+
+
+
+</resources>
