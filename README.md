@@ -26,9 +26,9 @@ An Android application for controlling Helio blinds
 4. When you approve a review, move the issue card to Reviewer approved.
 5. If you request changes, move the issue to In progress and add the rework label.
 
-### Mock Server
-For the time being, `mock_server` contains files that can be used to mock up `GET` responses.
-NB: I also tried this with `POST` and `PATCH` requests, but these are not supported.
-
-1. `cd app/mock_server`
-2. `python3 -m http.server`
+### connecting to `helio-hub` (server side)
+In order to do anything interesting within the app, we have to communicate with the Hub.
+You can run the Hub on your own device in the following way:
+1. clone `https://github.com/SDP-group22/helio-hub`
+2. follow the instructions in the `README` over there to launch the Hub
+3. the app can now communicate with the Hub by sending requests to `10.0.2.2:4310` (`10.0.2.2` is `localhost` in Android)
