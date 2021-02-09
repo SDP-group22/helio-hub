@@ -1,5 +1,7 @@
 package com.helio.app.networking;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -22,12 +24,15 @@ class MotorDeletionCallback implements Callback<ResponseBody> {
     }
 
     @Override
-    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+    public void onResponse(
+            @NotNull Call<ResponseBody> call,
+            @NotNull Response<ResponseBody> response
+    ) {
         unregisterFromLocalMotorState();
     }
 
     @Override
-    public void onFailure(Call<ResponseBody> call, Throwable t) {
+    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
         System.out.println(call + " failed: " + t);
     }
 }

@@ -1,5 +1,7 @@
 package com.helio.app.networking;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Map;
 
 import retrofit2.Call;
@@ -21,7 +23,7 @@ class MotorCallback implements Callback<Motor> {
     }
 
     @Override
-    public void onResponse(Call<Motor> call, Response<Motor> response) {
+    public void onResponse(@NotNull Call<Motor> call, Response<Motor> response) {
         Motor m = response.body();
         if(m != null) {
             System.out.println(call + " succeeded: " + m);
@@ -30,7 +32,7 @@ class MotorCallback implements Callback<Motor> {
     }
 
     @Override
-    public void onFailure(Call<Motor> call, Throwable t) {
+    public void onFailure(@NotNull Call<Motor> call, @NotNull Throwable t) {
         System.out.println(call + " failed: " + t);
     }
 }
