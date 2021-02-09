@@ -23,7 +23,7 @@
         <item>Book</item>
         <item>Bed</item>
         <item>Fridge</item>
-        <item>No icon</item>
+        <item>None</item>
     </array>
 
     <array name="iconsValues">
@@ -39,10 +39,8 @@
         <item>@drawable/ic_book</item>
         <item>@drawable/ic_bed</item>
         <item>@drawable/ic_fridge</item>
-        <item></item>
+        <item/>
     </array>
-
-
 
 
 </resources>

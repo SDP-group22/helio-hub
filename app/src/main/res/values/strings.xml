@@ -19,4 +19,13 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="settingsOpenNow">Open Now</string>
+    <string name="settingsCloseNow">Close Now</string>
+    <string name="settingsControlCat">Control</string>
+    <string name="settingsCalibration">Motor Calibration</string>
+    <string name="settingsViewSensors">View this Blind\'s Sensors</string>
+    <string name="settingsViewSchedules">View this Blind\'s Schedules</string>
+    <string name="settingsIcon">Icon</string>
+    <string name="settingsName">Name</string>
+    <string name="settingsIP">IP address</string>
 </resources>
