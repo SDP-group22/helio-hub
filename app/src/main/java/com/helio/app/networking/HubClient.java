@@ -2,6 +2,7 @@ package com.helio.app.networking;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,7 +58,7 @@ public class HubClient {
     }
 
     public void deleteMotor(Map<Integer, Motor> motors, int motorId) {
-        Call<Motor> call = service.deleteMotor(motorId);
+        Call<ResponseBody> call = service.deleteMotor(motorId);
         call.enqueue(new MotorDeletionCallback(motors, motorId));
     }
 }

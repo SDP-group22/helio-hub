@@ -1,5 +1,6 @@
 package com.helio.app.networking;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -34,5 +35,5 @@ public interface HubService {
     Call<Motor> stopMotorCalibration(@Body int motorId);
 
     @DELETE("/motor/unregister/{motor_id}")
-    Call<Motor> deleteMotor(@Path("motor_id") int motorId);
+    Call<ResponseBody> deleteMotor(@Path("motor_id") int motorId);
 }
