@@ -27,25 +27,25 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         '500':
           $ref: '#/components/responses/500InternalError'
-  # /motor/get_all:
-  #   get:
-  #     tags:
-  #     - motor
-  #     summary: Get all motor information
-  #     operationId: getAllMotors
-  #     responses:
-  #       '200':
-  #         description: "OK"
-  #         content:
-  #           application/json:
-  #             schema:
-  #               type: array
-  #               items:
-  #                 $ref: '#/components/schemas/Motor'
-  #       '400':
-  #         $ref: '#/components/responses/400InvalidInput'
-  #       '500':
-  #         $ref: '#/components/responses/500InternalError'
+  /motor/get_all:
+    get:
+      tags:
+      - motor
+      summary: Get all motor information
+      operationId: motor.get_all
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Motor'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
   /motor/unregister/{motor_id}:
     delete:
       tags:
@@ -75,22 +75,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - id
-                - ip
-                - name
-                - active
-              properties:
-                id:
-                  $ref: '#/components/schemas/id-type'
-                name:
-                  type: string
-                  example: bedroom-1
-                ip:
-                  $ref: '#/components/schemas/ip'
-                active:
-                  type: boolean
+              $ref: '#/components/schemas/MotorNoId'
       responses:
         200:
           description: OK
@@ -118,7 +103,7 @@ paths:
                 - level
               properties:
                 id:
-                  $ref: '#/components/schemas/id-type'
+                  $ref: '#/components/schemas/id'
                 level:
                   $ref: '#/components/schemas/level'
       responses:
@@ -148,7 +133,7 @@ paths:
                 - name
               properties:
                 id:
-                  $ref: '#/components/schemas/id-type'
+                  $ref: '#/components/schemas/id'
                 name:
                   type: string
                   example: bedroom-1
@@ -163,17 +148,18 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/activate:
+  /motor/activate/{motor_id}:
     patch:
       tags:
       - "motor"
       summary: "Activate a motor"
       operationId: "motor.activate"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id'
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -185,17 +171,18 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/deactivate:
+  /motor/deactivate/{motor_id}:
     patch:
       tags:
       - "motor"
       summary: "Deactivate a motor"
       operationId: "motor.deactivate"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id'
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -207,7 +194,7 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/start_calibrate:
+  /motor/start_calibrate/{motor_id}:
     # the user has manually moved the blinds to the top
     # this request triggers the blinds to drop down and waits for user
     # to send stop_calibrate request
@@ -216,11 +203,12 @@ paths:
       - "motor"
       summary: "Start calibration process"
       operationId: "motor.start_calibration"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id'
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -232,7 +220,7 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/stop_calibrate:
+  /motor/stop_calibrate/{motor_id}:
     # this request tells motor to stop dropping blinds and
     # completes the calibration process. The motor will record
     # the length of the blinds (the number of motor rotations) from this
@@ -241,11 +229,12 @@ paths:
       - "motor"
       summary: "Stop calibration process"
       operationId: "motor.stop_calibration"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id'
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       responses:
         200:
           description: OK
@@ -380,7 +369,7 @@ paths:
 #                 - name
 #               properties:
 #                 id:
-#                   $ref: '#/components/schemas/id-type'
+#                   $ref: '#/components/schemas/id'
 #                 name:
 #                   type: "string"
 #                   example: "hallway-1"
@@ -411,7 +400,7 @@ paths:
 #                 - motor-ids
 #               properties:
 #                 id:
-#                   $ref: '#/components/schemas/id-type'
+#                   $ref: '#/components/schemas/id'
 #                 motor-ids:
 #                   type: array
 #                   items:
@@ -443,7 +432,7 @@ paths:
 #                 - durationSensitivity
 #               properties:
 #                 id:
-#                   $ref: '#/components/schemas/id-type'
+#                   $ref: '#/components/schemas/id'
 #                 durationSensitivity:
 #                   type: "string"
 #                   # pattern: hh:mm
@@ -468,7 +457,7 @@ paths:
 #         content:
 #           application/json:
 #             schema:
-#               $ref: '#/components/schemas/Motion'
+#               $ref: '#/components/schemas/MotionNoId'
 
 #       responses:
 #         201:
@@ -604,7 +593,7 @@ paths:
 #                 - name
 #               properties:
 #                 id:
-#                   $ref: '#/components/schemas/id-type'
+#                   $ref: '#/components/schemas/id'
 #                 name:
 #                   type: "string"
 #                   example: "hallway-1"
@@ -635,7 +624,7 @@ paths:
 #                 - motor-ids
 #               properties:
 #                 id:
-#                   $ref: '#/components/schemas/id-type'
+#                   $ref: '#/components/schemas/id'
 #                 motor-ids:
 #                   type: array
 #                   items:
@@ -661,7 +650,7 @@ paths:
 #         content:
 #           application/json:
 #             schema:
-#               $ref: '#/components/schemas/Light'
+#               $ref: '#/components/schemas/LightNoId'
 #       responses:
 #         200:
 #           description: OK
@@ -703,7 +692,7 @@ paths:
 #         content:
 #           application/json:
 #             schema:
-#                 $ref: "#/components/schemas/Schedule"
+#                 $ref: "#/components/schemas/ScheduleNoId"
 #       responses:
 #         200:
 #           description: "Ok"
@@ -784,7 +773,7 @@ paths:
 #                 - time
 #               properties:
 #                 id:
-#                   $ref: '#/components/schemas/id-type'
+#                   $ref: '#/components/schemas/id'
 #                 time:
 #                   $ref: '#/components/schemas/time'
 #       responses:
@@ -814,7 +803,7 @@ paths:
 #                 - gradient
 #               properties:
 #                 id:
-#                   $ref: '#/components/schemas/id-type'
+#                   $ref: '#/components/schemas/id'
 #                 gradient:
 #                   $ref: '#/components/schemas/gradient'
 #       responses:
@@ -844,7 +833,7 @@ paths:
 #                 - name
 #               properties:
 #                 id:
-#                   $ref: '#/components/schemas/id-type'
+#                   $ref: '#/components/schemas/id'
 #                 name:
 #                   type: string
 #       responses:
@@ -919,7 +908,37 @@ components:
         - style
       properties:
         id:
-          $ref: '#/components/schemas/id-type'
+          $ref: '#/components/schemas/id'
+        name:
+          type: string
+          example: bedroom-1
+        ip:
+          $ref: '#/components/schemas/ip'
+        active:
+          type: boolean
+        level:
+          $ref: '#/components/schemas/level'
+        battery:
+          type: integer
+          minimum: 0
+          maximum: 100
+        length:
+          type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
+    MotorNoId:
+      type: object
+      required:
+        - name
+        - ip
+        - active
+        - level
+        - battery
+        - length
+        - style
+      properties:
         name:
           type: string
           example: bedroom-1
@@ -952,7 +971,7 @@ components:
         - style
       properties:
         id:
-          $ref: '#/components/schemas/id-type'
+          $ref: '#/components/schemas/id'
         name:
           type: "string"
           example: "hallway"
@@ -986,7 +1005,7 @@ components:
         - style
       properties:
         id:
-          $ref: '#/components/schemas/id-type'
+          $ref: '#/components/schemas/id'
         name:
           type: "string"
           example: "hallway"
@@ -1019,7 +1038,7 @@ components:
         - time
       properties:
         id:
-          $ref: '#/components/schemas/id-type'
+          $ref: '#/components/schemas/id'
         name:
           type: "string"
           example: "weekday mornings"
@@ -1040,8 +1059,6 @@ components:
     id:
       type: "integer"
       minimum: 0
-    id-type:
-      type: integer
     ip:
       type: string
       format: ipv4
@@ -1066,6 +1083,95 @@ components:
           - Friday
           - Saturday
           - Sunday
+    MotionNoId:
+      type: "object"
+      required:
+        - name
+        - ip
+        - active
+        - battery
+        - durationSensitivity
+        - motor-ids
+        - style
+      properties:
+        name:
+          type: "string"
+          example: "hallway"
+        ip:
+          $ref: '#/components/schemas/ip'
+        active:
+          type: "boolean"
+        battery:
+          type: "integer"
+          minimum: 0
+          maximum: 100
+        durationSensitivity:
+          type: "string" # pattern hh:mm
+        motor-ids:
+          type: array
+          items:
+            type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
+    LightNoId:
+      type: "object"
+      required:
+        - name
+        - ip
+        - active
+        - battery
+        - motor-ids
+        - style
+      properties:
+        name:
+          type: "string"
+          example: "hallway"
+        ip:
+          $ref: '#/components/schemas/ip'
+        active:
+          type: "boolean"
+        battery:
+          type: "integer"
+          minimum: 0
+          maximum: 100
+        motor-ids:
+          type: array
+          items:
+            type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
+    ScheduleNoId:
+      type: "object"
+      required:
+        - name
+        - active
+        - days
+        - target-level
+        - gradient
+        - motor-ids
+        - time
+      properties:
+        name:
+          type: "string"
+          example: "weekday mornings"
+        active:
+          type: "boolean"
+        days: 
+          $ref: "#/components/schemas/days"
+        target-level:
+          $ref: '#/components/schemas/level'
+        gradient:
+          $ref: '#/components/schemas/gradient'
+        motor-ids:
+          type: array
+          items:
+            type: integer
+        time:
+          $ref: "#/components/schemas/time"
   responses:
     200OK:
       description: Operation completed successfully

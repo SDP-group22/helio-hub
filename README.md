@@ -19,3 +19,8 @@ Linux : `source venv\bin\activate`
 
 6. Swagger UI can be found on your browser at `localhost:{4310}/ui`
 
+## Testing
+
+1. run tests (must be in top level folder) \
+`pytest tests` \
+*Note: -s flag can be useful to print stdout of tests*
