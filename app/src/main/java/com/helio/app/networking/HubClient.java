@@ -1,5 +1,7 @@
 package com.helio.app.networking;
 
+import com.helio.app.model.Motor;
+
 import java.util.Map;
 
 import okhttp3.ResponseBody;

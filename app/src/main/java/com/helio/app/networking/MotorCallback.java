@@ -1,5 +1,7 @@
 package com.helio.app.networking;
 
+import com.helio.app.model.Motor;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

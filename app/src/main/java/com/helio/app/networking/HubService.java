@@ -1,5 +1,7 @@
 package com.helio.app.networking;
 
+import com.helio.app.model.Motor;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;

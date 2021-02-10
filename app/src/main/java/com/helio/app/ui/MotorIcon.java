@@ -5,7 +5,7 @@ import com.helio.app.R;
 /**
  * Represents an icon for identifying blinds (selected by the user)
  */
-public enum BlindIcon {
+public enum MotorIcon {
     WINDOW("Window", R.drawable.ic_window),
     BEDROOM("Bedroom", R.drawable.ic_bed),
     BATHROOM("Bathroom", R.drawable.ic_wash),
@@ -28,7 +28,7 @@ public enum BlindIcon {
      */
     public final int id;
 
-    BlindIcon(String name, int id) {
+    MotorIcon(String name, int id) {
         this.name = name;
         this.id = id;
     }
