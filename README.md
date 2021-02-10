@@ -25,3 +25,10 @@ An Android application for controlling Helio blinds
 3. Go to files changed and review the changes, making comments and requesting changes if necessary. Consider if the goal has been achieved, code style, clarity, comments, etc.
 4. When you approve a review, move the issue card to Reviewer approved.
 5. If you request changes, move the issue to In progress and add the rework label.
+
+### connecting to `helio-hub` (server side)
+In order to do anything interesting within the app, we have to communicate with the Hub.
+You can run the Hub on your own device in the following way:
+1. clone `https://github.com/SDP-group22/helio-hub`
+2. follow the instructions in the `README` over there to launch the Hub
+3. the app can now communicate with the Hub by sending requests to `10.0.2.2:4310` (`10.0.2.2` is `localhost` in Android)
