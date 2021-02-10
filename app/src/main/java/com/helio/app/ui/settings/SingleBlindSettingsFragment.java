@@ -10,7 +10,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.helio.app.R;
-import com.helio.app.ui.BlindIcon;
 
 public class SingleBlindSettingsFragment extends PreferenceFragmentCompat {
     private PopupWindow changeIconPop;

@@ -1,19 +1,20 @@
 package com.helio.app;
 
+import android.os.Bundle;
+import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.os.Bundle;
-import android.os.Handler;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.helio.app.model.Day;
+import com.helio.app.model.Motor;
+import com.helio.app.networking.HubClient;
 import com.helio.app.networking.MoveMotorRequest;
 import com.helio.app.networking.RegisterMotorRequest;
-import com.helio.app.networking.HubClient;
-import com.helio.app.networking.Motor;
 import com.helio.app.networking.RenameMotorRequest;
 
 import java.util.HashMap;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchState() {
+        System.out.println(Day.valueOf("Monday"));
         motors = new HashMap<>();
         HubClient client = new HubClient("http://10.0.2.2:4310/");
         RegisterMotorRequest registerMotorRequest = new RegisterMotorRequest(
