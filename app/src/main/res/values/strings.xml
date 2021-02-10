@@ -3,6 +3,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_schedule">Schedule</string>
-    <string name="title_hub">Connect to Hub</string>
+    <string name="title_blinds_settings">Blinds Settings</string>
     <string name="set_time_message">Time set!</string>
 </resources>

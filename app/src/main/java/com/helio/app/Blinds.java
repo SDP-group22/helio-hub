@@ -1,12 +1,16 @@
 package com.helio.app;
 
+import com.helio.app.ui.BlindIcon;
+
+import org.jetbrains.annotations.NotNull;
+
 public class Blinds {
     private String name;
-    private String imageUrl;
+    private BlindIcon icon;
 
-    public Blinds(String name,String imageUrl){
+    public Blinds(String name, BlindIcon icon){
         this.name = name;
-        this.imageUrl = imageUrl;
+        this.icon = icon;
     }
 
     public String getName() {
@@ -17,20 +21,21 @@ public class Blinds {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public BlindIcon getIcon() {
+        return icon;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setIcon(BlindIcon icon) {
+        this.icon = icon;
     }
 
 
+    @NotNull
     @Override
     public String toString() {
         return "Blinds{" +
                 "name='" + name + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
+                ", icon='" + icon + '\'' +
                 '}';
     }
 }
