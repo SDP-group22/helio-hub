@@ -12,7 +12,8 @@ public abstract class Sensor {
     private final List<Integer> motorIds;
     private String style;
 
-    public Sensor(int id, String name, String ip, boolean active, int battery, List<Integer> motorIds, String style) {
+    public Sensor(int id, String name, String ip, boolean active, int battery,
+                  List<Integer> motorIds, String style) {
         this.id = id;
         this.name = name;
         this.ip = ip;

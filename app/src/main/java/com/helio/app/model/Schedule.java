@@ -15,7 +15,8 @@ public class Schedule {
     private final List<Integer> motorIds;
     private String time;
 
-    public Schedule(int id, String name, boolean active, List<Day> days, int targetLevel, int gradient, List<Integer> motorIds, String time) {
+    public Schedule(int id, String name, boolean active, List<Day> days, int targetLevel,
+                    int gradient, List<Integer> motorIds, String time) {
         this.id = id;
         this.name = name;
         this.active = active;

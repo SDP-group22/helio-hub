@@ -1,23 +1,22 @@
 package com.helio.app;
 
+import android.os.Bundle;
+import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.os.Bundle;
-import android.os.Handler;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.helio.app.model.Day;
+import com.helio.app.model.Motor;
+import com.helio.app.networking.HubClient;
 import com.helio.app.networking.MoveMotorRequest;
 import com.helio.app.networking.RegisterMotorRequest;
-import com.helio.app.networking.HubClient;
-import com.helio.app.model.Motor;
 import com.helio.app.networking.RenameMotorRequest;
 
-import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
 
