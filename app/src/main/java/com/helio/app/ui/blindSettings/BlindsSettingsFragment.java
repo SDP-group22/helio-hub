@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.helio.app.Blinds;
 import com.helio.app.R;
-import com.helio.app.ui.BlindIcon;
+import com.helio.app.ui.MotorIcon;
 
 import java.util.ArrayList;
 
@@ -24,10 +24,10 @@ public class BlindsSettingsFragment extends Fragment {
 
         // Prepare the list of motors TODO (temporary)
         ArrayList<Blinds> blinds = new ArrayList<>();
-        blinds.add(new Blinds("Bedroom", BlindIcon.BEDROOM));
-        blinds.add(new Blinds("Kitchen", BlindIcon.KITCHEN));
-        blinds.add(new Blinds("Next to TV", BlindIcon.TV));
-        blinds.add(new Blinds("Living room", BlindIcon.HOUSE));
+        blinds.add(new Blinds("Bedroom", MotorIcon.BEDROOM));
+        blinds.add(new Blinds("Kitchen", MotorIcon.KITCHEN));
+        blinds.add(new Blinds("Next to TV", MotorIcon.TV));
+        blinds.add(new Blinds("Living room", MotorIcon.HOUSE));
 
         // Setup the adapter with the motors
         BlindsRecViewAdapter adapter = new BlindsRecViewAdapter(getContext());

@@ -1,14 +1,14 @@
 package com.helio.app;
 
-import com.helio.app.ui.BlindIcon;
+import com.helio.app.ui.MotorIcon;
 
 import org.jetbrains.annotations.NotNull;
 
 public class Blinds {
     private String name;
-    private BlindIcon icon;
+    private MotorIcon icon;
 
-    public Blinds(String name, BlindIcon icon){
+    public Blinds(String name, MotorIcon icon){
         this.name = name;
         this.icon = icon;
     }
@@ -21,11 +21,11 @@ public class Blinds {
         this.name = name;
     }
 
-    public BlindIcon getIcon() {
+    public MotorIcon getIcon() {
         return icon;
     }
 
-    public void setIcon(BlindIcon icon) {
+    public void setIcon(MotorIcon icon) {
         this.icon = icon;
     }
 
