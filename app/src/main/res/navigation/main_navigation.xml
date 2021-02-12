@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/navigation_control">
 
     <fragment
-        android:id="@+id/blindsSettingsFragment"
+        android:id="@+id/navigation_blinds"
         android:name="com.helio.app.ui.blinds.BlindsSettingsFragment"
         android:label="@string/title_blinds_settings"
         tools:layout="@layout/fragment_blinds_settings">
@@ -15,22 +15,15 @@
             app:destination="@id/singleBlindSettingsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/hubFragment"
+        android:id="@+id/navigation_hub"
         android:name="com.helio.app.ui.hub.HubFragment"
         android:label="@string/title_connect_hub"
         tools:layout="@layout/fragment_hub" />
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.helio.app.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_blindsSettingsFragment"
-            app:destination="@id/blindsSettingsFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_hubFragment"
-            app:destination="@id/hubFragment" />
-    </fragment>
+        android:id="@+id/navigation_control"
+        android:name="com.helio.app.ui.control.ControlFragment"
+        android:label="@string/title_control"
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/singleBlindSettingsFragment"
         android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"

@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_control"
+        android:icon="@drawable/blinds_icon"
+        android:title="@string/title_control" />
+    <item
+        android:id="@+id/navigation_blinds"
+        android:icon="@drawable/ic_edit_pencil"
+        android:title="@string/title_blinds_settings" />
+    <item
+        android:id="@+id/navigation_hub"
+        android:icon="@drawable/ic_baseline_wifi_24"
+        android:title="@string/title_connect_hub" />
+</menu>
