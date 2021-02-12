@@ -47,6 +47,13 @@ public class Motor {
         this(id, "", "", false, 0, 0, 0, "", null);
     }
 
+    /**
+     * Create a motor with name and icon only (DEBUG)
+     */
+    public Motor(String name, MotorIcon icon) {
+        this(0, name, "", false, 0, 0, 0, "", icon);
+    }
+
     @NonNull
     @Override
     public String toString() {
