@@ -21,11 +21,11 @@
         tools:layout="@layout/fragment_hub" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"
+        android:name="com.helio.app.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_blindsSettingsFragment2"
+            android:id="@+id/action_homeFragment_to_blindsSettingsFragment"
             app:destination="@id/blindsSettingsFragment" />
         <action
             android:id="@+id/action_homeFragment_to_hubFragment"
@@ -35,5 +35,5 @@
         android:id="@+id/singleBlindSettingsFragment"
         android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"
         android:label="@string/title_edit_blind"
-        tools:layout="@layout/fragment_single_blind_settings"/>
+        tools:layout="@layout/fragment_single_blind_settings" />
 </navigation>
