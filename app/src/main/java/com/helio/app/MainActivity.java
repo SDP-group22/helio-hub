@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchState() {
-        System.out.println(Day.valueOf("Monday"));
         motors = new HashMap<>();
         HubClient client = new HubClient("http://10.0.2.2:4310/");
         RegisterMotorRequest registerMotorRequest = new RegisterMotorRequest(
