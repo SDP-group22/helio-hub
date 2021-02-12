@@ -1,4 +1,4 @@
-package com.helio.app.ui.blindSettings;
+package com.helio.app.ui.blinds;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

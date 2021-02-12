@@ -3,7 +3,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_schedule">Schedule</string>
-    <string name="title_blinds_settings">Blinds Settings</string>
+    <string name="title_blinds_settings">Edit Blinds</string>
     <string name="set_time_message">Time set!</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -19,8 +19,8 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="settingsOpenNow">Open Now</string>
-    <string name="settingsCloseNow">Close Now</string>
+    <string name="open_button">Open</string>
+    <string name="close_button">Close</string>
     <string name="settingsControlCat">Control</string>
     <string name="settingsCalibration">Motor Calibration</string>
     <string name="settingsViewSensors">View this Blind\'s Sensors</string>
@@ -28,4 +28,6 @@
     <string name="settingsIcon">Icon</string>
     <string name="settingsName">Name</string>
     <string name="settingsIP">IP address</string>
+    <string name="title_connect_hub">Connect to Hub</string>
+    <string name="title_edit_blind">Edit Blind</string>
 </resources>

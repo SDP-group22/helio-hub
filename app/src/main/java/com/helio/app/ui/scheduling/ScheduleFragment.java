@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.helio.app.R;
-import com.helio.app.ui.settings.SingleBlindSettingsFragment;
+import com.helio.app.ui.blind.SingleBlindSettingsPreferencesFragment;
 
 public class ScheduleFragment extends Fragment {
 
@@ -32,7 +32,7 @@ public class ScheduleFragment extends Fragment {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment childFragment = new SingleBlindSettingsFragment();
+                Fragment childFragment = new SingleBlindSettingsPreferencesFragment();
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.child_fragment_container, childFragment).commit();
             }
