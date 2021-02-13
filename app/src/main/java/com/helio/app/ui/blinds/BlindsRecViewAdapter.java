@@ -1,4 +1,4 @@
-package com.helio.app.ui.blindSettings;
+package com.helio.app.ui.blinds;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,16 +10,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.helio.app.Blinds;
 import com.helio.app.R;
+import com.helio.app.model.Motor;
 
 import java.util.ArrayList;
 
 public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdapter.ViewHolder> {
 
-    private ArrayList<Blinds> blinds = new ArrayList<>();
+    private ArrayList<Motor> motors = new ArrayList<>();
 
     private final Context context;
 
@@ -37,19 +38,22 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtName.setText(blinds.get(position).getName());
-        holder.blindIcon.setImageResource(blinds.get(position).getIcon().id);
+        holder.txtName.setText(motors.get(position).getName());
+        holder.blindIcon.setImageResource(motors.get(position).getIcon().id);
         holder.parent.setOnClickListener(v ->
-                Toast.makeText(context, blinds.get(position).getName() + " Selected", Toast.LENGTH_SHORT).show());
+        {
+            Toast.makeText(context, motors.get(position).getName() + " Selected", Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_blindsSettingsFragment_to_singleBlindSettingsFragment);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return blinds.size();
+        return motors.size();
     }
 
-    public void setBlinds(ArrayList<Blinds> blinds) {
-        this.blinds = blinds;
+    public void setMotors(ArrayList<Motor> motors) {
+        this.motors = motors;
         notifyDataSetChanged();
     }
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/navigation_control">
+
+    <fragment
+        android:id="@+id/navigation_blinds"
+        android:name="com.helio.app.ui.blinds.BlindsSettingsFragment"
+        android:label="@string/title_blinds_settings"
+        tools:layout="@layout/fragment_blinds_settings">
+        <action
+            android:id="@+id/action_blindsSettingsFragment_to_singleBlindSettingsFragment"
+            app:destination="@id/singleBlindSettingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_hub"
+        android:name="com.helio.app.ui.hub.HubFragment"
+        android:label="@string/title_connect_hub"
+        tools:layout="@layout/fragment_hub" />
+    <fragment
+        android:id="@+id/navigation_control"
+        android:name="com.helio.app.ui.control.ControlFragment"
+        android:label="@string/title_control"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/singleBlindSettingsFragment"
+        android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"
+        android:label="@string/title_edit_blind"
+        tools:layout="@layout/fragment_single_blind_settings" />
+</navigation>

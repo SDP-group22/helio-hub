@@ -2,7 +2,9 @@ package com.helio.app;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -10,7 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.helio.app.model.Day;
 import com.helio.app.model.Motor;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.MoveMotorRequest;
@@ -23,14 +24,15 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private Map<Integer, Motor> motors;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_schedule, R.id.blinds_settings)
+                R.id.navigation_control, R.id.navigation_blinds, R.id.navigation_hub)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
@@ -38,9 +40,19 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         // This makes the fragment change when you press the navigation buttons
+        BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
 
         fetchState();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Navigate backwards when pressing back button in top app bar
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void fetchState() {

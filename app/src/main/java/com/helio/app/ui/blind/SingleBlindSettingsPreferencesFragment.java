@@ -1,4 +1,4 @@
-package com.helio.app.ui.settings;
+package com.helio.app.ui.blind;
 
 import android.os.Bundle;
 import android.text.InputType;
@@ -11,7 +11,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.helio.app.R;
 
-public class SingleBlindSettingsFragment extends PreferenceFragmentCompat {
+public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCompat {
     private PopupWindow changeIconPop;
 
 

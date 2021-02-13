@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:andriod="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.blind.SingleBlindSettingsPreferencesFragment">
 
     <EditTextPreference
         andriod:key="ip"
@@ -31,16 +33,4 @@
         andriod:key="calibration"
         andriod:title="@string/settingsCalibration" />
 
-    <PreferenceCategory
-        andriod:key="control_category"
-        andriod:title="@string/settingsControlCat">
-
-        <Preference
-            andriod:key="openNow"
-            andriod:title="@string/settingsOpenNow" />
-
-        <Preference
-            andriod:key="closeNow"
-            andriod:title="@string/settingsCloseNow" />
-    </PreferenceCategory>
 </PreferenceScreen>

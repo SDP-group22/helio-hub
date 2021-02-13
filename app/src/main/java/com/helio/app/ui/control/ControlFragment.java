@@ -1,4 +1,4 @@
-package com.helio.app.ui.home;
+package com.helio.app.ui.control;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +11,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.helio.app.R;
 
-public class HomeFragment extends Fragment {
+public class ControlFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private ControlViewModel controlViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        controlViewModel =
+                new ViewModelProvider(this).get(ControlViewModel.class);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 }
