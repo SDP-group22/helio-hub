@@ -4,27 +4,20 @@ import android.os.Bundle;
 import android.text.InputType;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import com.helio.app.R;
 
-public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCompat {
-
+public class MotionSensorSettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.single_blind_preferences, rootKey);
+        setPreferencesFromResource(R.xml.motion_sensor_preferences, rootKey);
 
         EditTextPreference namePreference = findPreference("name");
         EditTextPreference ipPreference = findPreference("ip");
+        EditTextPreference durationSensitivityPreference = findPreference("durationSensitivity");
         ListPreference changeIconPreference = findPreference("changeIcon");
-        Preference calibrationPreference = findPreference("calibration");
-        Preference openNowPreference = findPreference("openNow");
-        Preference closeNowPreference = findPreference("closeNow");
-        Preference createSchedulePreference = findPreference("createSchedule");
-        Preference seeSchedulePreference = findPreference("seeSchedule");
-        Preference sensor1Preference = findPreference("motionSensor");
-        Preference sensor2Preference = findPreference("lightSensor");
+
 
         assert ipPreference != null;
         ipPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_PHONE));
@@ -32,7 +25,8 @@ public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCo
         assert namePreference != null;
         namePreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_TEXT));
 
-
+        assert  durationSensitivityPreference != null;
+        durationSensitivityPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
 
     }
 }
