@@ -39,8 +39,13 @@
         <item>@drawable/ic_book</item>
         <item>@drawable/ic_bed</item>
         <item>@drawable/ic_fridge</item>
-        <item/>
+        <item />
     </array>
+
+    <string-array name="sensorTypeString">
+        <item>@string/light_sensor</item>
+        <item>@string/motion_sensor</item>
+    </string-array>
 
 
 </resources>

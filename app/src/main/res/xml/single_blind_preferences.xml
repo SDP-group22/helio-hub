@@ -33,4 +33,14 @@
         andriod:key="calibration"
         andriod:title="@string/settingsCalibration" />
 
+    <Preference
+        andriod:key="motionSensor"
+        andriod:title="Motion sensor settings"/>
+
+    <Preference
+        andriod:key="lightSensor"
+        andriod:title="Light sensor settings"/>
+
+
+
 </PreferenceScreen>

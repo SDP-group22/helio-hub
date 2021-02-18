@@ -2,17 +2,13 @@ package com.helio.app.ui.blind;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.widget.PopupWindow;
-
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-
 import com.helio.app.R;
 
 public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCompat {
-    private PopupWindow changeIconPop;
 
 
     @Override
@@ -27,19 +23,15 @@ public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCo
         Preference closeNowPreference = findPreference("closeNow");
         Preference createSchedulePreference = findPreference("createSchedule");
         Preference seeSchedulePreference = findPreference("seeSchedule");
-        Preference sensorsPreference = findPreference("sensors");
+        Preference motionSensorPreference = findPreference("motionSensor");
+        Preference lightSensorPreference = findPreference("lightSensor");
 
-
-        //IP
         assert ipPreference != null;
         ipPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_PHONE));
 
-
-        //Name
         assert namePreference != null;
         namePreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_TEXT));
 
-        //change icon
 
 
     }
