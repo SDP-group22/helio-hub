@@ -2,10 +2,12 @@ package com.helio.app.ui.sensor;
 
 import android.os.Bundle;
 import android.text.InputType;
+
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
 import com.helio.app.R;
 
 public class SensorSettingsFragment extends PreferenceFragmentCompat {
@@ -27,23 +29,18 @@ public class SensorSettingsFragment extends PreferenceFragmentCompat {
         assert namePreference != null;
         namePreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_TEXT));
 
-        assert  inactivityDurationPreference != null;
+        assert inactivityDurationPreference != null;
         inactivityDurationPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
 
-        //When sensor type changes
-        assert  sensorTypePreference != null;
-        sensorTypePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if(newValue.toString().contains("Light")){
-                    inactivityDurationPreference.setVisible(false);
-                }else{
-                    inactivityDurationPreference.setVisible(true);
-                }
-                return true;
-            }
+        assert sensorTypePreference != null;
+        String motionSensorString = getResources().getString(R.string.motion_sensor);
+        // Make duration visible if is motion sensor
+        inactivityDurationPreference.setVisible(sensorTypePreference.getValue().equals(motionSensorString));
+
+        // Update when sensor type changes
+        sensorTypePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            inactivityDurationPreference.setVisible(newValue.equals(motionSensorString));
+            return true;
         });
-
-
     }
 }

@@ -43,8 +43,8 @@
     </array>
 
     <string-array name="sensorTypeString">
-        <item>Light Sensor</item>
-        <item>Motion Sensor</item>
+        <item>@string/light_sensor</item>
+        <item>@string/motion_sensor</item>
     </string-array>
 
 
