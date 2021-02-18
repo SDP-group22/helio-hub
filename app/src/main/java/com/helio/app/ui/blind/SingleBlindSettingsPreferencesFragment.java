@@ -23,8 +23,8 @@ public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCo
         Preference closeNowPreference = findPreference("closeNow");
         Preference createSchedulePreference = findPreference("createSchedule");
         Preference seeSchedulePreference = findPreference("seeSchedule");
-        Preference sensor1Preference = findPreference("motionSensor");
-        Preference sensor2Preference = findPreference("lightSensor");
+        Preference motionSensorPreference = findPreference("motionSensor");
+        Preference lightSensorPreference = findPreference("lightSensor");
 
         assert ipPreference != null;
         ipPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_PHONE));

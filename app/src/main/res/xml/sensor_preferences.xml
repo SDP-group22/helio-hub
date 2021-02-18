@@ -2,8 +2,16 @@
     xmlns:andriod="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        andriod:key="motion_sensor_category"
-        andriod:title="Motion sensor settings">
+        andriod:key="sensor_category"
+        andriod:title="Sensor settings">
+
+        <ListPreference
+            andriod:entries="@array/sensorTypeString"
+            andriod:entryValues="@array/sensorTypeString"
+            andriod:key="sensorType"
+            andriod:title="Sensor Type"
+            app:useSimpleSummaryProvider="true"
+            andriod:defaultValue="Light Sensor"/>
 
         <EditTextPreference
             andriod:key="ip"
@@ -23,9 +31,10 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            andriod:key="durationSensitivity"
-            andriod:title="Duration sensitivity setting"
+            andriod:key="inactivityDuration"
+            andriod:title="Inactivity duration"
             app:useSimpleSummaryProvider="true"
+            app:isPreferenceVisible="false"
             />
 
 
