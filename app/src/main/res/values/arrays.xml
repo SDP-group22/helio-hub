@@ -39,7 +39,32 @@
         <item>@drawable/ic_book</item>
         <item>@drawable/ic_bed</item>
         <item>@drawable/ic_fridge</item>
-        <item/>
+        <item />
+    </array>
+
+    <array name="colours">
+        <item>White</item>
+        <item>Black</item>
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Cyan</item>
+        <item>Blue</item>
+        <item>Purple</item>
+
+    </array>
+
+    <array name="coloursVaules">
+        <item>#FFFFFF</item>
+        <item>#000000</item>
+        <item>#FF0000</item>
+        <item>#FF6600</item>
+        <item>#FFFF00</item>
+        <item>#33FF00</item>
+        <item>#00CCFF</item>
+        <item>#0033FF</item>
+        <item>#CC00FF</item>
     </array>
 
 

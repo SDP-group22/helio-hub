@@ -1,0 +1,47 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:andriod="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        andriod:key="sensor_category"
+        andriod:title="Sensor settings">
+
+        <EditTextPreference
+            andriod:key="ip"
+            andriod:title="IP address"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            andriod:key="name"
+            andriod:title="Name"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            andriod:entries="@array/icons"
+            andriod:entryValues="@array/iconsValues"
+            andriod:key="changeIcon"
+            andriod:title="Icon"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            andriod:entries="@array/colours"
+            andriod:entryValues="@array/coloursVaules"
+            andriod:key="changeColour"
+            andriod:title="change colour of icon"
+            app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            andriod:key="durationSensitivity"
+            andriod:title="Duration sensitivity setting"
+            />
+
+        <Preference
+            andriod:key="blindControlling"
+            andriod:title="Which blind it is controlling"
+            />
+
+
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

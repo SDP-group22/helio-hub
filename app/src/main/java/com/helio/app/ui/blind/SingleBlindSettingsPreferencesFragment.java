@@ -1,9 +1,14 @@
 package com.helio.app.ui.blind;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.PopupWindow;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -12,8 +17,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.helio.app.R;
 
 public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCompat {
-    private PopupWindow changeIconPop;
 
+    public static String blindName;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -27,7 +32,8 @@ public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCo
         Preference closeNowPreference = findPreference("closeNow");
         Preference createSchedulePreference = findPreference("createSchedule");
         Preference seeSchedulePreference = findPreference("seeSchedule");
-        Preference sensorsPreference = findPreference("sensors");
+        Preference sensor1Preference = findPreference("sensor1");
+        Preference sensor2Preference = findPreference("sensor2");
 
 
         //IP
@@ -38,8 +44,15 @@ public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCo
         //Name
         assert namePreference != null;
         namePreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_TEXT));
+        namePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                blindName = String.valueOf(namePreference.getSummary());
+                return true;
+            }
+        });
 
-        //change icon
+
 
 
     }

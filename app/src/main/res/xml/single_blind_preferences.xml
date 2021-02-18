@@ -33,4 +33,16 @@
         andriod:key="calibration"
         andriod:title="@string/settingsCalibration" />
 
+    <Preference
+        andriod:fragment="com.helio.app.ui.blind.SensorSettingsFragment"
+        andriod:key="sensor1"
+        andriod:title="sensor1"/>
+
+    <Preference
+        andriod:fragment="com.helio.app.ui.blind.SensorSettingsFragment"
+        andriod:key="sensor2"
+        andriod:title="sensor2"/>
+
+
+
 </PreferenceScreen>
