@@ -96,18 +96,16 @@ def activate(light_sensor_id):
 
 def change_motors(body):
     try:
-        light_sensor_id = body['id']
+        schedule_id = body['id']
         motor_ids = body['motor_ids']
-
-        print(body)
 
         for motor_id in motor_ids:
             motorExists = motor_db.contains(where('id') == motor_id)
             if not motorExists:
                 raise Exception()
 
-        db.update({'motor_ids': motor_ids}, Query().id == light_sensor_id)
-        light_sensor = db.search(Query().id == light_sensor_id)[0]
+        db.update({'motor_ids': motor_ids}, Query().id == schedule_id)
+        light_sensor = db.search(Query().id == schedule_id)[0]
         return light_sensor
 
     except:
