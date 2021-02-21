@@ -1,6 +1,7 @@
 package com.helio.app.networking;
 
 import com.helio.app.model.Motor;
+import com.helio.app.model.Schedule;
 
 import java.util.Map;
 
@@ -41,46 +42,51 @@ public class HubClient {
 
     public void addMotor(Map<Integer, Motor> motors, RegisterMotorRequest registerMotorRequest) {
         Call<Motor> call = service.addMotor(registerMotorRequest);
-        call.enqueue(new MotorCallback(motors));
+        call.enqueue(new MyCallback<>(motors));
     }
 
     public void activateMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.activateMotor(motorId);
-        call.enqueue(new MotorCallback(motors));
+        call.enqueue(new MyCallback<>(motors));
     }
 
     public void deactivateMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.deactivateMotor(motorId);
-        call.enqueue(new MotorCallback(motors));
+        call.enqueue(new MyCallback<>(motors));
     }
 
     public void renameMotor(Map<Integer, Motor> motors, RenameMotorRequest renameMotorRequest) {
         Call<Motor> call = service.renameMotor(renameMotorRequest);
-        call.enqueue(new MotorCallback(motors));
+        call.enqueue(new MyCallback<>(motors));
     }
 
     public void getMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.getMotor(motorId);
-        call.enqueue(new MotorCallback(motors));
+        call.enqueue(new MyCallback<>(motors));
     }
 
     public void moveMotor(Map<Integer, Motor> motors, MoveMotorRequest moveMotorRequest) {
         Call<Motor> call = service.moveMotor(moveMotorRequest);
-        call.enqueue(new MotorCallback(motors));
+        call.enqueue(new MyCallback<>(motors));
     }
 
     public void startMotorCalibration(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.startMotorCalibration(motorId);
-        call.enqueue(new MotorCallback(motors));
+        call.enqueue(new MyCallback<>(motors));
     }
 
     public void stopMotorCalibration(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.stopMotorCalibration(motorId);
-        call.enqueue(new MotorCallback(motors));
+        call.enqueue(new MyCallback<>(motors));
     }
 
     public void deleteMotor(Map<Integer, Motor> motors, int motorId) {
         Call<ResponseBody> call = service.deleteMotor(motorId);
         call.enqueue(new MotorDeletionCallback(motors, motorId));
+    }
+
+    public void addSchedule(Map<Integer, Schedule> schedules, RegisterScheduleRequest registerScheduleRequest) {
+        Call<Schedule> call = service.addSchedule(registerScheduleRequest);
+        call.enqueue(new MyCallback<>(schedules));
     }
 }

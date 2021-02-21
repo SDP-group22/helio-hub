@@ -8,8 +8,7 @@ import com.helio.app.ui.MotorIcon;
 /**
  * Motor objects represent motor controllers in the user's home environment.
  */
-public class Motor {
-    private final int id;
+public class Motor extends IdComponent{
     private String name;
     private String ip;
     private boolean active;
@@ -29,7 +28,7 @@ public class Motor {
             int length,
             String style,
             MotorIcon icon) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.ip = ip;
         this.active = active;
@@ -57,11 +56,7 @@ public class Motor {
     @NonNull
     @Override
     public String toString() {
-        return "Motor w/ id=" + id;
-    }
-
-    public int getId() {
-        return id;
+        return "Motor w/ id=" + getId();
     }
 
     public String getName() {

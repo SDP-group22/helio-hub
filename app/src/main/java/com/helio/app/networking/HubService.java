@@ -1,6 +1,9 @@
 package com.helio.app.networking;
 
 import com.helio.app.model.Motor;
+import com.helio.app.model.Schedule;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -43,4 +46,31 @@ public interface HubService {
 
     @DELETE("/motor/unregister/{motor_id}")
     Call<ResponseBody> deleteMotor(@Path("motor_id") int motorId);
+
+    @GET("/schedule/get_all")
+    Call<List<Schedule>> getAllMotors();
+
+    @POST("/schedule/register")
+    Call<Schedule> addSchedule(@Body RegisterScheduleRequest registerScheduleRequest);
+
+    @DELETE("/schedule/unregister/{schedule_id}")
+    Call<ResponseBody> deleteSchedule(@Path("schedule_id") int scheduleId);
+
+    @PATCH("/schedule/change_days")
+    Call<Schedule> changeDaysSchedule(@Body ChangeDaysScheduleRequest changeDaysScheduleRequest);
+
+    @PATCH("/schedule/change_time")
+    Call<Schedule> changeTimeSchedule(@Body ChangeTimeScheduleRequest changeTimeScheduleRequest);
+
+    @PATCH("/schedule/change_gradient")
+    Call<Schedule> changeGradientSchedule(@Body ChangeGradientScheduleRequest changeGradientScheduleRequest);
+
+    @PATCH("/schedule/rename")
+    Call<Schedule> renameSchedule(@Body RenameScheduleRequest renameScheduleRequest);
+
+    @PATCH("/schedule/activate/{schedule_id}")
+    Call<Schedule> activateSchedule(@Path("schedule_id") int scheduleId);
+
+    @PATCH("/schedule/deactivate/{schedule_id}:")
+    Call<Schedule> deActivateSchedule(@Path("schedule_id") int scheduleId);
 }

@@ -3,6 +3,7 @@ package com.helio.app.networking;
 /**
  * retrofit serialises these objects to be passed to the Hub for /motor/register/ requests
  */
+@SuppressWarnings({"FieldCanBeLocal", "unused", "RedundantSuppression"})
 public class RegisterMotorRequest {
     private final boolean active;
     private final int battery;

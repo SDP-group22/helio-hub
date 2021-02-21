@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Schedule {
-    private final int id;
+public class Schedule extends IdComponent{
     private String name;
     private boolean active;
     private final List<Day> days;
@@ -17,7 +16,7 @@ public class Schedule {
 
     public Schedule(int id, String name, boolean active, List<Day> days, int targetLevel,
                     int gradient, List<Integer> motorIds, String time) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.active = active;
         this.days = days;
@@ -32,10 +31,6 @@ public class Schedule {
      */
     public Schedule(int id) {
         this(id, "", false, new ArrayList<>(), 0, 0, new ArrayList<>(), "");
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {

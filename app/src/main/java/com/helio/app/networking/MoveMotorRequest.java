@@ -3,6 +3,7 @@ package com.helio.app.networking;
 /**
  * retrofit serialises these objects to be passed to the Hub for /motor/move/ requests
  */
+@SuppressWarnings({"FieldCanBeLocal", "unused", "RedundantSuppression"})
 public class MoveMotorRequest {
     private final int id;
     private final int level;
