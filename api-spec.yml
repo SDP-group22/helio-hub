@@ -4,6 +4,7 @@ info:
   version: 1.0.0
   title: Helio API
 paths:
+  #Motor
   /motor/{motor_id}:
     get:
       tags:
@@ -247,650 +248,657 @@ paths:
         500:
           $ref: '#/components/responses/500InternalError'
 
-# Motion Sensor
-#   /motion/{motion_sensor_id}:
-#     get:
-#       tags:
-#       - motion
-#       summary: Get motion sensor state
-#       operationId: getMotionSensor
-#       parameters:
-#         - name: motion_sensor_id
-#           in: path
-#           required: true
-#           schema:
-#             $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Motion"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   # /motion/get_all:
-#   #   get:
-#   #     tags:
-#   #     - motion
-#   #     summary: Get all motion sensor information
-#   #     operationId: getAllMotions
-#   #     responses:
-#   #       '200':
-#   #         description: "OK"
-#   #         content:
-#   #           application/json:
-#   #             schema:
-#   #               type: array
-#   #               items:
-#   #                 $ref: '#/components/schemas/Motion'
-#   #       '400':
-#   #         $ref: '#/components/responses/400InvalidInput'
-#   #       '500':
-#   #         $ref: '#/components/responses/500InternalError'
-#   # /motion/unregister/{motion_sensor_id}:
-#     delete:
-#       tags:
-#         - "motion"
-#       summary: "Delete motion sensor"
-#       operationId: "deleteMotion"
-#       parameters:
-#         - name: motion_sensor_id
-#           in: path
-#           required: true
-#           schema:
-#             $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: "Ok"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /motion/activate:
-#     patch:
-#       tags:
-#       - "motion"
-#       summary: "Activate a motion sensor"
-#       operationId: "activateMotion"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Motion"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /motion/deactivate:
-#     patch:
-#       tags:
-#       - "motion"
-#       summary: "Deactivate a motion sensor"
-#       operationId: "deactivateMotion"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Motion"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /motion/rename:
-#     patch:
-#       tags:
-#       - "motion"
-#       summary: "Rename a motion sensor"
-#       operationId: "renameMotion"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: object
-#               required:
-#                 - id
-#                 - name
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 name:
-#                   type: "string"
-#                   example: "hallway-1"
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Motion"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /motion/change_motors:
-#     patch:
-#       tags:
-#       - "motion"
-#       summary: "Change the motors the sensor controls"
-#       operationId: "changeMotorsMotion"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: object
-#               required:
-#                 - id
-#                 - motor-ids
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 motor-ids:
-#                   type: array
-#                   items:
-#                     type: integer
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Motion"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /motion/duration_sensitivity:
-#     patch:
-#       tags:
-#       - "motion"
-#       summary: "Update duration sensitivity"
-#       operationId: "durationSensitivity"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: object
-#               required:
-#                 - id
-#                 - durationSensitivity
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 durationSensitivity:
-#                   type: "integer"
-#                   # number of minutes before to start moving
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Motion"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /motion/register:
-#     post:
-#       tags:
-#       - "motion"
-#       summary: "Add a new motion sensor to system"
-#       operationId: "addMotion"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/MotionNoId'
+  # Motion Sensor
+  /motion/{motion_sensor_id}:
+    get:
+      tags:
+      - motion
+      summary: Get motion sensor state
+      operationId: motion-sensor.get
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/get_all:
+    get:
+      tags:
+      - motion
+      summary: Get all motion sensor information
+      operationId: motion-sensor.get_all
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Motion'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+  /motion/unregister/{motion_sensor_id}:
+    delete:
+      tags:
+        - "motion"
+      summary: "Delete motion sensor"
+      operationId: motion-sensor.unregister
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: "Ok"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/activate/{motion_sensor_id}:
+    patch:
+      tags:
+      - "motion"
+      summary: "Activate a motion sensor"
+      operationId: motion-sensor.activate
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/deactivate/{motion_sensor_id}:
+    patch:
+      tags:
+      - "motion"
+      summary: "Deactivate a motion sensor"
+      operationId: motion-sensor.deactivate
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/rename:
+    patch:
+      tags:
+      - "motion"
+      summary: "Rename a motion sensor"
+      operationId: motion-sensor.rename
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - name
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                name:
+                  type: "string"
+                  example: "hallway-1"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/change_motors:
+    patch:
+      tags:
+      - "motion"
+      summary: "Change the motors the sensor controls"
+      operationId: motion-sensor.change_motors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - motor_ids
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                motor_ids:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/duration_sensitivity:
+    patch:
+      tags:
+      - "motion"
+      summary: "Update duration sensitivity"
+      operationId: motion-sensor.change_duration_sensitivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - duration_sensitivity
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                durationSensitivity:
+                   type: "integer"
+                   # number of minutes before to start moving
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /motion/register:
+    post:
+      tags:
+      - "motion"
+      summary: "Add a new motion sensor to system"
+      operationId: motion-sensor.register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MotionNoId'
 
-#       responses:
-#         201:
-#           description: Registered new motion sensor
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Motion"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
+      responses:
+        201:
+          description: Registered new motion sensor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
 
-# # Light sensor
-#   /light/{light_sensor_id}:
-#     get:
-#       tags:
-#       - "light"
-#       summary: "Get light sensor state"
-#       operationId: "getLightSensor"
-#       parameters:
-#         - name: light_sensor_id
-#           in: path
-#           required: true
-#           schema:
-#             $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Light"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /light/get_all:
-#     get:
-#       tags:
-#       - light
-#       summary: Get all light sensor information
-#       operationId: getAllLights
-#       responses:
-#         '200':
-#           description: "OK"
-#           content:
-#             application/json:
-#               schema:
-#                 type: array
-#                 items:
-#                   $ref: '#/components/schemas/Light'
-#         '400':
-#           $ref: '#/components/responses/400InvalidInput'
-#         '500':
-#           $ref: '#/components/responses/500InternalError'
-#   /light/unregister/{light_sensor_id}:
-#     delete:
-#       tags:
-#         - "light"
-#       summary: "Delete light sensor"
-#       operationId: "deleteLight"
-#       parameters:
-#         - name: light_sensor_id
-#           in: path
-#           required: true
-#           schema:
-#             $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: "Ok"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /light/activate:
-#     patch:
-#       tags:
-#       - "light"
-#       summary: "Activate a light sensor"
-#       operationId: "activateLight"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Light"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /light/deactivate:
-#     patch:
-#       tags:
-#       - "light"
-#       summary: "Deactivate a light sensor"
-#       operationId: "deactivateLight"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Light"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /light/rename:
-#     patch:
-#       tags:
-#       - "light"
-#       summary: "Rename a light sensor"
-#       operationId: "renameLight"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - name
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 name:
-#                   type: "string"
-#                   example: "hallway-1"
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Light"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /light/change_motors:
-#     patch:
-#       tags:
-#       - "light"
-#       summary: "Change the motors a sensor controls"
-#       operationId: "changeMotorsLight"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - motor-ids
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 motor-ids:
-#                   type: array
-#                   items:
-#                     type: integer
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Light"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /light/register:
-#     post:
-#       tags:
-#       - "light"
-#       summary: "Add a new light sensor to system"
-#       operationId: "addLight"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/LightNoId'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Light"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-  
-#   /schedule/get_all:
-#     get:
-#       tags:
-#       - schedule
-#       summary: Get all schedule information
-#       operationId: getAllSchedules
-#       responses:
-#         '200':
-#           description: "OK"
-#           content:
-#             application/json:
-#               schema:
-#                 type: array
-#                 items:
-#                   $ref: '#/components/schemas/Schedule'
-#         '400':
-#           $ref: '#/components/responses/400InvalidInput'
-#         '500':
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/register:
-#     post:
-#       tags:
-#       - "schedule"
-#       summary: "Add a new schedule"
-#       operationId: "addSchedule"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#                 $ref: "#/components/schemas/ScheduleNoId"
-#       responses:
-#         200:
-#           description: "Ok"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/unregister/{schedule_id}:
-#     delete:
-#       tags:
-#         - "schedule"
-#       summary: "Delete schedule"
-#       operationId: "deleteSchedule"
-#       parameters:
-#         - name: schedule_id
-#           in: path
-#           required: true
-#           schema:
-#             $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/change_days:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Change days"
-#       operationId: "changeScheduleDays"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - days
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 days: 
-#                   $ref: "#/components/schemas/days"
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/change_time:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Change time"
-#       operationId: "changeScheduleTime"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - time
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 time:
-#                   $ref: '#/components/schemas/time'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/change_gradient:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Change gradient"
-#       operationId: "changeScheduleGradient"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - gradient
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 gradient:
-#                   $ref: '#/components/schemas/gradient'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/rename:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "rename schedule"
-#       operationId: "renameSchedule"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - name
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 name:
-#                   type: string
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/activate:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Activate schedule"
-#       operationId: "activateSchedule"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/deactivate:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Deactivate schedule"
-#       operationId: "deactivateSchedule"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
+  # Light sensor
+  /light/{light_sensor_id}:
+    get:
+      tags:
+      - "light"
+      summary: "Get light sensor state"
+      operationId: light-sensor.get
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/get_all:
+    get:
+      tags:
+      - light
+      summary: Get all light sensor information
+      operationId: light-sensor.get_all
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Light'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+  /light/unregister/{light_sensor_id}:
+    delete:
+      tags:
+        - "light"
+      summary: "Delete light sensor"
+      operationId: light-sensor.unregister
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: "Ok"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/activate/{light_sensor_id}:
+    patch:
+      tags:
+      - "light"
+      summary: "Activate a light sensor"
+      operationId: light-sensor.activate
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/deactivate/{light_sensor_id}:
+    patch:
+      tags:
+      - "light"
+      summary: "Deactivate a light sensor"
+      operationId: light-sensor.deactivate
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/rename:
+    patch:
+      tags:
+      - "light"
+      summary: "Rename a light sensor"
+      operationId: light-sensor.rename
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - name
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                name:
+                  type: "string"
+                  example: "hallway-1"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/change_motors:
+    patch:
+      tags:
+      - "light"
+      summary: "Change the motors a sensor controls"
+      operationId: light-sensor.change_motors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - motor_ids
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                motor_ids:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /light/register:
+    post:
+      tags:
+      - "light"
+      summary: "Add a new light sensor to system"
+      operationId: light-sensor.register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LightNoId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+
+  #Schedule
+  /schedule/get_all:
+    get:
+      tags:
+      - schedule
+      summary: Get all schedule information
+      operationId: schedule.get_all
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+  /schedule/register:
+    post:
+      tags:
+      - "schedule"
+      summary: "Add a new schedule"
+      operationId: schedule.register
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: "#/components/schemas/ScheduleNoId"
+      responses:
+        200:
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/unregister/{schedule_id}:
+    delete:
+      tags:
+        - "schedule"
+      summary: "Delete schedule"
+      operationId: schedule.unregister
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/change_days:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Change days"
+      operationId: schedule.change_days
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - days
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                days:
+                  $ref: "#/components/schemas/days"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/change_time:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Change time"
+      operationId: schedule.change_time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - time
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                time:
+                  $ref: '#/components/schemas/time'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/change_gradient:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Change gradient"
+      operationId: schedule.change_gradient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - gradient
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                gradient:
+                  $ref: '#/components/schemas/gradient'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/rename:
+    patch:
+      tags:
+        - "schedule"
+      summary: "rename schedule"
+      operationId: schedule.rename
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - name
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                name:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/activate/{schedule_id}:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Activate schedule"
+      operationId: schedule.activate
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/deactivate/{schedule_id}:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Deactivate schedule"
+      operationId: schedule.deactivate
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
 
 
 components:
@@ -966,8 +974,8 @@ components:
         - ip
         - active
         - battery
-        - durationSensitivity
-        - motor-ids
+        - duration_sensitivity
+        - motor_ids
         - style
       properties:
         id:
@@ -983,9 +991,9 @@ components:
           type: "integer"
           minimum: 0
           maximum: 100
-        durationSensitivity:
+        duration_sensitivity:
           type: "string" # pattern hh:mm
-        motor-ids:
+        motor_ids:
           type: array
           items:
             type: integer
@@ -1001,7 +1009,7 @@ components:
         - ip
         - active
         - battery
-        - motor-ids
+        - motor_ids
         - style
       properties:
         id:
@@ -1017,7 +1025,7 @@ components:
           type: "integer"
           minimum: 0
           maximum: 100
-        motor-ids:
+        motor_ids:
           type: array
           items:
             type: integer
@@ -1034,7 +1042,7 @@ components:
         - days
         - target-level
         - gradient
-        - motor-ids
+        - motor_ids
         - time
       properties:
         id:
@@ -1050,7 +1058,7 @@ components:
           $ref: '#/components/schemas/level'
         gradient:
           $ref: '#/components/schemas/gradient'
-        motor-ids:
+        motor_ids:
           type: array
           items:
             type: integer
@@ -1090,8 +1098,8 @@ components:
         - ip
         - active
         - battery
-        - durationSensitivity
-        - motor-ids
+        - duration_sensitivity
+        - motor_ids
         - style
       properties:
         name:
@@ -1108,7 +1116,7 @@ components:
         durationSensitivity:
           type: "integer"
           # number of minutes before to start moving
-        motor-ids:
+        motor_ids:
           type: array
           items:
             type: integer
@@ -1123,7 +1131,7 @@ components:
         - ip
         - active
         - battery
-        - motor-ids
+        - motor_ids
         - style
       properties:
         name:
@@ -1137,7 +1145,7 @@ components:
           type: "integer"
           minimum: 0
           maximum: 100
-        motor-ids:
+        motor_ids:
           type: array
           items:
             type: integer
@@ -1153,7 +1161,7 @@ components:
         - days
         - target-level
         - gradient
-        - motor-ids
+        - motor_ids
         - time
       properties:
         name:
@@ -1167,7 +1175,7 @@ components:
           $ref: '#/components/schemas/level'
         gradient:
           $ref: '#/components/schemas/gradient'
-        motor-ids:
+        motor_ids:
           type: array
           items:
             type: integer
