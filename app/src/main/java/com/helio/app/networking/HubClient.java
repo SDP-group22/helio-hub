@@ -4,7 +4,9 @@ import com.helio.app.model.Motor;
 
 import java.util.Map;
 
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,15 +25,23 @@ public class HubClient {
     private final HubService service;
 
     public HubClient(String baseAddress) {
+        // Logging: https://stackoverflow.com/a/33328524/
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY); // Logging level
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseAddress)
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build());
         Retrofit retrofit = builder.build();
         service = retrofit.create(HubService.class);
     }
 
     public void addMotor(Map<Integer, Motor> motors, RegisterMotorRequest registerMotorRequest) {
         Call<Motor> call = service.addMotor(registerMotorRequest);
+        System.out.println(call.toString());
         call.enqueue(new MotorCallback(motors));
     }
 

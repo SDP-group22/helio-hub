@@ -37,11 +37,7 @@ class MotorCallback implements Callback<Motor> {
             System.out.println(call + " succeeded: " + m);
             updateLocalMotorState(m);
         } else {
-            try {
-                System.out.println(response.errorBody().string());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            System.out.println("Communication error");
         }
     }
 
