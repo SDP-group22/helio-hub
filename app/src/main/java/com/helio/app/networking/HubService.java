@@ -71,6 +71,6 @@ public interface HubService {
     @PATCH("/schedule/activate/{schedule_id}")
     Call<Schedule> activateSchedule(@Path("schedule_id") int scheduleId);
 
-    @PATCH("/schedule/deactivate/{schedule_id}:")
-    Call<Schedule> deActivateSchedule(@Path("schedule_id") int scheduleId);
+    @PATCH("/schedule/deactivate/{schedule_id}")
+    Call<Schedule> deactivateSchedule(@Path("schedule_id") int scheduleId);
 }

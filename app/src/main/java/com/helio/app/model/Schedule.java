@@ -1,5 +1,7 @@
 package com.helio.app.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -8,7 +10,7 @@ import java.util.Objects;
 public class Schedule extends IdComponent{
     private String name;
     private boolean active;
-    private final List<Day> days;
+    private List<Day> days;
     private int targetLevel;
     private int gradient;
     private final List<Integer> motorIds;
@@ -53,6 +55,10 @@ public class Schedule extends IdComponent{
         return days;
     }
 
+    public void setDays(List<Day> days) {
+        this.days = days;
+    }
+
     public int getTargetLevel() {
         return targetLevel;
     }
@@ -93,5 +99,20 @@ public class Schedule extends IdComponent{
 
     public int getTimeMinute() {
         return Integer.parseInt(Objects.requireNonNull(time).split(":")[1]);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id='" + getId() + '\'' +
+                ", name='" + name + '\'' +
+                ", active=" + active +
+                ", days=" + days +
+                ", targetLevel=" + targetLevel +
+                ", gradient=" + gradient +
+                ", motorIds=" + motorIds +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

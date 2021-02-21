@@ -15,11 +15,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.helio.app.model.Day;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
+import com.helio.app.networking.ChangeDaysScheduleRequest;
+import com.helio.app.networking.ChangeGradientScheduleRequest;
+import com.helio.app.networking.ChangeTimeScheduleRequest;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.MoveMotorRequest;
 import com.helio.app.networking.RegisterMotorRequest;
 import com.helio.app.networking.RegisterScheduleRequest;
 import com.helio.app.networking.RenameMotorRequest;
+import com.helio.app.networking.RenameScheduleRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +32,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int DELAY = 250;
+    private int postTime = 0;
     private Map<Integer, Motor> motors;
     private Map<Integer, Schedule> schedules;
 
@@ -77,26 +83,47 @@ public class MainActivity extends AppCompatActivity {
                 0, 0, 0, "style");
         // use Handler to force the actions to happen in order
         Handler handler = new Handler();
-        handler.postDelayed(() -> client.addMotor(motors, registerMotorRequest), 0);
+        handler.postDelayed(() -> client.addMotor(motors, registerMotorRequest), postTime);
 
         // This is extremely bad
         AtomicInteger id = new AtomicInteger();
 
-        handler.postDelayed(() -> id.set(new ArrayList<>(motors.keySet()).get(0)), 200);
+        postTime += DELAY;
+        handler.postDelayed(() -> id.set(new ArrayList<>(motors.keySet()).get(0)), postTime);
 
-        RenameMotorRequest renameMotorRequest = new RenameMotorRequest(id.get(), "kitchen");
-        MoveMotorRequest moveMotorRequest = new MoveMotorRequest(id.get(), 25);
-        handler.postDelayed(() -> client.activateMotor(motors, id.get()), 250);
-        handler.postDelayed(() -> client.renameMotor(motors, renameMotorRequest), 500);
-        handler.postDelayed(() -> client.getMotor(motors, id.get()), 750);
-        handler.postDelayed(() -> client.moveMotor(motors, moveMotorRequest), 1000);
-        handler.postDelayed(() -> client.startMotorCalibration(motors, id.get()), 1250);
-        handler.postDelayed(() -> client.stopMotorCalibration(motors, id.get()), 1500);
-        handler.postDelayed(() -> client.deactivateMotor(motors, id.get()), 1750);
-        handler.postDelayed(() -> client.deleteMotor(motors, id.get()), 2000);
+        postTime += DELAY;
+        handler.postDelayed(() -> client.activateMotor(motors, id.get()), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> {
+            RenameMotorRequest renameMotorRequest = new RenameMotorRequest(id.get(), "kitchen");
+            client.renameMotor(motors, renameMotorRequest);
+        }, postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.getMotor(motors, id.get()), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> {
+            MoveMotorRequest moveMotorRequest = new MoveMotorRequest(id.get(), 25);
+            client.moveMotor(motors, moveMotorRequest);
+        }, postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.startMotorCalibration(motors, id.get()), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.stopMotorCalibration(motors, id.get()), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.deactivateMotor(motors, id.get()), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.deleteMotor(motors, id.get()), postTime);
     }
 
     private void testSchedule(HubClient client) {
+        int delay = 2000;
         schedules = new HashMap<>();
         List<Integer> motorIds = new ArrayList<>();
         motorIds.add(999);
@@ -110,21 +137,48 @@ public class MainActivity extends AppCompatActivity {
 
         // use Handler to force the actions to happen in order
         Handler handler = new Handler();
-        handler.postDelayed(() -> client.addSchedule(schedules, registerScheduleRequest), 2250);
+        delay += 250;
+        handler.postDelayed(() -> client.addSchedule(schedules, registerScheduleRequest), delay);
 
         // This is extremely bad
-//        AtomicInteger id = new AtomicInteger();
-//        handler.postDelayed(() -> id.set(new ArrayList<>(motors.keySet()).get(0)), 200);
-//
-//        RenameMotorRequest renameMotorRequest = new RenameMotorRequest(id.get(), "kitchen");
-//        MoveMotorRequest moveMotorRequest = new MoveMotorRequest(id.get(), 25);
-//        handler.postDelayed(() -> client.activateMotor(motors, id.get()), 250);
-//        handler.postDelayed(() -> client.renameMotor(motors, renameMotorRequest), 500);
-//        handler.postDelayed(() -> client.getMotor(motors, id.get()), 750);
-//        handler.postDelayed(() -> client.moveMotor(motors, moveMotorRequest), 1000);
-//        handler.postDelayed(() -> client.startMotorCalibration(motors, id.get()), 1250);
-//        handler.postDelayed(() -> client.stopMotorCalibration(motors, id.get()), 1500);
-//        handler.postDelayed(() -> client.deactivateMotor(motors, id.get()), 1750);
-//        handler.postDelayed(() -> client.deleteMotor(motors, id.get()), 2000);
+        delay += DELAY;
+        AtomicInteger id = new AtomicInteger();
+        handler.postDelayed(() -> id.set(new ArrayList<>(schedules.keySet()).get(0)), delay);
+
+        delay += DELAY;
+        days.remove(0);
+        days.add(Day.SATURDAY);
+        days.add(Day.SUNDAY);
+        handler.postDelayed(() -> {
+            ChangeDaysScheduleRequest changeDaysScheduleRequest = new ChangeDaysScheduleRequest(id.get(), days);
+            client.changeDaysSchedule(schedules, changeDaysScheduleRequest);
+        }, delay);
+
+        delay += DELAY;
+        handler.postDelayed(() -> {
+            ChangeTimeScheduleRequest changeTimeScheduleRequest = new ChangeTimeScheduleRequest(id.get(), "a");
+            client.changeTimeSchedule(schedules, changeTimeScheduleRequest);
+        }, delay);
+
+        delay += DELAY;
+        handler.postDelayed(() -> {
+            ChangeGradientScheduleRequest changeGradientScheduleRequest = new ChangeGradientScheduleRequest(id.get(), 7216);
+            client.changeGradientSchedule(schedules, changeGradientScheduleRequest);
+        }, delay);
+
+        delay += DELAY;
+        handler.postDelayed(() -> {
+            RenameScheduleRequest renameScheduleRequest = new RenameScheduleRequest(id.get(), "newName");
+            client.renameSchedule(schedules, renameScheduleRequest);
+        }, delay);
+
+        delay += DELAY;
+        handler.postDelayed(() -> client.activateSchedule(schedules, id.get()), delay);
+
+        delay += DELAY;
+        handler.postDelayed(() -> client.deactivateSchedule(schedules, id.get()), delay);
+
+        delay += DELAY;
+        handler.postDelayed(() -> client.deleteSchedule(schedules, id.get()), delay);
     }
 }
