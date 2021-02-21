@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         motors = new HashMap<>();
         HubClient client = new HubClient("http://10.0.2.2:4310/");
         RegisterMotorRequest registerMotorRequest = new RegisterMotorRequest(
-                42,
                 "bedroom",
                 "1.2.3.4",
                 false

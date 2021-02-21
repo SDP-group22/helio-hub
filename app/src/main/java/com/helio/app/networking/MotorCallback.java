@@ -4,6 +4,7 @@ import com.helio.app.model.Motor;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -19,15 +20,13 @@ import retrofit2.Response;
  */
 class MotorCallback implements Callback<Motor> {
     private final Map<Integer, Motor> motors;
-    private final int motorId;
 
-    MotorCallback(Map<Integer, Motor> motors, int motorId) {
+    MotorCallback(Map<Integer, Motor> motors) {
         this.motors = motors;
-        this.motorId = motorId;
     }
 
     private void updateLocalMotorState(Motor m) {
-        motors.put(motorId, m);
+        motors.put(m.getId(), m);
         System.out.println("Updated local state for " + m);
     }
 
@@ -37,6 +36,12 @@ class MotorCallback implements Callback<Motor> {
         if(m != null) {
             System.out.println(call + " succeeded: " + m);
             updateLocalMotorState(m);
+        } else {
+            try {
+                System.out.println(response.errorBody().string());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
