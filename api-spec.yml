@@ -436,9 +436,9 @@ paths:
               properties:
                 id:
                   $ref: '#/components/schemas/id'
-                duration_sensitivity:
-                  type: "string"
-                  # pattern: hh:mm
+                durationSensitivity:
+                   type: "integer"
+                   # number of minutes before to start moving
       responses:
         200:
           description: OK
@@ -1113,8 +1113,9 @@ components:
           type: "integer"
           minimum: 0
           maximum: 100
-        duration_sensitivity:
-          type: "string" # pattern hh:mm
+        durationSensitivity:
+          type: "integer"
+          # number of minutes before to start moving
         motor_ids:
           type: array
           items:
