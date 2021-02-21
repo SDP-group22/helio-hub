@@ -18,8 +18,10 @@ import com.helio.app.networking.MoveMotorRequest;
 import com.helio.app.networking.RegisterMotorRequest;
 import com.helio.app.networking.RenameMotorRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
     private Map<Integer, Motor> motors;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // Navigate backwards when pressing back button in top app bar
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
@@ -63,18 +65,23 @@ public class MainActivity extends AppCompatActivity {
                 "1.2.3.4",
                 false,
                 0, 0, 0, "style");
-        RenameMotorRequest renameMotorRequest = new RenameMotorRequest(42, "kitchen");
-        MoveMotorRequest moveMotorRequest = new MoveMotorRequest(42, 25);
         // use Handler to force the actions to happen in order
         Handler handler = new Handler();
         handler.postDelayed(() -> client.addMotor(motors, registerMotorRequest), 0);
-        handler.postDelayed(() -> client.activateMotor(motors, 42), 250);
+
+        // This is extremely bad
+        AtomicInteger id = new AtomicInteger();
+        handler.postDelayed(() -> id.set(new ArrayList<>(motors.keySet()).get(0)), 200);
+
+        RenameMotorRequest renameMotorRequest = new RenameMotorRequest(id.get(), "kitchen");
+        MoveMotorRequest moveMotorRequest = new MoveMotorRequest(id.get(), 25);
+        handler.postDelayed(() -> client.activateMotor(motors, id.get()), 250);
         handler.postDelayed(() -> client.renameMotor(motors, renameMotorRequest), 500);
-        handler.postDelayed(() -> client.getMotor(motors, 42), 750);
+        handler.postDelayed(() -> client.getMotor(motors, id.get()), 750);
         handler.postDelayed(() -> client.moveMotor(motors, moveMotorRequest), 1000);
-        handler.postDelayed(() -> client.startMotorCalibration(motors, 42), 1250);
-        handler.postDelayed(() -> client.stopMotorCalibration(motors, 42), 1500);
-        handler.postDelayed(() -> client.deactivateMotor(motors, 42), 1750);
-        handler.postDelayed(() -> client.deleteMotor(motors, 42), 2000);
+        handler.postDelayed(() -> client.startMotorCalibration(motors, id.get()), 1250);
+        handler.postDelayed(() -> client.stopMotorCalibration(motors, id.get()), 1500);
+        handler.postDelayed(() -> client.deactivateMotor(motors, id.get()), 1750);
+        handler.postDelayed(() -> client.deleteMotor(motors, id.get()), 2000);
     }
 }

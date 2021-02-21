@@ -41,7 +41,6 @@ public class HubClient {
 
     public void addMotor(Map<Integer, Motor> motors, RegisterMotorRequest registerMotorRequest) {
         Call<Motor> call = service.addMotor(registerMotorRequest);
-        System.out.println(call.toString());
         call.enqueue(new MotorCallback(motors));
     }
 

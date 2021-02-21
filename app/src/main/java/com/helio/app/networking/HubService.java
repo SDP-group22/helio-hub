@@ -20,11 +20,11 @@ public interface HubService {
     @POST("/motor/register")
     Call<Motor> addMotor(@Body RegisterMotorRequest registerMotorRequest);
 
-    @PATCH("/motor/activate")
-    Call<Motor> activateMotor(@Body int motorId);
+    @PATCH("/motor/activate/{motor_id}")
+    Call<Motor> activateMotor(@Path("motor_id") int motorId);
 
-    @PATCH("/motor/deactivate")
-    Call<Motor> deactivateMotor(@Body int motorId);
+    @PATCH("/motor/deactivate/{motor_id}")
+    Call<Motor> deactivateMotor(@Path("motor_id") int motorId);
 
     @PATCH("/motor/rename")
     Call<Motor> renameMotor(@Body RenameMotorRequest renameMotorRequest);
@@ -35,11 +35,11 @@ public interface HubService {
     @PATCH("/motor/move")
     Call<Motor> moveMotor(@Body MoveMotorRequest moveMotorRequest);
 
-    @PATCH("/motor/start_calibrate")
-    Call<Motor> startMotorCalibration(@Body int motorId);
+    @PATCH("/motor/start_calibrate/{motor_id}")
+    Call<Motor> startMotorCalibration(@Path("motor_id") int motorId);
 
-    @PATCH("/motor/stop_calibrate")
-    Call<Motor> stopMotorCalibration(@Body int motorId);
+    @PATCH("/motor/stop_calibrate/{motor_id}")
+    Call<Motor> stopMotorCalibration(@Path("motor_id") int motorId);
 
     @DELETE("/motor/unregister/{motor_id}")
     Call<ResponseBody> deleteMotor(@Path("motor_id") int motorId);
