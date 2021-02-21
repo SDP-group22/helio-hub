@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         RegisterMotorRequest registerMotorRequest = new RegisterMotorRequest(
                 "bedroom",
                 "1.2.3.4",
-                false
-        );
+                false,
+                0, 0, 0, "style");
         RenameMotorRequest renameMotorRequest = new RenameMotorRequest(42, "kitchen");
         MoveMotorRequest moveMotorRequest = new MoveMotorRequest(42, 25);
         // use Handler to force the actions to happen in order
