@@ -15,14 +15,14 @@ import retrofit2.Response;
  * A MyDeletionCallback instance allows for code to be run after deleting on the Hub.
  * To remain in sync with the Hub, we also remove it from our local state.
  *
- * @see MyCallback
+ * @see IdComponentCallback
  * @see HubClient
  */
-class MyDeletionCallback<T extends IdComponent> implements Callback<ResponseBody> {
+class DeletionCallback<T extends IdComponent> implements Callback<ResponseBody> {
     private final Map<Integer, T> map;
     private final int id;
 
-    MyDeletionCallback(Map<Integer, T> map, int id) {
+    DeletionCallback(Map<Integer, T> map, int id) {
         this.map = map;
         this.id = id;
     }

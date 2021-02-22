@@ -11,10 +11,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyGetAllCallback<T extends IdComponent> implements Callback<List<T>> {
+public class GetAllCallback<T extends IdComponent> implements Callback<List<T>> {
     private final Map<Integer, T> map;
 
-    public MyGetAllCallback(Map<Integer, T> map) {
+    public GetAllCallback(Map<Integer, T> map) {
         this.map = map;
     }
 
