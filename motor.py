@@ -1,13 +1,12 @@
-from tinydb import TinyDB, Query
-db = TinyDB('./database/motors.json')
+from tiny_db_wrapper import *
 
 def get(motor_id):
     try:
         # db.search returns a list
-        motor = db.search(Query().id == motor_id)[0]
+        motor = motor_table.search(Query().id == motor_id)
         
         if motor:
-            return motor, 200
+            return motor[0], 200
         else:
             return f"Motor {motor_id} not found", 400
     except:
@@ -15,7 +14,7 @@ def get(motor_id):
 
 def get_all():
     try:
-        all_motors = db.all()
+        all_motors = motor_table.all()
         return all_motors, 200
     except:
         return 'Internal server error', 500
@@ -26,7 +25,7 @@ def register(body):
         # TODO confirm motor is available at given ip, if not return 400
 
         # generate new id by incrementing on largest existing id
-        all_motors = db.all()
+        all_motors = motor_table.all()
         ids = [motor['id'] for motor in all_motors]
         
         if ids:
@@ -37,22 +36,22 @@ def register(body):
             body['id'] = 0
 
         # Add new motor to database
-        db.insert(body)
+        motor_table.insert(body)
 
-        new_motor = db.search(Query().id == body['id'])
+        new_motor = motor_table.search(Query().id == body['id'])
         return new_motor, 200
     except:
         return 'Internal server error', 500
 
 def unregister(motor_id):
     try:
-        motor = db.search(Query().id == motor_id)
+        motor = motor_table.search(Query().id == motor_id)
 
         if motor:
 
             # TODO call unregister on motor api, if fail return 400
 
-            db.remove(Query().id == motor_id)
+            motor_table.remove(Query().id == motor_id)
             return f"Motor {motor_id} unregistered", 200
         else:
             return f"Motor {motor_id} does not exist", 400
@@ -61,14 +60,14 @@ def unregister(motor_id):
     
 def move(body):
     try:
-        motor = db.search(Query().id == body['id'])
+        motor = motor_table.search(Query().id == body['id'])
 
         if motor:
 
             # TODO call move on motor api, if fail return 400
 
-            motor_db_key = db.update({'level':body['level']}, Query().id==body['id'])
-            return db.get(doc_id=motor_db_key[0]), 200
+            motor_db_key = motor_table.update({'level':body['level']}, Query().id==body['id'])
+            return motor_table.get(doc_id=motor_db_key[0]), 200
         else:
             return f"Motor {body['id']} does not exist", 400
     except:
@@ -76,11 +75,11 @@ def move(body):
 
 def rename(body):
     try:
-        motor = db.search(Query().id == body['id'])
+        motor = motor_table.search(Query().id == body['id'])
 
         if motor:
-            motor_db_key = db.update({'name':body['name']}, Query().id==body['id'])
-            return db.get(doc_id=motor_db_key[0]), 200
+            motor_db_key = motor_table.update({'name':body['name']}, Query().id==body['id'])
+            return motor_table.get(doc_id=motor_db_key[0]), 200
         else:
             return f"Motor {body['id']} does not exist", 400
     except:
@@ -88,14 +87,14 @@ def rename(body):
 
 def deactivate(motor_id):
     try:
-        motor = db.search(Query().id == motor_id)
+        motor = motor_table.search(Query().id == motor_id)
 
         if motor:
 
             # TODO call deactivate on motor api, if fail return 400
 
-            motor_db_key = db.update({'active':False}, Query().id==motor_id)
-            return db.get(doc_id=motor_db_key[0]), 200
+            motor_db_key = motor_table.update({'active':False}, Query().id==motor_id)
+            return motor_table.get(doc_id=motor_db_key[0]), 200
         else:
             return f"Motor {motor_id} does not exist", 400
     except:
@@ -103,12 +102,12 @@ def deactivate(motor_id):
 
 def activate(motor_id):
     try:
-        motor = db.search(Query().id == motor_id)
+        motor = motor_table.search(Query().id == motor_id)
 
         if motor:
             # TODO call activate on motor api, if fail return 400
-            motor_db_key = db.update({'active':True}, Query().id==motor_id)
-            return db.get(doc_id=motor_db_key[0]), 200
+            motor_db_key = motor_table.update({'active':True}, Query().id==motor_id)
+            return motor_table.get(doc_id=motor_db_key[0]), 200
         else:
             return f"Motor {motor_id} does not exist", 400
     except:

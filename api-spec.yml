@@ -661,236 +661,260 @@ paths:
 #         400:
 #           $ref: '#/components/responses/400InvalidInput'
 #         500:
-#           $ref: '#/components/responses/500InternalError'
-  
-#   /schedule/get_all:
-#     get:
-#       tags:
-#       - schedule
-#       summary: Get all schedule information
-#       operationId: getAllSchedules
-#       responses:
-#         '200':
-#           description: "OK"
-#           content:
-#             application/json:
-#               schema:
-#                 type: array
-#                 items:
-#                   $ref: '#/components/schemas/Schedule'
-#         '400':
-#           $ref: '#/components/responses/400InvalidInput'
-#         '500':
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/register:
-#     post:
-#       tags:
-#       - "schedule"
-#       summary: "Add a new schedule"
-#       operationId: "addSchedule"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#                 $ref: "#/components/schemas/ScheduleNoId"
-#       responses:
-#         200:
-#           description: "Ok"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/unregister/{schedule_id}:
-#     delete:
-#       tags:
-#         - "schedule"
-#       summary: "Delete schedule"
-#       operationId: "deleteSchedule"
-#       parameters:
-#         - name: schedule_id
-#           in: path
-#           required: true
-#           schema:
-#             $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/change_days:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Change days"
-#       operationId: "changeScheduleDays"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - days
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 days: 
-#                   $ref: "#/components/schemas/days"
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/change_time:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Change time"
-#       operationId: "changeScheduleTime"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - time
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 time:
-#                   $ref: '#/components/schemas/time'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/change_gradient:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Change gradient"
-#       operationId: "changeScheduleGradient"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - gradient
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 gradient:
-#                   $ref: '#/components/schemas/gradient'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/rename:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "rename schedule"
-#       operationId: "renameSchedule"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: "object"
-#               required:
-#                 - id
-#                 - name
-#               properties:
-#                 id:
-#                   $ref: '#/components/schemas/id'
-#                 name:
-#                   type: string
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/activate:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Activate schedule"
-#       operationId: "activateSchedule"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
-#   /schedule/deactivate:
-#     patch:
-#       tags:
-#         - "schedule"
-#       summary: "Deactivate schedule"
-#       operationId: "deactivateSchedule"
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/id'
-#       responses:
-#         200:
-#           description: OK
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Schedule"
-#         400:
-#           $ref: '#/components/responses/400InvalidInput'
-#         500:
-#           $ref: '#/components/responses/500InternalError'
+#           $ref: '#/components/responses/500InternalError'  /motor/{motor_id}:
+  /schedule/get/{schedule_id}:
+    get:
+      tags:
+      - schedule
+      summary: Get schedule state
+      operationId: shedule.get
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+  /schedule/get_all:
+    get:
+      tags:
+      - schedule
+      summary: Get all schedule information
+      operationId: shedule.get_all
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+  /schedule/register:
+    post:
+      tags:
+      - "schedule"
+      summary: "Add a new schedule"
+      operationId: shedule.register
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: "#/components/schemas/ScheduleNoId"
+      responses:
+        200:
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/unregister/{schedule_id}:
+    delete:
+      tags:
+        - "schedule"
+      summary: "Delete schedule"
+      operationId: shedule.unregister
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/change_days:
+    patch:
+      tags:
+        - schedule
+      summary: Change days
+      operationId: shedule.change_days
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - days
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                days: 
+                  $ref: '#/components/schemas/days'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/change_time:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Change time"
+      operationId: shedule.change_time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - time
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                time:
+                  $ref: '#/components/schemas/time'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/change_gradient:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Change gradient"
+      operationId: shedule.change_gradient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - gradient
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                gradient:
+                  $ref: '#/components/schemas/gradient'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/rename:
+    patch:
+      tags:
+        - "schedule"
+      summary: "rename schedule"
+      operationId: shedule.rename
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - id
+                - name
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                name:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/activate/{schedule_id}:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Activate schedule"
+      operationId: shedule.activate
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/deactivate/{schedule_id}:
+    patch:
+      tags:
+        - "schedule"
+      summary: "Deactivate schedule"
+      operationId: shedule.deactivate
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
 
 
 components:
