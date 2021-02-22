@@ -2,17 +2,13 @@ package com.helio.app.networking;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.helio.app.model.Day;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
-import com.helio.app.networking.request.ChangeDaysScheduleRequest;
-import com.helio.app.networking.request.ChangeGradientScheduleRequest;
-import com.helio.app.networking.request.ChangeTimeScheduleRequest;
-import com.helio.app.networking.request.MoveMotorRequest;
 import com.helio.app.networking.request.RegisterMotorRequest;
 import com.helio.app.networking.request.RegisterScheduleRequest;
-import com.helio.app.networking.request.RenameMotorRequest;
-import com.helio.app.networking.request.RenameScheduleRequest;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -75,8 +71,8 @@ public class HubClient {
         call.enqueue(new MyCallback<>(motors));
     }
 
-    public void renameMotor(Map<Integer, Motor> motors, RenameMotorRequest renameMotorRequest) {
-        Call<Motor> call = service.renameMotor(renameMotorRequest);
+    public void renameMotor(Map<Integer, Motor> motors, int id, String name) {
+        Call<Motor> call = service.renameMotor(id, name);
         call.enqueue(new MyCallback<>(motors));
     }
 
@@ -85,8 +81,8 @@ public class HubClient {
         call.enqueue(new MyCallback<>(motors));
     }
 
-    public void moveMotor(Map<Integer, Motor> motors, MoveMotorRequest moveMotorRequest) {
-        Call<Motor> call = service.moveMotor(moveMotorRequest);
+    public void moveMotor(Map<Integer, Motor> motors, int id, int level) {
+        Call<Motor> call = service.moveMotor(id, level);
         call.enqueue(new MyCallback<>(motors));
     }
 
@@ -115,23 +111,23 @@ public class HubClient {
         call.enqueue(new MyDeletionCallback<>(schedules, id));
     }
 
-    public void changeDaysSchedule(Map<Integer, Schedule> schedules, ChangeDaysScheduleRequest changeDaysScheduleRequest) {
-        Call<Schedule> call = service.changeDaysSchedule(changeDaysScheduleRequest);
+    public void changeDaysSchedule(Map<Integer, Schedule> schedules, int id, List<Day> days) {
+        Call<Schedule> call = service.changeDaysSchedule(id, days);
         call.enqueue(new MyCallback<>(schedules));
     }
 
-    public void changeTimeSchedule(Map<Integer, Schedule> schedules, ChangeTimeScheduleRequest changeTimeScheduleRequest) {
-        Call<Schedule> call = service.changeTimeSchedule(changeTimeScheduleRequest);
+    public void changeTimeSchedule(Map<Integer, Schedule> schedules, int id, String time) {
+        Call<Schedule> call = service.changeTimeSchedule(id, time);
         call.enqueue(new MyCallback<>(schedules));
     }
 
-    public void changeGradientSchedule(Map<Integer, Schedule> schedules, ChangeGradientScheduleRequest changeGradientScheduleRequest) {
-        Call<Schedule> call = service.changeGradientSchedule(changeGradientScheduleRequest);
+    public void changeGradientSchedule(Map<Integer, Schedule> schedules, int id, int gradient) {
+        Call<Schedule> call = service.changeGradientSchedule(id, gradient);
         call.enqueue(new MyCallback<>(schedules));
     }
 
-    public void renameSchedule(Map<Integer, Schedule> schedules, RenameScheduleRequest renameScheduleRequest) {
-        Call<Schedule> call = service.renameSchedule(renameScheduleRequest);
+    public void renameSchedule(Map<Integer, Schedule> schedules, int id, String name) {
+        Call<Schedule> call = service.renameSchedule(id, name);
         call.enqueue(new MyCallback<>(schedules));
     }
 

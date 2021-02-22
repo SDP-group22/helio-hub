@@ -16,14 +16,8 @@ import com.helio.app.model.Day;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.networking.HubClient;
-import com.helio.app.networking.request.ChangeDaysScheduleRequest;
-import com.helio.app.networking.request.ChangeGradientScheduleRequest;
-import com.helio.app.networking.request.ChangeTimeScheduleRequest;
-import com.helio.app.networking.request.MoveMotorRequest;
 import com.helio.app.networking.request.RegisterMotorRequest;
 import com.helio.app.networking.request.RegisterScheduleRequest;
-import com.helio.app.networking.request.RenameMotorRequest;
-import com.helio.app.networking.request.RenameScheduleRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,19 +89,13 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(() -> client.activateMotor(motors, id.get()), postTime);
 
         postTime += DELAY;
-        handler.postDelayed(() -> {
-            RenameMotorRequest renameMotorRequest = new RenameMotorRequest(id.get(), "kitchen");
-            client.renameMotor(motors, renameMotorRequest);
-        }, postTime);
+        handler.postDelayed(() -> client.renameMotor(motors, id.get(), "kitchen"), postTime);
 
         postTime += DELAY;
         handler.postDelayed(() -> client.getMotor(motors, id.get()), postTime);
 
         postTime += DELAY;
-        handler.postDelayed(() -> {
-            MoveMotorRequest moveMotorRequest = new MoveMotorRequest(id.get(), 25);
-            client.moveMotor(motors, moveMotorRequest);
-        }, postTime);
+        handler.postDelayed(() -> client.moveMotor(motors, id.get(), 25), postTime);
 
         postTime += DELAY;
         handler.postDelayed(() -> client.startMotorCalibration(motors, id.get()), postTime);
@@ -149,28 +137,16 @@ public class MainActivity extends AppCompatActivity {
         days.remove(0);
         days.add(Day.SATURDAY);
         days.add(Day.SUNDAY);
-        handler.postDelayed(() -> {
-            ChangeDaysScheduleRequest changeDaysScheduleRequest = new ChangeDaysScheduleRequest(id.get(), days);
-            client.changeDaysSchedule(schedules, changeDaysScheduleRequest);
-        }, delay);
+        handler.postDelayed(() -> client.changeDaysSchedule(schedules, id.get(), days), delay);
 
         delay += DELAY;
-        handler.postDelayed(() -> {
-            ChangeTimeScheduleRequest changeTimeScheduleRequest = new ChangeTimeScheduleRequest(id.get(), "a");
-            client.changeTimeSchedule(schedules, changeTimeScheduleRequest);
-        }, delay);
+        handler.postDelayed(() -> client.changeTimeSchedule(schedules, id.get(), "a"), delay);
 
         delay += DELAY;
-        handler.postDelayed(() -> {
-            ChangeGradientScheduleRequest changeGradientScheduleRequest = new ChangeGradientScheduleRequest(id.get(), 7216);
-            client.changeGradientSchedule(schedules, changeGradientScheduleRequest);
-        }, delay);
+        handler.postDelayed(() -> client.changeGradientSchedule(schedules, id.get(), 7216), delay);
 
         delay += DELAY;
-        handler.postDelayed(() -> {
-            RenameScheduleRequest renameScheduleRequest = new RenameScheduleRequest(id.get(), "newName");
-            client.renameSchedule(schedules, renameScheduleRequest);
-        }, delay);
+        handler.postDelayed(() -> client.renameSchedule(schedules, id.get(), "newName"), delay);
 
         delay += DELAY;
         handler.postDelayed(() -> client.activateSchedule(schedules, id.get()), delay);
