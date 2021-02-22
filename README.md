@@ -6,7 +6,7 @@
 
 2. activate virtual environment \
 Windows : `venv\Scripts\activate.bat` \
-Linux : `source venv\bin\activate`
+Linux : `source venv/bin/activate`
 
 3. install requirements \
 `pip install -r requirements.txt`
