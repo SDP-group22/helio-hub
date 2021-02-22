@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Sensor {
-    private final int id;
+public abstract class Sensor extends IdComponent{
     @SerializedName("motor_ids")
     private final List<Integer> motorIds;
     private String name;
@@ -17,7 +16,7 @@ public abstract class Sensor {
 
     public Sensor(int id, String name, String ip, boolean active, int battery,
                   List<Integer> motorIds, String style) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.ip = ip;
         this.active = active;
@@ -31,10 +30,6 @@ public abstract class Sensor {
      */
     public Sensor(int id) {
         this(id, "", "", false, 0, new ArrayList<>(), "");
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {

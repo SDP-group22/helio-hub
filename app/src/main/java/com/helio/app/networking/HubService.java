@@ -2,10 +2,11 @@ package com.helio.app.networking;
 
 import com.helio.app.model.Day;
 import com.helio.app.model.LightSensor;
+import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
-import com.helio.app.networking.request.RegisterMotionSensorRequest;
+import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
 import com.helio.app.networking.request.ScheduleSettingsRequest;
 
@@ -89,9 +90,27 @@ public interface HubService {
     @PATCH("/schedule/deactivate/{schedule_id}")
     Call<Schedule> deactivateSchedule(@Path("schedule_id") int id);
 
-    @PATCH("/light/register")
+    @POST("/light/register")
     Call<LightSensor> addLightSensor(@Body LightSensorSettingsRequest registerLightSensorRequest);
 
-    @PATCH("/motion/register")
-    Call<LightSensor> addMotionSensor(@Body RegisterMotionSensorRequest registerMotionSensorRequest);
+    @DELETE("/light/unregister/{light_sensor_id}")
+    Call<ResponseBody> deleteLightSensor(@Path("light_sensor_id") int id);
+
+    @GET("/light/get_all")
+    Call<List<LightSensor>> getAllLightSensors();
+
+    @PATCH("/light/update/{light_sensor_id}")
+    Call<LightSensor> updateLightSensor(@Path("light_sensor_id") int id, @Body LightSensorSettingsRequest lightSensorSettingsRequest);
+
+    @POST("/motion/register")
+    Call<MotionSensor> addMotionSensor(@Body MotionSensorSettingsRequest motionSensorSettingsRequest);
+
+    @DELETE("/motion/unregister/{motion_sensor_id}")
+    Call<ResponseBody> deleteMotionSensor(@Path("motion_sensor_id") int id);
+
+    @GET("/motion/get_all")
+    Call<List<MotionSensor>> getAllMotionSensors();
+
+    @PATCH("/motion/update/{motion_sensor_id}")
+    Call<MotionSensor> updateMotionSensor(@Path("motion_sensor_id") int id, @Body MotionSensorSettingsRequest motionSensorSettingsRequest);
 }

@@ -3,8 +3,12 @@ package com.helio.app.networking;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.helio.app.model.Day;
+import com.helio.app.model.LightSensor;
+import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
+import com.helio.app.networking.request.LightSensorSettingsRequest;
+import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
 import com.helio.app.networking.request.ScheduleSettingsRequest;
 
@@ -159,5 +163,45 @@ public class HubClient {
     public void deactivateSchedule(Map<Integer, Schedule> schedules, int id) {
         Call<Schedule> call = service.deactivateSchedule(id);
         call.enqueue(new MyCallback<>(schedules));
+    }
+
+    public void getAllLightSensors(Map<Integer, LightSensor> sensors) {
+        Call<List<LightSensor>> call = service.getAllLightSensors();
+        call.enqueue(new MyGetAllCallback<>(sensors));
+    }
+
+    public void addLightSensor(Map<Integer, LightSensor> sensors, LightSensorSettingsRequest lightSensorSettingsRequest) {
+        Call<LightSensor> call = service.addLightSensor(lightSensorSettingsRequest);
+        call.enqueue(new MyCallback<>(sensors));
+    }
+
+    public void deleteLightSensor(Map<Integer, LightSensor> sensors, int id) {
+        Call<ResponseBody> call = service.deleteLightSensor(id);
+        call.enqueue(new MyDeletionCallback<>(sensors, id));
+    }
+
+    public void updateLightSensor(Map<Integer, LightSensor> sensors, int id, LightSensorSettingsRequest lightSensorSettingsRequest) {
+        Call<LightSensor> call = service.updateLightSensor(id, lightSensorSettingsRequest);
+        call.enqueue(new MyCallback<>(sensors));
+    }
+
+    public void getAllMotionSensors(Map<Integer, MotionSensor> sensors) {
+        Call<List<MotionSensor>> call = service.getAllMotionSensors();
+        call.enqueue(new MyGetAllCallback<>(sensors));
+    }
+
+    public void addMotionSensor(Map<Integer, MotionSensor> sensors, MotionSensorSettingsRequest motionSensorSettingsRequest) {
+        Call<MotionSensor> call = service.addMotionSensor(motionSensorSettingsRequest);
+        call.enqueue(new MyCallback<>(sensors));
+    }
+
+    public void deleteMotionSensor(Map<Integer, MotionSensor> sensors, int id) {
+        Call<ResponseBody> call = service.deleteMotionSensor(id);
+        call.enqueue(new MyDeletionCallback<>(sensors, id));
+    }
+
+    public void updateMotionSensor(Map<Integer, MotionSensor> sensors, int id, MotionSensorSettingsRequest motionSensorSettingsRequest) {
+        Call<MotionSensor> call = service.updateMotionSensor(id, motionSensorSettingsRequest);
+        call.enqueue(new MyCallback<>(sensors));
     }
 }

@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused", "RedundantSuppression"})
-public abstract class RegisterMotionSensorRequest extends RegisterSensorRequest {
+public class MotionSensorSettingsRequest extends SensorSettingsRequest {
     @SerializedName("duration_sensitivity")
-    private final int durationSensitivity;
+    private final String durationSensitivity;
 
-    public RegisterMotionSensorRequest(List<Integer> motorIds, String name, String ip, boolean active, int battery, String style, int durationSensitivity) {
+    public MotionSensorSettingsRequest(List<Integer> motorIds, String name, String ip, boolean active, int battery, String style, String durationSensitivity) {
         super(motorIds, name, ip, active, battery, style);
         this.durationSensitivity = durationSensitivity;
     }

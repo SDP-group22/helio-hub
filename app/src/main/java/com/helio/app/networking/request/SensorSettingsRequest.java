@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused", "RedundantSuppression"})
-public class RegisterSensorRequest {
+public abstract class SensorSettingsRequest {
     @SerializedName("motor_ids")
     private final List<Integer> motorIds;
     private final String name;
@@ -14,7 +14,7 @@ public class RegisterSensorRequest {
     private final int battery;
     private final String style;
 
-    public RegisterSensorRequest(List<Integer> motorIds, String name, String ip, boolean active, int battery, String style) {
+    public SensorSettingsRequest(List<Integer> motorIds, String name, String ip, boolean active, int battery, String style) {
         this.motorIds = motorIds;
         this.name = name;
         this.ip = ip;

@@ -6,10 +6,10 @@ import java.util.List;
 
 public class MotionSensor extends Sensor {
     @SerializedName("duration_sensitivity")
-    private int durationSensitivity;
+    private String durationSensitivity;
 
     public MotionSensor(int id, String name, String ip, boolean active, int battery,
-                        List<Integer> motorIds, String style, int durationSensitivity) {
+                        List<Integer> motorIds, String style, String durationSensitivity) {
         super(id, name, ip, active, battery, motorIds, style);
         this.durationSensitivity = durationSensitivity;
     }
@@ -18,11 +18,11 @@ public class MotionSensor extends Sensor {
         super(id);
     }
 
-    public int getDurationSensitivity() {
+    public String getDurationSensitivity() {
         return durationSensitivity;
     }
 
-    public void setDurationSensitivity(int durationSensitivity) {
+    public void setDurationSensitivity(String durationSensitivity) {
         this.durationSensitivity = durationSensitivity;
     }
 }

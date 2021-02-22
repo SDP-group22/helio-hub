@@ -13,9 +13,13 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.helio.app.model.Day;
+import com.helio.app.model.LightSensor;
+import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.networking.HubClient;
+import com.helio.app.networking.request.LightSensorSettingsRequest;
+import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
 import com.helio.app.networking.request.ScheduleSettingsRequest;
 
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private int postTime = 0;
     private Map<Integer, Motor> motors;
     private Map<Integer, Schedule> schedules;
+    private Map<Integer, LightSensor> lightSensors;
+    private Map<Integer, MotionSensor> motionSensors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         HubClient client = new HubClient("http://10.0.2.2:4310/");
         testMotor(client);
         testSchedule(client);
+        testLightSensors(client);
+        testMotionSensors(client);
     }
 
     private void testMotor(HubClient client) {
@@ -85,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(() -> client.addMotor(motors, motorSettingsRequest), postTime);
 
         // This is extremely bad
-        AtomicInteger id = new AtomicInteger();
+        AtomicInteger id = new AtomicInteger(-1);
 
         postTime += DELAY;
         handler.postDelayed(() -> id.set(new ArrayList<>(motors.keySet()).get(0)), postTime);
@@ -143,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
         // This is extremely bad
         postTime += DELAY;
-        AtomicInteger id = new AtomicInteger();
+        AtomicInteger id = new AtomicInteger(-1);
         handler.postDelayed(() -> id.set(new ArrayList<>(schedules.keySet()).get(0)), postTime);
 
         postTime += DELAY;
@@ -174,5 +182,65 @@ public class MainActivity extends AppCompatActivity {
 
         postTime += DELAY;
         handler.postDelayed(() -> client.deleteSchedule(schedules, id.get()), postTime);
+    }
+
+    private void testLightSensors(HubClient client) {
+        lightSensors = new HashMap<>();
+        List<Integer> motorIds = new ArrayList<>();
+        motorIds.add(999);
+        LightSensorSettingsRequest lightSensorSettingsRequest = new LightSensorSettingsRequest(
+                motorIds, "name", "1.2.3.4", false, 0, "style");
+
+        // use Handler to force the actions to happen in order
+        Handler handler = new Handler();
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.getAllLightSensors(lightSensors), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.addLightSensor(lightSensors, lightSensorSettingsRequest), postTime);
+
+        // This is extremely bad
+        postTime += DELAY;
+        AtomicInteger id = new AtomicInteger(-1);
+        handler.postDelayed(() -> id.set(new ArrayList<>(lightSensors.keySet()).get(0)), postTime);
+
+        postTime += DELAY;
+        LightSensorSettingsRequest newLightSensorSettingsRequest = new LightSensorSettingsRequest(
+                motorIds, "a", "0.0.0.0", false, 0, "style");
+        handler.postDelayed(() -> client.updateLightSensor(lightSensors, id.get(), newLightSensorSettingsRequest), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.deleteLightSensor(lightSensors, id.get()), postTime);
+    }
+
+    private void testMotionSensors(HubClient client) {
+        motionSensors = new HashMap<>();
+        List<Integer> motorIds = new ArrayList<>();
+        motorIds.add(999);
+        MotionSensorSettingsRequest motionSensorSettingsRequest = new MotionSensorSettingsRequest(
+                motorIds, "name", "1.2.3.4", false, 0, "style", "30");
+
+        // use Handler to force the actions to happen in order
+        Handler handler = new Handler();
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.getAllMotionSensors(motionSensors), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.addMotionSensor(motionSensors, motionSensorSettingsRequest), postTime);
+
+        // This is extremely bad
+        postTime += DELAY;
+        AtomicInteger id = new AtomicInteger(-1);
+        handler.postDelayed(() -> id.set(new ArrayList<>(motionSensors.keySet()).get(0)), postTime);
+
+        postTime += DELAY;
+        MotionSensorSettingsRequest newMotionSensorSettingsRequest = new MotionSensorSettingsRequest(
+                motorIds, "new", "1.1.1.1", false, 0, "style", "40");
+        handler.postDelayed(() -> client.updateMotionSensor(motionSensors, id.get(), newMotionSensorSettingsRequest), postTime);
+
+        postTime += DELAY;
+        handler.postDelayed(() -> client.deleteMotionSensor(motionSensors, id.get()), postTime);
     }
 }
