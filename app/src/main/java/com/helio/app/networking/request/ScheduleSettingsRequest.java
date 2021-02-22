@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused", "RedundantSuppression", "MismatchedQueryAndUpdateOfCollection"})
-public class RegisterScheduleRequest {
+public class ScheduleSettingsRequest {
     private final String name;
     private final boolean active;
     private final List<String> days;
@@ -18,7 +18,7 @@ public class RegisterScheduleRequest {
     private final List<Integer> motorIds;
     private final String time;
 
-    public RegisterScheduleRequest(String name, boolean active, List<Day> days, int targetLevel,
+    public ScheduleSettingsRequest(String name, boolean active, List<Day> days, int targetLevel,
                                    int gradient, List<Integer> motorIds, String time) {
         this.name = name;
         this.active = active;

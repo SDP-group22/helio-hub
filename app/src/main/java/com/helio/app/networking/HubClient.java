@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.helio.app.model.Day;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
-import com.helio.app.networking.request.RegisterMotorRequest;
-import com.helio.app.networking.request.RegisterScheduleRequest;
+import com.helio.app.networking.request.MotorSettingsRequest;
+import com.helio.app.networking.request.ScheduleSettingsRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -56,8 +56,8 @@ public class HubClient {
         return GsonConverterFactory.create(gson);
     }
 
-    public void addMotor(Map<Integer, Motor> motors, RegisterMotorRequest registerMotorRequest) {
-        Call<Motor> call = service.addMotor(registerMotorRequest);
+    public void addMotor(Map<Integer, Motor> motors, MotorSettingsRequest motorSettingsRequest) {
+        Call<Motor> call = service.addMotor(motorSettingsRequest);
         call.enqueue(new MyCallback<>(motors));
     }
 
@@ -68,6 +68,11 @@ public class HubClient {
 
     public void deactivateMotor(Map<Integer, Motor> motors, int motorId) {
         Call<Motor> call = service.deactivateMotor(motorId);
+        call.enqueue(new MyCallback<>(motors));
+    }
+
+    public void updateMotor(Map<Integer, Motor> motors, int id, MotorSettingsRequest motorSettingsRequest) {
+        Call<Motor> call = service.updateMotor(id, motorSettingsRequest);
         call.enqueue(new MyCallback<>(motors));
     }
 
@@ -111,14 +116,19 @@ public class HubClient {
         call.enqueue(new MyGetAllCallback<>(schedules));
     }
 
-    public void addSchedule(Map<Integer, Schedule> schedules, RegisterScheduleRequest registerScheduleRequest) {
-        Call<Schedule> call = service.addSchedule(registerScheduleRequest);
+    public void addSchedule(Map<Integer, Schedule> schedules, ScheduleSettingsRequest scheduleSettingsRequest) {
+        Call<Schedule> call = service.addSchedule(scheduleSettingsRequest);
         call.enqueue(new MyCallback<>(schedules));
     }
 
     public void deleteSchedule(Map<Integer, Schedule> schedules, int id) {
         Call<ResponseBody> call = service.deleteSchedule(id);
         call.enqueue(new MyDeletionCallback<>(schedules, id));
+    }
+
+    public void updateSchedule(Map<Integer, Schedule> schedules, int id, ScheduleSettingsRequest scheduleSettingsRequest) {
+        Call<Schedule> call = service.updateSchedule(id, scheduleSettingsRequest);
+        call.enqueue(new MyCallback<>(schedules));
     }
 
     public void changeDaysSchedule(Map<Integer, Schedule> schedules, int id, List<Day> days) {

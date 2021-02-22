@@ -16,8 +16,8 @@ import com.helio.app.model.Day;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.networking.HubClient;
-import com.helio.app.networking.request.RegisterMotorRequest;
-import com.helio.app.networking.request.RegisterScheduleRequest;
+import com.helio.app.networking.request.MotorSettingsRequest;
+import com.helio.app.networking.request.ScheduleSettingsRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testMotor(HubClient client) {
-        RegisterMotorRequest registerMotorRequest = new RegisterMotorRequest(
+        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
                 "bedroom",
                 "1.2.3.4",
                 false,
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(() -> client.getAllMotors(motors), postTime);
 
         postTime += DELAY;
-        handler.postDelayed(() -> client.addMotor(motors, registerMotorRequest), postTime);
+        handler.postDelayed(() -> client.addMotor(motors, motorSettingsRequest), postTime);
 
         // This is extremely bad
         AtomicInteger id = new AtomicInteger();
@@ -92,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
         postTime += DELAY;
         handler.postDelayed(() -> client.activateMotor(motors, id.get()), postTime);
+
+        postTime += DELAY;
+        MotorSettingsRequest newMotorSettingsRequest = new MotorSettingsRequest("Mars", "5.6.7.8",
+                false, 0, 0, 0, "fancy");
+        handler.postDelayed(() -> client.updateMotor(motors, id.get(), newMotorSettingsRequest), postTime);
 
         postTime += DELAY;
         handler.postDelayed(() -> client.renameMotor(motors, id.get(), "kitchen"), postTime);
@@ -121,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         motorIds.add(999);
         List<Day> days = new ArrayList<>();
         days.add(Day.MONDAY);
-        RegisterScheduleRequest registerScheduleRequest = new RegisterScheduleRequest(
+        ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
                 "name",
                 false,
                 days,
@@ -134,12 +139,17 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(() -> client.getAllSchedules(schedules), postTime);
 
         postTime += DELAY;
-        handler.postDelayed(() -> client.addSchedule(schedules, registerScheduleRequest), postTime);
+        handler.postDelayed(() -> client.addSchedule(schedules, scheduleSettingsRequest), postTime);
 
         // This is extremely bad
         postTime += DELAY;
         AtomicInteger id = new AtomicInteger();
         handler.postDelayed(() -> id.set(new ArrayList<>(schedules.keySet()).get(0)), postTime);
+
+        postTime += DELAY;
+        ScheduleSettingsRequest newScheduleSettingsRequest = new ScheduleSettingsRequest(
+                "new name", false, days, 0, 12, motorIds, "00:00");
+        handler.postDelayed(() -> client.updateSchedule(schedules, id.get(), newScheduleSettingsRequest), postTime);
 
         postTime += DELAY;
         days.remove(0);

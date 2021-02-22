@@ -1,5 +1,7 @@
 package com.helio.app.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -8,10 +10,12 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class Schedule extends IdComponent {
+    @SerializedName("motor_ids")
     private final List<Integer> motorIds;
     private String name;
     private boolean active;
     private List<Day> days;
+    @SerializedName("target-level")
     private int targetLevel;
     private int gradient;
     private String time;

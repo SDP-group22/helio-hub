@@ -1,8 +1,11 @@
 package com.helio.app.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class MotionSensor extends Sensor {
+    @SerializedName("duration_sensitivity")
     private int durationSensitivity;
 
     public MotionSensor(int id, String name, String ip, boolean active, int battery,

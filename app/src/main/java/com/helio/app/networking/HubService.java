@@ -1,10 +1,13 @@
 package com.helio.app.networking;
 
 import com.helio.app.model.Day;
+import com.helio.app.model.LightSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
-import com.helio.app.networking.request.RegisterMotorRequest;
-import com.helio.app.networking.request.RegisterScheduleRequest;
+import com.helio.app.networking.request.LightSensorSettingsRequest;
+import com.helio.app.networking.request.RegisterMotionSensorRequest;
+import com.helio.app.networking.request.MotorSettingsRequest;
+import com.helio.app.networking.request.ScheduleSettingsRequest;
 
 import java.util.List;
 
@@ -24,13 +27,16 @@ import retrofit2.http.Path;
  */
 public interface HubService {
     @POST("/motor/register")
-    Call<Motor> addMotor(@Body RegisterMotorRequest registerMotorRequest);
+    Call<Motor> addMotor(@Body MotorSettingsRequest motorSettingsRequest);
 
     @PATCH("/motor/activate/{motor_id}")
     Call<Motor> activateMotor(@Path("motor_id") int id);
 
     @PATCH("/motor/deactivate/{motor_id}")
     Call<Motor> deactivateMotor(@Path("motor_id") int id);
+
+    @PATCH("/motor/update/{motor_id}")
+    Call<Motor> updateMotor(@Path("motor_id") int id, @Body MotorSettingsRequest motorSettingsRequest);
 
     @PATCH("/motor/rename/{motor_id}")
     Call<Motor> renameMotor(@Path("motor_id") int id, @Body String name);
@@ -57,10 +63,13 @@ public interface HubService {
     Call<List<Schedule>> getAllSchedules();
 
     @POST("/schedule/register")
-    Call<Schedule> addSchedule(@Body RegisterScheduleRequest registerScheduleRequest);
+    Call<Schedule> addSchedule(@Body ScheduleSettingsRequest scheduleSettingsRequest);
 
     @DELETE("/schedule/unregister/{schedule_id}")
     Call<ResponseBody> deleteSchedule(@Path("schedule_id") int id);
+
+    @PATCH("/schedule/update/{schedule_id}")
+    Call<Schedule> updateSchedule(@Path("schedule_id") int id, @Body ScheduleSettingsRequest scheduleSettingsRequest);
 
     @PATCH("/schedule/change_days/{schedule_id}")
     Call<Schedule> changeDaysSchedule(@Path("schedule_id") int id, @Body List<Day> days);
@@ -79,4 +88,10 @@ public interface HubService {
 
     @PATCH("/schedule/deactivate/{schedule_id}")
     Call<Schedule> deactivateSchedule(@Path("schedule_id") int id);
+
+    @PATCH("/light/register")
+    Call<LightSensor> addLightSensor(@Body LightSensorSettingsRequest registerLightSensorRequest);
+
+    @PATCH("/motion/register")
+    Call<LightSensor> addMotionSensor(@Body RegisterMotionSensorRequest registerMotionSensorRequest);
 }

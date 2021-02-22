@@ -1,10 +1,13 @@
 package com.helio.app.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Sensor {
     private final int id;
+    @SerializedName("motor_ids")
     private final List<Integer> motorIds;
     private String name;
     private String ip;
