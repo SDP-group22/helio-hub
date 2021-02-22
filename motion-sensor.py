@@ -55,16 +55,28 @@ def unregister(motion_sensor_id):
     except:
         return 'Internal server error', 500
 
-
-def rename(body):
+def update(motion_sensor_id, body):
     try:
-        motion_sensor = db.search(Query().id == body['id'])
+        motion_sensor = db.search(Query().id == motion_sensor_id)
 
         if motion_sensor:
-            motion_sensor_db_key = db.update({'name': body['name']}, Query().id == body['id'])
+            motion_sensor_db_key = db.update(body, Query().id == motion_sensor_id)
             return db.get(doc_id=motion_sensor_db_key[0]), 200
         else:
-            return f"Motion sensor {body['id']} does not exist", 400
+            return f"Motion sensor {motion_sensor_id} does not exist", 400
+    except:
+        return 'Internal server error', 500
+
+def rename(motion_sensor_id, body):
+    try:
+        motion_sensor = db.search(Query().id == motion_sensor_id)
+        name = body
+
+        if motion_sensor:
+            motion_sensor_db_key = db.update({'name': name}, Query().id == motion_sensor_id)
+            return db.get(doc_id=motion_sensor_db_key[0]), 200
+        else:
+            return f"Motion sensor {motion_sensor_id} does not exist", 400
     except:
         return 'Internal server error', 500
 
@@ -95,10 +107,9 @@ def activate(motion_sensor_id):
         return 'Internal server error', 500
 
 
-def change_motors(body):
+def change_motors(motion_sensor_id, body):
     try:
-        motion_sensor_id = body['id']
-        motor_ids = body['motor_ids']
+        motor_ids = body
 
         print(body)
 
@@ -116,8 +127,7 @@ def change_motors(body):
 
 
 def change_duration_sensitivity(body):
-    motion_sensor_id = body['id']
-    duration_sensitivity = body['duration_sensitivity']
+    duration_sensitivity = body
 
     if not db.contains(where('id') == motion_sensor_id):
         return f"Motion sensor {motion_sensor_id} does not exist", 400
