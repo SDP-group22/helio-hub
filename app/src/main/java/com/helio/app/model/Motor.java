@@ -1,7 +1,5 @@
 package com.helio.app.model;
 
-import androidx.annotation.NonNull;
-
 import com.helio.app.ui.MotorIcon;
 
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Motor objects represent motor controllers in the user's home environment.
  */
-public class Motor extends IdComponent{
+public class Motor extends IdComponent {
     private String name;
     private String ip;
     private boolean active;

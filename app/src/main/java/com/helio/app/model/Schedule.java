@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Schedule extends IdComponent{
+public class Schedule extends IdComponent {
+    private final List<Integer> motorIds;
     private String name;
     private boolean active;
     private List<Day> days;
     private int targetLevel;
     private int gradient;
-    private final List<Integer> motorIds;
     private String time;
 
     public Schedule(int id, String name, boolean active, List<Day> days, int targetLevel,
@@ -85,7 +85,8 @@ public class Schedule extends IdComponent{
 
     /**
      * Set the time of this schedule
-     * @param hour the hour of the day (24-hour)
+     *
+     * @param hour   the hour of the day (24-hour)
      * @param minute the minute
      */
     public void setTime(int hour, int minute) {

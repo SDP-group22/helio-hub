@@ -1,4 +1,4 @@
-package com.helio.app.networking;
+package com.helio.app.networking.request;
 
 import com.google.gson.annotations.SerializedName;
 import com.helio.app.model.Day;

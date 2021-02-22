@@ -1,4 +1,4 @@
-package com.helio.app.networking;
+package com.helio.app.networking.request;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused", "RedundantSuppression"})
 public class RenameScheduleRequest {

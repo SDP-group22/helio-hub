@@ -1,4 +1,4 @@
-package com.helio.app.networking;
+package com.helio.app.networking.request;
 
 /**
  * retrofit serialises these objects to be passed to the Hub for /motor/move/ requests

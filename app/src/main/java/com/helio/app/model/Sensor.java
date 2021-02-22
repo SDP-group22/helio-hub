@@ -5,11 +5,11 @@ import java.util.List;
 
 public abstract class Sensor {
     private final int id;
+    private final List<Integer> motorIds;
     private String name;
     private String ip;
     private boolean active;
     private int battery;
-    private final List<Integer> motorIds;
     private String style;
 
     public Sensor(int id, String name, String ip, boolean active, int battery,

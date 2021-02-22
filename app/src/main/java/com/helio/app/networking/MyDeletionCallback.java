@@ -12,7 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * A DeletionCallback instance allows for code to be run after deleting on the Hub.
+ * A MyDeletionCallback instance allows for code to be run after deleting on the Hub.
  * To remain in sync with the Hub, we also remove it from our local state.
  *
  * @see MyCallback

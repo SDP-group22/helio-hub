@@ -2,6 +2,14 @@ package com.helio.app.networking;
 
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
+import com.helio.app.networking.request.ChangeDaysScheduleRequest;
+import com.helio.app.networking.request.ChangeGradientScheduleRequest;
+import com.helio.app.networking.request.ChangeTimeScheduleRequest;
+import com.helio.app.networking.request.MoveMotorRequest;
+import com.helio.app.networking.request.RegisterMotorRequest;
+import com.helio.app.networking.request.RegisterScheduleRequest;
+import com.helio.app.networking.request.RenameMotorRequest;
+import com.helio.app.networking.request.RenameScheduleRequest;
 
 import java.util.List;
 

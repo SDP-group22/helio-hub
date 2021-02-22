@@ -10,6 +10,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * A MyCallback instance allows for code to be run when a response is received from the Hub.
+ * It will update our local state to match that of the Hub after performing an action.
+ *
+ * @see MyDeletionCallback
+ * @see HubClient
+ */
 public class MyCallback<T extends IdComponent> implements Callback<T> {
     private final Map<Integer, T> map;
 
@@ -20,7 +27,7 @@ public class MyCallback<T extends IdComponent> implements Callback<T> {
     @Override
     public void onResponse(@NotNull Call<T> call, Response<T> response) {
         T t = response.body();
-        if(t != null) {
+        if (t != null) {
             System.out.println(call + " succeeded: " + t);
             map.put(t.getId(), t);
             System.out.println("Updated local state for " + t);

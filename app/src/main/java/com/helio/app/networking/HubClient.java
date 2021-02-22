@@ -4,6 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
+import com.helio.app.networking.request.ChangeDaysScheduleRequest;
+import com.helio.app.networking.request.ChangeGradientScheduleRequest;
+import com.helio.app.networking.request.ChangeTimeScheduleRequest;
+import com.helio.app.networking.request.MoveMotorRequest;
+import com.helio.app.networking.request.RegisterMotorRequest;
+import com.helio.app.networking.request.RegisterScheduleRequest;
+import com.helio.app.networking.request.RenameMotorRequest;
+import com.helio.app.networking.request.RenameScheduleRequest;
 
 import java.util.Map;
 
@@ -45,7 +53,7 @@ public class HubClient {
     private static GsonConverterFactory buildCustomConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
 
-        // Adding custom deserializer
+        // Adding custom deserializers
         gsonBuilder.registerTypeAdapter(Schedule.class, new ScheduleDeserializer());
         Gson gson = gsonBuilder.create();
 
