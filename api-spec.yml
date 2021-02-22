@@ -132,7 +132,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/level'
+              type: object
+              properties:
+                level:
+                  $ref: '#/components/schemas/level'
       responses:
         200:
           description: OK
@@ -160,8 +163,11 @@ paths:
         content:
           application/json:
             schema:
-              type: string
-              example: bedroom-1
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: bedroom-1
       responses:
         200:
           description: OK
@@ -424,8 +430,11 @@ paths:
         content:
           application/json:
             schema:
-              type: "string"
-              example: "hallway-1"
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: bedroom-1
       responses:
         200:
           description: OK
@@ -672,8 +681,11 @@ paths:
         content:
           application/json:
             schema:
-              type: "string"
-              example: "hallway-1"
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: bedroom-1
       responses:
         200:
           description: OK
@@ -931,7 +943,11 @@ paths:
         content:
           application/json:
             schema:
-              type: string
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: bedroom-1
       responses:
         200:
           description: OK
