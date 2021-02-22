@@ -101,6 +101,16 @@ public class HubClient {
         call.enqueue(new MyDeletionCallback<>(motors, motorId));
     }
 
+    public void getAllMotors(Map<Integer, Motor> motors) {
+        Call<List<Motor>> call = service.getAllMotors();
+        call.enqueue(new MyGetAllCallback<>(motors));
+    }
+
+    public void getAllSchedules(Map<Integer, Schedule> schedules) {
+        Call<List<Schedule>> call = service.getAllSchedules();
+        call.enqueue(new MyGetAllCallback<>(schedules));
+    }
+
     public void addSchedule(Map<Integer, Schedule> schedules, RegisterScheduleRequest registerScheduleRequest) {
         Call<Schedule> call = service.addSchedule(registerScheduleRequest);
         call.enqueue(new MyCallback<>(schedules));

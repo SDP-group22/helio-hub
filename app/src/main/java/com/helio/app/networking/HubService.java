@@ -50,8 +50,11 @@ public interface HubService {
     @DELETE("/motor/unregister/{motor_id}")
     Call<ResponseBody> deleteMotor(@Path("motor_id") int id);
 
+    @GET("/motor/get_all")
+    Call<List<Motor>> getAllMotors();
+
     @GET("/schedule/get_all")
-    Call<List<Schedule>> getAllMotors();
+    Call<List<Schedule>> getAllSchedules();
 
     @POST("/schedule/register")
     Call<Schedule> addSchedule(@Body RegisterScheduleRequest registerScheduleRequest);
