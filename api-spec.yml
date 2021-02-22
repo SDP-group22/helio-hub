@@ -88,6 +88,34 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  /motor/update/{motor_id}:
+    patch:
+      tags:
+      - motor
+      summary: Update the settings of a motor
+      operationId: motor.update
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MotorNoId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motor"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
   /motor/move/{motor_id}:
     patch:
       tags:
@@ -352,6 +380,34 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  /motion/update/{motion_sensor_id}:
+    patch:
+      tags:
+      - motion
+      summary: Update the settings of a motion sensor
+      operationId: motion-sensor.update
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MotionNoId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motion"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
   /motion/rename/{motion_sensor_id}:
     patch:
       tags:
@@ -572,6 +628,34 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
+  /light/update/{light_sensor_id}:
+    patch:
+      tags:
+      - light
+      summary: Update the settings of a light sensor
+      operationId: light-sensor.update
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LightNoId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Light"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
   /light/rename/{light_sensor_id}:
     patch:
       tags:
@@ -708,6 +792,34 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
+  /schedule/update/{schedule_id}:
+    patch:
+      tags:
+      - schedule
+      summary: Update the settings of a schedule
+      operationId: schedule.update
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleNoId'
       responses:
         200:
           description: OK

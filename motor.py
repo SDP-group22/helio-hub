@@ -58,7 +58,19 @@ def unregister(motor_id):
             return f"Motor {motor_id} does not exist", 400
     except:
         return 'Internal server error', 500
-    
+
+def update(motor_id, body):
+    try:
+        motor = db.search(Query().id == motor_id)
+
+        if motor:
+            motor_db_key = db.update(body, Query().id==motor_id)
+            return db.get(doc_id=motor_db_key[0]), 200
+        else:
+            return f"Motor {motor_id} does not exist", 400
+    except:
+        return 'Internal server error', 500  
+
 def move(motor_id, body):
     try:
         motor = db.search(Query().id == motor_id)

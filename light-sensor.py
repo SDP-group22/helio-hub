@@ -54,6 +54,17 @@ def unregister(light_sensor_id):
     except:
         return 'Internal server error', 500
 
+def update(light_sensor_id, body):
+    try:
+        light_sensor = db.search(Query().id == light_sensor_id)
+
+        if light_sensor:
+            light_sensor_db_key = db.update(body, Query().id == light_sensor_id)
+            return db.get(doc_id=light_sensor_db_key[0]), 200
+        else:
+            return f"Light sensor {light_sensor_id} does not exist", 400
+    except:
+        return 'Internal server error', 500
 
 def rename(light_sensor_id, body):
     try:

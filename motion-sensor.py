@@ -55,6 +55,17 @@ def unregister(motion_sensor_id):
     except:
         return 'Internal server error', 500
 
+def update(motion_sensor_id, body):
+    try:
+        motion_sensor = db.search(Query().id == motion_sensor_id)
+
+        if motion_sensor:
+            motion_sensor_db_key = db.update(body, Query().id == motion_sensor_id)
+            return db.get(doc_id=motion_sensor_db_key[0]), 200
+        else:
+            return f"Motion sensor {motion_sensor_id} does not exist", 400
+    except:
+        return 'Internal server error', 500
 
 def rename(motion_sensor_id, body):
     try:

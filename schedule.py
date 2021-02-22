@@ -42,6 +42,17 @@ def unregister(schedule_id):
     except:
         return 'Internal server error', 500
 
+def update(schedule_id, body):
+    try:
+        schedule = db.search(Query().id == schedule_id)
+
+        if schedule:
+            schedule_db_key = db.update(body, Query().id==schedule_id)
+            return db.get(doc_id=schedule_db_key[0]), 200
+        else:
+            return f"Schedule {schedule_id} does not exist", 400
+    except:
+        return 'Internal server error', 500  
 
 def change_days(schedule_id, body):
     try:
