@@ -39,7 +39,7 @@ def register(body):
         # Add new motor to database
         db.insert(body)
 
-        new_motor = db.search(Query().id == body['id'])
+        new_motor = db.search(Query().id == body['id'])[0]
         return new_motor, 200
     except:
         return 'Internal server error', 500

@@ -98,6 +98,7 @@ paths:
         content:
           application/json:
             schema:
+              title: MotorMoveRequestBody
               type: object
               required:
                 - id
@@ -128,6 +129,7 @@ paths:
         content:
           application/json:
             schema:
+              title: MotorRenameRequestBody
               type: object
               required:
                 - id
@@ -366,6 +368,7 @@ paths:
         content:
           application/json:
             schema:
+              title: MotionRenameRequestBody
               type: object
               required:
                 - id
@@ -397,6 +400,7 @@ paths:
         content:
           application/json:
             schema:
+              title: MotionChangeMotorsRequestBody
               type: object
               required:
                 - id
@@ -429,6 +433,7 @@ paths:
         content:
           application/json:
             schema:
+              title: MotionDurationSensitivityRequestBody
               type: object
               required:
                 - id
@@ -592,6 +597,7 @@ paths:
         content:
           application/json:
             schema:
+              title: LightRenameRequestBody
               type: "object"
               required:
                 - id
@@ -623,6 +629,7 @@ paths:
         content:
           application/json:
             schema:
+              title: LightChangeMotorsRequestBody
               type: "object"
               required:
                 - id
@@ -743,6 +750,7 @@ paths:
         content:
           application/json:
             schema:
+              title: ScheduleChangeDaysRequestBody
               type: "object"
               required:
                 - id
@@ -773,6 +781,7 @@ paths:
         content:
           application/json:
             schema:
+              title: ScheduleChangeTimeRequestBody
               type: "object"
               required:
                 - id
@@ -803,6 +812,7 @@ paths:
         content:
           application/json:
             schema:
+              title: ScheduleChangeGradientRequestBody
               type: "object"
               required:
                 - id
@@ -833,6 +843,7 @@ paths:
         content:
           application/json:
             schema:
+              title: ScheduleRenameRequestBody
               type: "object"
               required:
                 - id
