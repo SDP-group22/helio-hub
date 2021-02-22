@@ -88,26 +88,23 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/move:
+  /motor/move/{motor_id}:
     patch:
       tags:
       - motor
       summary: Move the blinds to a specified level
       operationId: motor.move
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: MotorMoveRequestBody
-              type: object
-              required:
-                - id
-                - level
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                level:
-                  $ref: '#/components/schemas/level'
+              $ref: '#/components/schemas/level'
       responses:
         200:
           description: OK
@@ -119,27 +116,24 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/rename:
+  /motor/rename/{motor_id}:
     patch:
       tags:
       - motor
       summary: Rename a motor
       operationId: motor.rename
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: MotorRenameRequestBody
-              type: object
-              required:
-                - id
-                - name
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                name:
-                  type: string
-                  example: bedroom-1
+              type: string
+              example: bedroom-1
       responses:
         200:
           description: OK
@@ -358,27 +352,24 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motion/rename:
+  /motion/rename/{motion_sensor_id}:
     patch:
       tags:
       - "motion"
       summary: "Rename a motion sensor"
       operationId: motion-sensor.rename
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: MotionRenameRequestBody
-              type: object
-              required:
-                - id
-                - name
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                name:
-                  type: "string"
-                  example: "hallway-1"
+              type: "string"
+              example: "hallway-1"
       responses:
         200:
           description: OK
@@ -390,28 +381,25 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motion/change_motors:
+  /motion/change_motors/{motion_sensor_id}:
     patch:
       tags:
       - "motion"
       summary: "Change the motors the sensor controls"
       operationId: motion-sensor.change_motors
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: MotionChangeMotorsRequestBody
-              type: object
-              required:
-                - id
-                - motor_ids
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                motor_ids:
-                  type: array
-                  items:
-                    type: integer
+              type: array
+              items:
+                type: integer
       responses:
         200:
           description: OK
@@ -423,27 +411,24 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motion/duration_sensitivity:
+  /motion/duration_sensitivity/{motion_sensor_id}:
     patch:
       tags:
       - "motion"
       summary: "Update duration sensitivity"
       operationId: motion-sensor.change_duration_sensitivity
+      parameters:
+        - name: motion_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: MotionDurationSensitivityRequestBody
-              type: object
-              required:
-                - id
-                - duration_sensitivity
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                duration_sensitivity:
-                  type: "string"
-                  # pattern: hh:mm
+              type: "string"
+              # pattern: hh:mm
       responses:
         200:
           description: OK
@@ -587,27 +572,24 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /light/rename:
+  /light/rename/{light_sensor_id}:
     patch:
       tags:
       - "light"
       summary: "Rename a light sensor"
       operationId: light-sensor.rename
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: LightRenameRequestBody
-              type: "object"
-              required:
-                - id
-                - name
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                name:
-                  type: "string"
-                  example: "hallway-1"
+              type: "string"
+              example: "hallway-1"
       responses:
         200:
           description: OK
@@ -619,28 +601,25 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /light/change_motors:
+  /light/change_motors/{light_sensor_id}:
     patch:
       tags:
       - "light"
       summary: "Change the motors a sensor controls"
       operationId: light-sensor.change_motors
+      parameters:
+        - name: light_sensor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: LightChangeMotorsRequestBody
-              type: "object"
-              required:
-                - id
-                - motor_ids
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                motor_ids:
-                  type: array
-                  items:
-                    type: integer
+              type: array
+              items:
+                type: integer
       responses:
         200:
           description: OK
@@ -740,26 +719,23 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /schedule/change_days:
+  /schedule/change_days/{schedule_id}:
     patch:
       tags:
         - "schedule"
       summary: "Change days"
       operationId: schedule.change_days
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: ScheduleChangeDaysRequestBody
-              type: "object"
-              required:
-                - id
-                - days
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                days:
-                  $ref: "#/components/schemas/days"
+              $ref: "#/components/schemas/days"
       responses:
         200:
           description: OK
@@ -771,26 +747,23 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /schedule/change_time:
+  /schedule/change_time/{schedule_id}:
     patch:
       tags:
         - "schedule"
       summary: "Change time"
       operationId: schedule.change_time
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: ScheduleChangeTimeRequestBody
-              type: "object"
-              required:
-                - id
-                - time
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                time:
-                  $ref: '#/components/schemas/time'
+              $ref: '#/components/schemas/time'
       responses:
         200:
           description: OK
@@ -802,26 +775,23 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /schedule/change_gradient:
+  /schedule/change_gradient/{schedule_id}:
     patch:
       tags:
         - "schedule"
       summary: "Change gradient"
       operationId: schedule.change_gradient
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: ScheduleChangeGradientRequestBody
-              type: "object"
-              required:
-                - id
-                - gradient
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                gradient:
-                  $ref: '#/components/schemas/gradient'
+              $ref: '#/components/schemas/gradient'
       responses:
         200:
           description: OK
@@ -833,26 +803,23 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /schedule/rename:
+  /schedule/rename/{schedule_id}:
     patch:
       tags:
         - "schedule"
       summary: "rename schedule"
       operationId: schedule.rename
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
       requestBody:
         content:
           application/json:
             schema:
-              title: ScheduleRenameRequestBody
-              type: "object"
-              required:
-                - id
-                - name
-              properties:
-                id:
-                  $ref: '#/components/schemas/id'
-                name:
-                  type: string
+              type: string
       responses:
         200:
           description: OK

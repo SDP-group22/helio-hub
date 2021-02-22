@@ -55,15 +55,16 @@ def unregister(light_sensor_id):
         return 'Internal server error', 500
 
 
-def rename(body):
+def rename(light_sensor_id, body):
     try:
-        light_sensor = db.search(Query().id == body['id'])
+        light_sensor = db.search(Query().id == light_sensor_id)
+        name = body
 
         if light_sensor:
-            light_sensor_db_key = db.update({'name': body['name']}, Query().id == body['id'])
+            light_sensor_db_key = db.update({'name': name}, Query().id == light_sensor_id)
             return db.get(doc_id=light_sensor_db_key[0]), 200
         else:
-            return f"Light sensor {body['id']} does not exist", 400
+            return f"Light sensor {light_sensor_id} does not exist", 400
     except:
         return 'Internal server error', 500
 
@@ -94,18 +95,17 @@ def activate(light_sensor_id):
         return 'Internal server error', 500
 
 
-def change_motors(body):
+def change_motors(light_sensor_id, body):
     try:
-        schedule_id = body['id']
-        motor_ids = body['motor_ids']
+        motor_ids = body
 
         for motor_id in motor_ids:
             motorExists = motor_db.contains(where('id') == motor_id)
             if not motorExists:
                 raise Exception()
 
-        db.update({'motor_ids': motor_ids}, Query().id == schedule_id)
-        light_sensor = db.search(Query().id == schedule_id)[0]
+        db.update({'motor_ids': motor_ids}, Query().id == light_sensor_id)
+        light_sensor = db.search(Query().id == light_sensor_id)[0]
         return light_sensor
 
     except:

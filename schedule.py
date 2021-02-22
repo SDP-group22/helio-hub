@@ -43,10 +43,9 @@ def unregister(schedule_id):
         return 'Internal server error', 500
 
 
-def change_days(body):
+def change_days(schedule_id, body):
     try:
-        schedule_id = body['id']
-        days = body['days']
+        days = body
 
         db.update({'days': days}, Query().id == schedule_id)
         schedule = db.search(Query().id == schedule_id)[0]
@@ -56,10 +55,9 @@ def change_days(body):
         return 'Internal server error', 500
 
 
-def change_time(body):
+def change_time(schedule_id, body):
     try:
-        schedule_id = body['id']
-        time = body['time']
+        time = body
 
         db.update({'time': time}, Query().id == schedule_id)
         schedule = db.search(Query().id == schedule_id)[0]
@@ -69,10 +67,9 @@ def change_time(body):
         return 'Internal server error', 500
 
 
-def change_gradient(body):
+def change_gradient(schedule_id, body):
     try:
-        schedule_id = body['id']
-        gradient = body['gradient']
+        gradient = body
 
         db.update({'gradient': gradient}, Query().id == schedule_id)
         schedule = db.search(Query().id == schedule_id)[0]
@@ -82,15 +79,16 @@ def change_gradient(body):
         return 'Internal server error', 500
 
 
-def rename(body):
+def rename(schedule_id, body):
     try:
-        schedule = db.search(Query().id == body['id'])
+        name = body
+        schedule = db.search(Query().id == schedule_id)
 
         if schedule:
-            schedule_db_key = db.update({'name': body['name']}, Query().id == body['id'])
+            schedule_db_key = db.update({'name': name}, Query().id == schedule_id)
             return db.get(doc_id=schedule_db_key[0]), 200
         else:
-            return f"Schedule {body['id']} does not exist", 400
+            return f"Schedule {schedule_id} does not exist", 400
     except:
         return 'Internal server error', 500
 

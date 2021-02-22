@@ -59,30 +59,32 @@ def unregister(motor_id):
     except:
         return 'Internal server error', 500
     
-def move(body):
+def move(motor_id, body):
     try:
-        motor = db.search(Query().id == body['id'])
+        motor = db.search(Query().id == motor_id)
+        level = body
 
         if motor:
 
             # TODO call move on motor api, if fail return 400
 
-            motor_db_key = db.update({'level':body['level']}, Query().id==body['id'])
+            motor_db_key = db.update({'level':level}, Query().id==motor_id)
             return db.get(doc_id=motor_db_key[0]), 200
         else:
-            return f"Motor {body['id']} does not exist", 400
+            return f"Motor {motor_id} does not exist", 400
     except:
         return 'Internal server error', 500
 
-def rename(body):
+def rename(motor_id, body):
     try:
-        motor = db.search(Query().id == body['id'])
+        motor = db.search(Query().id == motor_id)
+        name = body
 
         if motor:
-            motor_db_key = db.update({'name':body['name']}, Query().id==body['id'])
+            motor_db_key = db.update({'name':name}, Query().id==motor_id)
             return db.get(doc_id=motor_db_key[0]), 200
         else:
-            return f"Motor {body['id']} does not exist", 400
+            return f"Motor {motor_id} does not exist", 400
     except:
         return 'Internal server error', 500
 
