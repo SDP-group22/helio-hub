@@ -11,7 +11,6 @@ import com.helio.app.model.Day;
 import com.helio.app.model.Schedule;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

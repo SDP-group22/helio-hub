@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int DELAY = 250;
+    public static final int DELAY = 500;
     private int postTime = 0;
     private Map<Integer, Motor> motors;
     private Map<Integer, Schedule> schedules;

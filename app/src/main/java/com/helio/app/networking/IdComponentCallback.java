@@ -11,7 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * A MyCallback instance allows for code to be run when a response is received from the Hub.
+ * An instance of this class allows for code to be run when a response is received from the Hub.
  * It will update our local state to match that of the Hub after performing an action.
  *
  * @see DeletionCallback
