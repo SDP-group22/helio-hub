@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Schedule extends IdComponent {
+public class Schedule implements IdComponent {
+    private final int id;
     @SerializedName("motor_ids")
     private final List<Integer> motorIds;
     private String name;
@@ -22,7 +23,7 @@ public class Schedule extends IdComponent {
 
     public Schedule(int id, String name, boolean active, List<Day> days, int targetLevel,
                     int gradient, List<Integer> motorIds, String time) {
-        super(id);
+        this.id = id;
         this.name = name;
         this.active = active;
         this.days = days;
@@ -104,6 +105,11 @@ public class Schedule extends IdComponent {
 
     public int getTimeMinute() {
         return Integer.parseInt(Objects.requireNonNull(time).split(":")[1]);
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     @NotNull

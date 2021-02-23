@@ -8,7 +8,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Motor objects represent motor controllers in the user's home environment.
  */
-public class Motor extends IdComponent {
+public class Motor implements IdComponent {
+    private final int id;
     private String name;
     private String ip;
     private boolean active;
@@ -28,7 +29,7 @@ public class Motor extends IdComponent {
             int length,
             String style,
             MotorIcon icon) {
-        super(id);
+        this.id = id;
         this.name = name;
         this.ip = ip;
         this.active = active;
@@ -131,5 +132,10 @@ public class Motor extends IdComponent {
 
     public void setIcon(MotorIcon icon) {
         this.icon = icon;
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 }
