@@ -71,10 +71,11 @@ public class MainActivity extends AppCompatActivity {
     private void fetchState() {
         motors = new HashMap<>();
         HubClient client = new HubClient("http://10.0.2.2:4310/");
-        testMotor(client);
-        testSchedule(client);
-        testLightSensors(client);
-        testMotionSensors(client);
+        client.getAllMotors(motors);
+//        testMotor(client);
+//        testSchedule(client);
+//        testLightSensors(client);
+//        testMotionSensors(client);
     }
 
     private void testMotor(HubClient client) {
