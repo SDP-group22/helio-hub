@@ -31,7 +31,8 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blinds_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blinds_list_item,
+                parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,8 +42,11 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
         holder.blindIcon.setImageResource(motors.get(position).getIcon().id);
         holder.parent.setOnClickListener(v ->
         {
-            Toast.makeText(context, motors.get(position).getName() + " Selected", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(holder.itemView).navigate(R.id.action_blindsSettingsFragment_to_singleBlindSettingsFragment);
+            Toast.makeText(context, motors.get(position).getName() + " Selected",
+                    Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(holder.itemView).navigate(
+                    R.id.action_blindsSettingsFragment_to_singleBlindSettingsFragment
+            );
         });
     }
 
