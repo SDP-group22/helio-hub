@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.helio.app.R;
 import com.helio.app.model.Motor;
+import com.helio.app.ui.MotorIcon;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,10 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtName.setText(motors.get(position).getName());
-        holder.blindIcon.setImageResource(motors.get(position).getIcon().id);
+        MotorIcon icon = motors.get(position).getIcon();
+        if(icon != null) {
+            holder.blindIcon.setImageResource(icon.id);
+        }
         holder.parent.setOnClickListener(v ->
         {
             Toast.makeText(context, motors.get(position).getName() + " Selected",
