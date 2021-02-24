@@ -68,13 +68,13 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
                 Motor motor = motors.get(position);
-                // disable dragging TODO
+                // disable dragging? TODO
                 // send update to Hub
                 motor.setLevel((int) slider.getValue());
                 System.out.println("Updated level using slider: " + motor);
                 model.setCurrentMotor(motor.getId());
                 model.pushCurrentMotorState(motor);
-                // asynchronously enable dragging TODO
+                // asynchronously enable dragging? TODO
             }
         });
     }
