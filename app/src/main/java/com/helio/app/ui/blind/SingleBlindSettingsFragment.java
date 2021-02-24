@@ -21,9 +21,15 @@ public class SingleBlindSettingsFragment extends Fragment {
     private UserDataViewModel model;
 
     private void setActionListeners(View view) {
+        // "open" button
         view.findViewById(R.id.btn_open).setOnClickListener(v -> {
-            System.out.println("OPEN BUTTON PRESSED FOR " + model.getCurrentMotor());
+            System.out.println("OPEN button pressed for " + model.getCurrentMotor());
             model.moveCurrentMotor(0);
+        });
+        // "close" button
+        view.findViewById(R.id.btn_close).setOnClickListener(v -> {
+            System.out.println("CLOSE button pressed for " + model.getCurrentMotor());
+            model.moveCurrentMotor(100);
         });
     }
 
