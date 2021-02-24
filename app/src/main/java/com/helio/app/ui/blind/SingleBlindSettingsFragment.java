@@ -13,8 +13,6 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
 
-import java.util.ArrayList;
-
 public class SingleBlindSettingsFragment extends Fragment {
 
     private Motor motor;
