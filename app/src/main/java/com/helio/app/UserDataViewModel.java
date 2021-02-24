@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.helio.app.model.Motor;
 import com.helio.app.networking.HubClient;
+import com.helio.app.networking.request.MotorSettingsRequest;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class UserDataViewModel extends ViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
@@ -31,6 +33,15 @@ public class UserDataViewModel extends ViewModel {
     }
 
     public Motor getCurrentMotor() {
-        return motors.getValue().get(currentMotorId);
+        return Objects.requireNonNull(motors.getValue()).get(currentMotorId);
+    }
+
+    public void pushCurrentMotorState(Motor m) {
+        motors.getValue().put(currentMotorId, m);
+        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
+                m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
+                m.getLevel(), m.getStyle()
+        );
+        client.updateMotor(motors.getValue(), currentMotorId, motorSettingsRequest);
     }
 }

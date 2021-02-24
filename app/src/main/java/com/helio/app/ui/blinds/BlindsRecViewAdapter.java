@@ -27,9 +27,9 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
     private final UserDataViewModel model;
     private ArrayList<Motor> motors = new ArrayList<>();
 
-    public BlindsRecViewAdapter(Context context, BlindsSettingsFragment fragment) {
+    public BlindsRecViewAdapter(Context context, UserDataViewModel model) {
         this.context = context;
-        this.model = new ViewModelProvider(fragment).get(UserDataViewModel.class);
+        this.model = model;
     }
 
     @NonNull
