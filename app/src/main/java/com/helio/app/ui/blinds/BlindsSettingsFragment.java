@@ -23,7 +23,7 @@ public class BlindsSettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blinds_settings, container, false);
         BlindsRecViewAdapter adapter = new BlindsRecViewAdapter(getContext(), this);
 
-        UserDataViewModel model = new ViewModelProvider(this).get(UserDataViewModel.class);
+        UserDataViewModel model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> adapter.setMotors(new ArrayList<>(motors.values()))

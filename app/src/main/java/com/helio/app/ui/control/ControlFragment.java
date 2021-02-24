@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.helio.app.R;
+import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
 import com.helio.app.ui.MotorIcon;
 
@@ -26,17 +27,15 @@ public class ControlFragment extends Fragment {
         controlViewModel =
                 new ViewModelProvider(this).get(ControlViewModel.class);
         View view = inflater.inflate(R.layout.fragment_control, container, false);
-
-        // Prepare the list of motors TODO (temporary)
-        ArrayList<Motor> motors = new ArrayList<>();
-        motors.add(new Motor("Bedroom", MotorIcon.BEDROOM));
-        motors.add(new Motor("Kitchen", MotorIcon.KITCHEN));
-        motors.add(new Motor("Next to TV", MotorIcon.TV));
-        motors.add(new Motor("Living room", MotorIcon.HOUSE));
-
-        // Setup the adapter with the motors
         ControlRecViewAdapter adapter = new ControlRecViewAdapter(getContext());
-        adapter.setMotors(motors);
+
+        UserDataViewModel model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
+        model.fetchMotors().observe(
+                getViewLifecycleOwner(),
+                motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+        );
+
+
 
         // Insert into the recycler view
         RecyclerView recView = view.findViewById(R.id.control_rc_view);

@@ -36,9 +36,12 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
     @Override
     public void onBindViewHolder(@NonNull ControlRecViewAdapter.ViewHolder holder, int position) {
         // Set the name and icon of the motor and put the current level in the slider
-        holder.txtName.setText(motors.get(position).getName());
-        holder.blindIcon.setImageResource(motors.get(position).getIcon().id);
-        holder.slider.setValue(motors.get(position).getLevel());
+        Motor motor = motors.get(position);
+        holder.txtName.setText(motor.getName());
+        if(motor.getIcon() != null) {
+            holder.blindIcon.setImageResource(motor.getIcon().id);
+        }
+        holder.slider.setValue(motor.getLevel());
 
         // Format the number as a percentage (possibly sensitive to Locale)
         // Display Closed or Open if completely closed or open
