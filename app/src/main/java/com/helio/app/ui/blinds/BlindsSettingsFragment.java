@@ -25,9 +25,10 @@ public class BlindsSettingsFragment extends Fragment {
 
         UserDataViewModel model = new ViewModelProvider(this).get(UserDataViewModel.class);
 
-        model.fetchMotors().observe(getViewLifecycleOwner(), motors -> {
-            adapter.setMotors(new ArrayList<>(motors.values()));
-        });
+        model.fetchMotors().observe(
+                getViewLifecycleOwner(),
+                motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+        );
 
         // Insert into the recycler view
         RecyclerView recView = view.findViewById(R.id.blindsRCView);
