@@ -16,6 +16,8 @@ public class SingleBlindSettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View returnView = inflater.inflate(R.layout.fragment_single_blind_settings, container, false);
+        assert getArguments() != null;
+        int motorId = getArguments().getInt("currentMotorId");
 
         return returnView;
     }

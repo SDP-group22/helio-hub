@@ -46,11 +46,17 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
         }
         holder.parent.setOnClickListener(v ->
         {
-            Toast.makeText(context, motors.get(position).getName() + " Selected",
+            /*  The following line is horribly convoluted, but it follows the advice given here:
+                https://developer.android.com/guide/navigation/navigation-pass-data#define_destination_arguments
+                In short, this allows us to pass an argument (the id of the motor) to the single
+                blind settings fragment.
+             */
+            BlindsSettingsFragmentDirections.ActionBlindsSettingsFragmentToSingleBlindSettingsFragment action =
+                    BlindsSettingsFragmentDirections.actionBlindsSettingsFragmentToSingleBlindSettingsFragment();
+            action.setCurrentMotorId(motor.getId());
+            Toast.makeText(context, motor.getName() + " Selected",
                     Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(holder.itemView).navigate(
-                    R.id.action_blindsSettingsFragment_to_singleBlindSettingsFragment
-            );
+            Navigation.findNavController(holder.itemView).navigate(action);
         });
     }
 
