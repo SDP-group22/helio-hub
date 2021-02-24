@@ -10,10 +10,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.helio.app.R;
+import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
 import com.helio.app.ui.MotorIcon;
 
@@ -22,12 +24,13 @@ import java.util.ArrayList;
 public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdapter.ViewHolder> {
 
     private final Context context;
+    private final UserDataViewModel model;
     private ArrayList<Motor> motors = new ArrayList<>();
 
-    public BlindsRecViewAdapter(Context context) {
+    public BlindsRecViewAdapter(Context context, BlindsSettingsFragment fragment) {
         this.context = context;
+        this.model = new ViewModelProvider(fragment).get(UserDataViewModel.class);
     }
-
 
     @NonNull
     @Override
@@ -39,8 +42,9 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtName.setText(motors.get(position).getName());
-        MotorIcon icon = motors.get(position).getIcon();
+        Motor motor = motors.get(position);
+        holder.txtName.setText(motor.getName());
+        MotorIcon icon = motor.getIcon();
         if(icon != null) {
             holder.blindIcon.setImageResource(icon.id);
         }

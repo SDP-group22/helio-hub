@@ -92,9 +92,9 @@ public class HubClient {
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void moveMotor(Map<Integer, Motor> motors, int id, int level) {
-        Call<Motor> call = service.moveMotor(id, level);
-        call.enqueue(new IdComponentCallback<>(motors));
+    public void moveMotor(Motor motor, int level) {
+        Call<Motor> call = service.moveMotor(motor.getId(), level);
+        call.enqueue(new MoveMotorCallback());
     }
 
     public void startMotorCalibration(Map<Integer, Motor> motors, int motorId) {

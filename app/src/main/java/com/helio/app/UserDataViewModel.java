@@ -12,6 +12,7 @@ import java.util.Map;
 public class UserDataViewModel extends ViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
     private MutableLiveData<Map<Integer, Motor>> motors;
+    private int currentMotorId = -1;
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
         if(motors == null) {
@@ -19,5 +20,17 @@ public class UserDataViewModel extends ViewModel {
             client.getAllMotors(motors);
         }
         return motors;
+    }
+
+    public void setCurrentMotor(int id) {
+        currentMotorId = id;
+    }
+
+    public void moveCurrentMotor(int level) {
+        client.moveMotor(getCurrentMotor(), level);
+    }
+
+    public Motor getCurrentMotor() {
+        return motors.getValue().get(currentMotorId);
     }
 }
