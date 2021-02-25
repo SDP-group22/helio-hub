@@ -1,5 +1,6 @@
 from flask import render_template
 import connexion
+from ScheduleController import ScheduleController
 
 def get_app():
     # Create the app instance
@@ -17,6 +18,8 @@ def get_app():
 
 if __name__ == '__main__':
     app = get_app()
+
+    ScheduleController().start()
 
     # serve the api
     app.run(host='0.0.0.0', port=4310, debug=True)

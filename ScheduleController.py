@@ -3,6 +3,7 @@ from tiny_db_wrapper import *
 from json.decoder import JSONDecodeError
 import time
 import os
+import threading
 
 def move_blinds(schedule):
     motor_ids = schedule['motor-ids']
@@ -11,17 +12,25 @@ def move_blinds(schedule):
     for motor_id in motor_ids:
         print(f"moving blinds {motor_id} to: {level}")
 
-class ScheduleController:
+class ScheduleController(threading.Thread):
 
-    # stores a list of jobs with schedule id as dict key
-    schedule_dict = {}
+    def __init__(self):
+        threading.Thread.__init__(self)
 
-    # the schedule object that runs jobs
-    scheduler = Scheduler() 
+        # stores jobs with schedule id as dict key
+        self.schedule_dict = {}
+
+        # the (imported) schedule object that runs jobs
+        self.scheduler = Scheduler() 
+
+        self.lock = threading.Lock()
 
     def add_schedules(self, schedules):
 
+        # schedules contains all schedules found in db
         for schedule in schedules:
+
+            # if in-memory schedule_dict does not contain schedule from database then add it
             if schedule['id'] not in self.schedule_dict.keys() \
                 and schedule['active']:
                 self.add_schedule(schedule)
@@ -77,21 +86,34 @@ class ScheduleController:
             del self.schedule_dict[schedule_id]
 
     def run(self):
+        # loop forever
         while True:
+
+            # check activate any pending schedules
             self.scheduler.run_pending()
+            
+            # poll database for updates to schedules
             self.check_schedule_changes()
 
     def check_schedule_changes(self):
         schedules = None
 
-        while not schedules:
-            try:
-                schedules = schedule_table.all()
-            except JSONDecodeError:
-                time.sleep(0.5)
+        with self.lock:
+                # get all schedules from database
+            schedules = schedule_table.all()
+            # except JSONDecodeError:
+                # sometimes clashes with api reading from the table 
+                # just naively repeat until okay
+                # time.sleep(0.5)
 
         self.remove_schedules(schedules)
         self.add_schedules(schedules)
 
-sc = ScheduleController()
-sc.run()
+# alternative to avoid db clash 
+# api called schedule controller functions directly
+# add schedule
+# delete schedule 
+# whenever an update occurs api can call delete and then add again
+
+# run script by:
+# sc = ScheduleController().start()
