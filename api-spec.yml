@@ -104,7 +104,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MotorNoId'
+              $ref: '#/components/schemas/MotorUpdate'
       responses:
         200:
           description: OK
@@ -396,7 +396,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MotionNoId'
+              $ref: '#/components/schemas/MotionUpdate'
       responses:
         200:
           description: OK
@@ -644,7 +644,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LightNoId'
+              $ref: '#/components/schemas/UpdateLight'
       responses:
         200:
           description: OK
@@ -739,6 +739,31 @@ paths:
           $ref: '#/components/responses/500InternalError'
 
   #Schedule
+  /schedule/{schedule_id}:
+    get:
+      tags:
+      - schedule
+      summary: Get schedule information
+      operationId: schedule.get
+      parameters:
+        - name: schedule_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+        '400':
+          $ref: '#/components/responses/400InvalidInput'
+        '500':
+          $ref: '#/components/responses/500InternalError'
   /schedule/get_all:
     get:
       tags:
@@ -819,119 +844,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ScheduleNoId'
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Schedule"
-        400:
-          $ref: '#/components/responses/400InvalidInput'
-        500:
-          $ref: '#/components/responses/500InternalError'
-  /schedule/change_days/{schedule_id}:
-    patch:
-      tags:
-        - "schedule"
-      summary: "Change days"
-      operationId: schedule.change_days
-      parameters:
-        - name: schedule_id
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/id'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/days"
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Schedule"
-        400:
-          $ref: '#/components/responses/400InvalidInput'
-        500:
-          $ref: '#/components/responses/500InternalError'
-  /schedule/change_time/{schedule_id}:
-    patch:
-      tags:
-        - "schedule"
-      summary: "Change time"
-      operationId: schedule.change_time
-      parameters:
-        - name: schedule_id
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/id'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/time'
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Schedule"
-        400:
-          $ref: '#/components/responses/400InvalidInput'
-        500:
-          $ref: '#/components/responses/500InternalError'
-  /schedule/change_gradient/{schedule_id}:
-    patch:
-      tags:
-        - "schedule"
-      summary: "Change gradient"
-      operationId: schedule.change_gradient
-      parameters:
-        - name: schedule_id
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/id'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/gradient'
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Schedule"
-        400:
-          $ref: '#/components/responses/400InvalidInput'
-        500:
-          $ref: '#/components/responses/500InternalError'
-  /schedule/rename/{schedule_id}:
-    patch:
-      tags:
-        - "schedule"
-      summary: "rename schedule"
-      operationId: schedule.rename
-      parameters:
-        - name: schedule_id
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/id'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: string
+              $ref: '#/components/schemas/ScheduleUpdate'
       responses:
         200:
           description: OK
@@ -1056,6 +969,28 @@ components:
           # For storing customised style info like icon or colour.
           # Hub just needs to store it, app will figure out formatting and stuff.
           type: string
+    MotorUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: bedroom-1
+        ip:
+          $ref: '#/components/schemas/ip'
+        active:
+          type: boolean
+        level:
+          $ref: '#/components/schemas/level'
+        battery:
+          type: integer
+          minimum: 0
+          maximum: 100
+        length:
+          type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
     Motion:
       type: "object"
       required:
@@ -1101,6 +1036,30 @@ components:
         - battery
         - motor_ids
         - style
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          type: "string"
+          example: "hallway"
+        ip:
+          $ref: '#/components/schemas/ip'
+        active:
+          type: "boolean"
+        battery:
+          type: "integer"
+          minimum: 0
+          maximum: 100
+        motor_ids:
+          type: array
+          items:
+            type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
+    UpdateLight:
+      type: "object"
       properties:
         id:
           $ref: '#/components/schemas/id'
@@ -1191,6 +1150,54 @@ components:
         - duration_sensitivity
         - motor_ids
         - style
+      properties:
+        name:
+          type: "string"
+          example: "hallway"
+        ip:
+          $ref: '#/components/schemas/ip'
+        active:
+          type: "boolean"
+        battery:
+          type: "integer"
+          minimum: 0
+          maximum: 100
+        duration_sensitivity:
+          type: "string" # pattern hh:mm
+        motor_ids:
+          type: array
+          items:
+            type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
+    MotionUpdate:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "hallway"
+        ip:
+          $ref: '#/components/schemas/ip'
+        active:
+          type: "boolean"
+        battery:
+          type: "integer"
+          minimum: 0
+          maximum: 100
+        duration_sensitivity:
+          type: "string" # pattern hh:mm
+        motor_ids:
+          type: array
+          items:
+            type: integer
+        style:
+          # For storing customised style info like icon or colour.
+          # Hub just needs to store it, app will figure out formatting and stuff.
+          type: string
+    ScheduleUpdate:
+      type: "object"
       properties:
         name:
           type: "string"

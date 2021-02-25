@@ -3,11 +3,11 @@ db = TinyDB('./database/motors.json')
 
 def get(motor_id):
     try:
-        # db.search returns a list
-        motor = db.search(Query().id == motor_id)[0]
+        # db search returns a list
+        motor = db.search(Query().id == motor_id)
         
         if motor:
-            return motor, 200
+            return motor[0], 200
         else:
             return f"Motor {motor_id} not found", 400
     except:

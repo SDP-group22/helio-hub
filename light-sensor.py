@@ -5,10 +5,10 @@ motor_db = TinyDB('./database/motors.json')
 
 def get(light_sensor_id):
     try:
-        light_sensor = db.search(Query().id == light_sensor_id)[0]
+        light_sensor = db.search(Query().id == light_sensor_id)
 
         if light_sensor:
-            return light_sensor, 200
+            return light_sensor[0], 200
         else:
             return f"Light sensor {light_sensor_id} not found", 400
     except:

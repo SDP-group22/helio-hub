@@ -2,6 +2,17 @@ from tinydb import TinyDB, Query, where
 
 db = TinyDB('./database/schedule.json')
 
+def get(schedule_id):
+    try:
+        # db search returns a list
+        schedule = db.search(Query().id == schedule_id)
+        
+        if schedule:
+            return schedule[0], 200
+        else:
+            return f"schedule {schedule_id} not found", 400
+    except:
+        return 'Internal server error', 500
 
 def get_all():
     try:
@@ -9,7 +20,6 @@ def get_all():
         return all_schedules, 200
     except:
         return 'Internal server error', 500
-
 
 def register(body):
     try:
@@ -53,56 +63,6 @@ def update(schedule_id, body):
             return f"Schedule {schedule_id} does not exist", 400
     except:
         return 'Internal server error', 500  
-
-def change_days(schedule_id, body):
-    try:
-        days = body
-
-        db.update({'days': days}, Query().id == schedule_id)
-        schedule = db.search(Query().id == schedule_id)[0]
-        return schedule
-
-    except:
-        return 'Internal server error', 500
-
-
-def change_time(schedule_id, body):
-    try:
-        time = body
-
-        db.update({'time': time}, Query().id == schedule_id)
-        schedule = db.search(Query().id == schedule_id)[0]
-        return schedule
-
-    except:
-        return 'Internal server error', 500
-
-
-def change_gradient(schedule_id, body):
-    try:
-        gradient = body
-
-        db.update({'gradient': gradient}, Query().id == schedule_id)
-        schedule = db.search(Query().id == schedule_id)[0]
-        return schedule
-
-    except:
-        return 'Internal server error', 500
-
-
-def rename(schedule_id, body):
-    try:
-        name = body
-        schedule = db.search(Query().id == schedule_id)
-
-        if schedule:
-            schedule_db_key = db.update({'name': name}, Query().id == schedule_id)
-            return db.get(doc_id=schedule_db_key[0]), 200
-        else:
-            return f"Schedule {schedule_id} does not exist", 400
-    except:
-        return 'Internal server error', 500
-
 
 def activate(schedule_id):
     try:
