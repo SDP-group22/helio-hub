@@ -11,7 +11,7 @@ def client():
         yield c
     
     # teardown
-    os.remove('./database/testdb.json')
+    os.remove('./database/testmotordb.json')
 
 @pytest.fixture(scope='module')
 def motor_object():
@@ -29,25 +29,25 @@ def motor_object():
 
 """NOTE: the order of tests is important!!!"""
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_get_returns_400(motor_object, client):
     response = client.get('/motor/0')
     
     assert response.status_code == 400
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_get_all_returns_empty_list(motor_object, client):
     response = client.get('/motor/get_all')
     
     assert response.json == []
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_get_all_returns_200_when_db_empty(motor_object, client):
     response = client.get('/motor/get_all')
     
     assert response.status_code == 200
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_register_returns_200(motor_object, client):
     response = client.post('/motor/register',
                         data=json.dumps(motor_object),
@@ -55,25 +55,25 @@ def test_register_returns_200(motor_object, client):
 
     assert response.status_code == 200
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_get_returns_200(motor_object, client):
     response = client.get('/motor/0')
     
     assert response.status_code == 200
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_get_returns_motor_object(motor_object, client):
     response = client.get('/motor/0')
     
     assert response.json == motor_object
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_get_all_returns_motor_in_list(motor_object, client):
     response = client.get('/motor/get_all')
     
     assert response.json == [motor_object]
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_register_increments_motor_id(motor_object, client):
     response = client.post('/motor/register',
                         data=json.dumps(motor_object),
@@ -81,19 +81,19 @@ def test_register_increments_motor_id(motor_object, client):
     
     assert response.json['id'] == 1
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_unregister_returns_200_when_motor_found(motor_object, client):
     response = client.delete('/motor/unregister/1')
     
     assert response.status_code == 200
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_unregister_returns_400_when_motor_not_found(motor_object, client):
     response = client.delete('/motor/unregister/1')
     
     assert response.status_code == 400
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_update_returns_200_when_motor_found(motor_object, client):
     
     response = client.patch('/motor/update/0',
@@ -102,7 +102,7 @@ def test_update_returns_200_when_motor_found(motor_object, client):
     
     assert response.status_code == 200
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_update_updates_name(motor_object, client):
     
     update_content = {'name': 'updated'}
@@ -113,7 +113,7 @@ def test_update_updates_name(motor_object, client):
     
     assert response.json['name'] == 'updated'
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_update_returns_400_when_motor_not_found(motor_object, client):
     
     update_content = {'name': 'updated'}
@@ -124,13 +124,13 @@ def test_update_returns_400_when_motor_not_found(motor_object, client):
     
     assert response.status_code == 400
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_deactivate_returns_200_when_motor_found(motor_object, client):
     response = client.patch('/motor/deactivate/0')
 
     assert response.status_code == 200
 
-@patch('motor.db', TinyDB('./database/testdb.json'))
+@patch('motor.db', TinyDB('./database/testmotordb.json'))
 def test_deactivate_returns_400_when_motor_not_found(motor_object, client):
     response = client.patch('/motor/deactivate/99')
 
@@ -138,4 +138,4 @@ def test_deactivate_returns_400_when_motor_not_found(motor_object, client):
 
 # @pytest.mark.skip(reason='Teardown function')
 # def test_teardown():
-#     os.remove('./database/testdb.json')
+#     os.remove('./database/testmotordb.json')

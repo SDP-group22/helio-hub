@@ -11,7 +11,7 @@ def client():
         yield c
     
     # teardown
-    os.remove('./database/testdb.json')
+    os.remove('./database/testscheduledb.json')
 
 @pytest.fixture(scope='module')
 def schedule_object():
@@ -29,25 +29,25 @@ def schedule_object():
 
 """NOTE: the order of tests is important!!!"""
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_get_returns_400(schedule_object, client):
     response = client.get('/schedule/0')
     
     assert response.status_code == 400
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_get_all_returns_empty_list(schedule_object, client):
     response = client.get('/schedule/get_all')
     
     assert response.json == []
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_get_all_returns_200_when_db_empty(schedule_object, client):
     response = client.get('/schedule/get_all')
     
     assert response.status_code == 200
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_register_returns_200(schedule_object, client):
     response = client.post('/schedule/register',
                         data=json.dumps(schedule_object),
@@ -55,25 +55,25 @@ def test_register_returns_200(schedule_object, client):
 
     assert response.status_code == 200
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_get_returns_200(schedule_object, client):
     response = client.get('/schedule/0')
     
     assert response.status_code == 200
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_get_returns_schedule_object(schedule_object, client):
     response = client.get('/schedule/0')
     
     assert response.json == schedule_object
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_get_all_returns_schedule_in_list(schedule_object, client):
     response = client.get('/schedule/get_all')
     
     assert response.json == [schedule_object]
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_register_increments_schedule_id(schedule_object, client):
     response = client.post('/schedule/register',
                         data=json.dumps(schedule_object),
@@ -81,19 +81,19 @@ def test_register_increments_schedule_id(schedule_object, client):
     
     assert response.json['id'] == 1
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_unregister_returns_200_when_schedule_found(schedule_object, client):
     response = client.delete('/schedule/unregister/1')
     
     assert response.status_code == 200
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_unregister_returns_400_when_schedule_not_found(schedule_object, client):
     response = client.delete('/schedule/unregister/1')
     
     assert response.status_code == 400
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_update_returns_200_when_schedule_found(schedule_object, client):
     
     response = client.patch('/schedule/update/0',
@@ -102,7 +102,7 @@ def test_update_returns_200_when_schedule_found(schedule_object, client):
     
     assert response.status_code == 200
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_update_updates_name(schedule_object, client):
     
     update_content = {'name': 'updated'}
@@ -113,7 +113,7 @@ def test_update_updates_name(schedule_object, client):
     
     assert response.json['name'] == 'updated'
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_update_returns_400_when_schedule_not_found(schedule_object, client):
     
     update_content = {'name': 'updated'}
@@ -124,13 +124,13 @@ def test_update_returns_400_when_schedule_not_found(schedule_object, client):
     
     assert response.status_code == 400
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_deactivate_returns_200_when_schedule_found(schedule_object, client):
     response = client.patch('/schedule/deactivate/0')
 
     assert response.status_code == 200
 
-@patch('schedule.db', TinyDB('./database/testdb.json'))
+@patch('schedule.db', TinyDB('./database/testscheduledb.json'))
 def test_deactivate_returns_400_when_schedule_not_found(schedule_object, client):
     response = client.patch('/schedule/deactivate/99')
 
@@ -138,4 +138,4 @@ def test_deactivate_returns_400_when_schedule_not_found(schedule_object, client)
 
 # @pytest.mark.skip(reason='Teardown function')
 # def test_teardown():
-#     os.remove('./database/testdb.json')
+#     os.remove('./database/testscheduledb.json')

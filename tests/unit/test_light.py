@@ -11,7 +11,7 @@ def client():
         yield c
     
     # teardown
-    os.remove('./database/testdb.json')
+    os.remove('./database/testlightdb.json')
 
 @pytest.fixture(scope='module')
 def light_object():
@@ -28,25 +28,25 @@ def light_object():
 
 """NOTE: the order of tests is important!!!"""
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_get_returns_400(light_object, client):
     response = client.get('/light/0')
     
     assert response.status_code == 400
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_get_all_returns_empty_list(light_object, client):
     response = client.get('/light/get_all')
     
     assert response.json == []
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_get_all_returns_200_when_db_empty(light_object, client):
     response = client.get('/light/get_all')
     
     assert response.status_code == 200
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_register_returns_200(light_object, client):
     response = client.post('/light/register',
                         data=json.dumps(light_object),
@@ -54,25 +54,25 @@ def test_register_returns_200(light_object, client):
 
     assert response.status_code == 200
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_get_returns_200(light_object, client):
     response = client.get('/light/0')
     
     assert response.status_code == 200
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_get_returns_light_object(light_object, client):
     response = client.get('/light/0')
     
     assert response.json == light_object
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_get_all_returns_light_in_list(light_object, client):
     response = client.get('/light/get_all')
     
     assert response.json == [light_object]
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_register_increments_light_id(light_object, client):
     response = client.post('/light/register',
                         data=json.dumps(light_object),
@@ -80,7 +80,7 @@ def test_register_increments_light_id(light_object, client):
     
     assert response.json['id'] == 1
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_register_returns_400_when_invalid_motor(light_object, client):
     light_object['motor_ids'] = [2000]
 
@@ -90,19 +90,19 @@ def test_register_returns_400_when_invalid_motor(light_object, client):
     
     assert response.status_code == 400
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_unregister_returns_200_when_light_found(light_object, client):
     response = client.delete('/light/unregister/1')
     
     assert response.status_code == 200
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_unregister_returns_400_when_light_not_found(light_object, client):
     response = client.delete('/light/unregister/1')
     
     assert response.status_code == 400
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_update_returns_200_when_light_found(light_object, client):
     
     response = client.patch('/light/update/0',
@@ -111,7 +111,7 @@ def test_update_returns_200_when_light_found(light_object, client):
     
     assert response.status_code == 200
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_update_updates_name(light_object, client):
     
     update_content = {'name': 'updated'}
@@ -122,7 +122,7 @@ def test_update_updates_name(light_object, client):
     
     assert response.json['name'] == 'updated'
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_update_returns_400_when_invalid_motor(light_object, client):
     light_object['motor_ids'] = [2000]
 
@@ -132,7 +132,7 @@ def test_update_returns_400_when_invalid_motor(light_object, client):
     
     assert response.status_code == 400
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_update_returns_400_when_light_not_found(light_object, client):
     
     update_content = {'name': 'updated'}
@@ -143,13 +143,13 @@ def test_update_returns_400_when_light_not_found(light_object, client):
     
     assert response.status_code == 400
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_deactivate_returns_200_when_light_found(light_object, client):
     response = client.patch('/light/deactivate/0')
 
     assert response.status_code == 200
 
-@patch('light-sensor.db', TinyDB('./database/testdb.json'))
+@patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_deactivate_returns_400_when_light_not_found(light_object, client):
     response = client.patch('/light/deactivate/99')
 
@@ -157,4 +157,4 @@ def test_deactivate_returns_400_when_light_not_found(light_object, client):
 
 # @pytest.mark.skip(reason='Teardown function')
 # def test_teardown():
-#     os.remove('./database/testdb.json')
+#     os.remove('./database/testlightdb.json')
