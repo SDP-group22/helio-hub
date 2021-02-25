@@ -55,7 +55,7 @@ def register(body):
 
         db.insert(body)
 
-        new_motion_sensor = db.search(Query().id == body['id'])
+        new_motion_sensor = db.search(Query().id == body['id'])[0]
         return new_motion_sensor, 200
     except:
         return 'Internal server error', 500

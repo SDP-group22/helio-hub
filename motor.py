@@ -51,7 +51,7 @@ def register(body):
 
         db.insert(body)
 
-        new_motor = db.search(Query().id == body['id'])
+        new_motor = db.search(Query().id == body['id'])[0]
         return new_motor, 200
     except Exception as e:
         print(str(e))

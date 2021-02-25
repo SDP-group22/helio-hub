@@ -44,7 +44,7 @@ def register(body):
 
         db.insert(body)
 
-        new_schedule = db.search(Query().id == body['id'])
+        new_schedule = db.search(Query().id == body['id'])[0]
         return new_schedule, 200
     except:
         return 'Internal server error', 500
