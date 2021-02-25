@@ -1130,7 +1130,7 @@ components:
         - name
         - active
         - days
-        - target-level
+        - target_level
         - gradient
         - motor_ids
         - time
@@ -1144,7 +1144,7 @@ components:
           type: "boolean"
         days: 
           $ref: "#/components/schemas/days"
-        target-level:
+        target_level:
           $ref: '#/components/schemas/level'
         gradient:
           $ref: '#/components/schemas/gradient'
@@ -1248,7 +1248,7 @@ components:
         - name
         - active
         - days
-        - target-level
+        - target_level
         - gradient
         - motor_ids
         - time
@@ -1260,7 +1260,7 @@ components:
           type: "boolean"
         days: 
           $ref: "#/components/schemas/days"
-        target-level:
+        target_level:
           $ref: '#/components/schemas/level'
         gradient:
           $ref: '#/components/schemas/gradient'
