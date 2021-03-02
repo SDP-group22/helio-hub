@@ -5,7 +5,6 @@ import utils
 db = TinyDB('./database/motion-sensors.json')
 motor_db = TinyDB('./database/motors.json')
 
-
 def get(motion_sensor_id):
     try:
         motion_sensor = db.search(Query().id == motion_sensor_id)

@@ -4,7 +4,6 @@ import utils
 db = TinyDB('./database/light-sensors.json')
 motor_db = TinyDB('./database/motors.json')
 
-
 def get(light_sensor_id):
     try:
         light_sensor = db.search(Query().id == light_sensor_id)
@@ -26,37 +25,37 @@ def get_all():
 
 
 def register(body):
-    try:
-        ip = body['ip']
-        motor_ids = body['motor_ids']
-        battery = body['battery']
+    # try:
+    ip = body['ip']
+    motor_ids = body['motor_ids']
+    battery = body['battery']
 
-        if not utils.valid_ip(ip):
-            return f'Could not register: Invalid ip {ip}', 400
+    if not utils.valid_ip(ip):
+        return f'Could not register: Invalid ip {ip}', 400
 
-        if not (0 <= battery <= 100):
-            return f'Could not register: Invalid battery level {battery}', 400
+    if not (0 <= battery <= 100):
+        return f'Could not register: Invalid battery level {battery}', 400
 
-        for motor_id in motor_ids:
-            motor_exists = motor_db.contains(where('id') == motor_id)
-            if not motor_exists:
-                return f"Could not register: Motor {motor_id} does not exist", 400
+    for motor_id in motor_ids:
+        motor_exists = motor_db.contains(where('id') == motor_id)
+        if not motor_exists:
+            return f"Could not register: Motor {motor_id} does not exist", 400
 
-        all_light_sensors = db.all()
-        ids = [light_sensor['id'] for light_sensor in all_light_sensors]
+    all_light_sensors = db.all()
+    ids = [light_sensor['id'] for light_sensor in all_light_sensors]
 
-        if ids:
-            largest_id = max(ids)
-            body['id'] = largest_id + 1
-        else:
-            body['id'] = 0
+    if ids:
+        largest_id = max(ids)
+        body['id'] = largest_id + 1
+    else:
+        body['id'] = 0
 
-        db.insert(body)
+    db.insert(body)
 
-        new_light_sensor = db.search(Query().id == body['id'])[0]
-        return new_light_sensor, 200
-    except:
-        return 'Internal server error', 500
+    new_light_sensor = db.search(Query().id == body['id'])[0]
+    return new_light_sensor, 200
+    # except:
+    #     return 'Internal server error', 500
 
 
 def unregister(light_sensor_id):
@@ -74,7 +73,8 @@ def unregister(light_sensor_id):
 
 def update(light_sensor_id, body):
     try:
-
+        # TODO: bug here since body may not contain these field and will throw a key error
+        # see broken tests
         ip = body['ip']
         motor_ids = body['motor_ids']
         battery = body['battery']
