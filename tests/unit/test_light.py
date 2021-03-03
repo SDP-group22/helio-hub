@@ -1,9 +1,7 @@
 import pytest
 import json
 from mock import patch
-from tinydb import TinyDB, Query
-import os
-import time
+from tinydb import TinyDB
 
 """NOTE: the order of tests is important!!!"""
 
@@ -28,7 +26,6 @@ def test_get_returns_200(light_db, client):
 @patch('light-sensor.db', TinyDB('./database/testlightdb.json'))
 def test_get_all_returns_empty_list(light_db, light_object, client):
 
-    # remove dummy record
     response = client.get('/light/get_all')
     
     assert response.json == [light_object]

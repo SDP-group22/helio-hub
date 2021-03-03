@@ -1,10 +1,7 @@
-from api import get_app
 import pytest
 import json
 from mock import patch
 from tinydb import TinyDB
-import os
-
 
 """NOTE: the order of tests is important!!!"""
 

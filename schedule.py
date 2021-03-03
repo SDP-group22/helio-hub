@@ -12,7 +12,7 @@ def get(schedule_id):
         if schedule:
             return schedule[0], 200
         else:
-            return f"schedule {schedule_id} not found", 400
+            return f"schedule {schedule_id} not found", 404
     except:
         return 'Internal server error', 500
 

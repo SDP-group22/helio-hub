@@ -11,7 +11,7 @@ def client():
     with get_app().app.test_client() as c:
         yield c
 
-# mock databases
+""" mock databases """
 
 @pytest.fixture(scope="function")
 def light_db(light_object):
@@ -47,8 +47,20 @@ def motion_db(motion_object):
     yield motion_db
 
     os.remove('./database/testmotiondb.json')
+
+@pytest.fixture(scope="function")
+def schedule_db(schedule_object):
     
-# mock objects
+    schedule_db = TinyDB('./database/testscheduledb.json')
+
+    # contains a dummy record
+    schedule_db.insert(schedule_object)
+
+    yield schedule_db
+
+    os.remove('./database/testscheduledb.json')
+    
+""" mock objects """
 
 @pytest.fixture(scope='function')
 def light_object():
@@ -91,6 +103,19 @@ def motion_object():
 
     return motion_object
 
+@pytest.fixture(scope='function')
+def schedule_object():
+    schedule_object = {}
+    schedule_object['id'] = 0
+    schedule_object['name'] = 'test_schedule'
+    schedule_object['active'] = False
+    schedule_object['days'] = ['Monday']
+    schedule_object['target_level'] = 80
+    schedule_object['gradient'] = 45
+    schedule_object['time'] = '07:00'
+    schedule_object['motor_ids'] = [0]
+
+    return schedule_object
 
 def pytest_sessionfinish(session, exitstatus):
     
