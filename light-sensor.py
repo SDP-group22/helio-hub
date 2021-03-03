@@ -79,6 +79,8 @@ def update(light_sensor_id, body):
         motor_ids = body['motor_ids']
         battery = body['battery']
 
+        # TODO connexion validates this for us so this could be removed but feel free to leave it in
+        # for example see minimum in apy.yaml
         if not utils.valid_ip(ip):
             return f'Could not register: Invalid ip {ip}', 400
 
