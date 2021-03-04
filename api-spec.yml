@@ -1345,7 +1345,7 @@ components:
     400InvalidInput:
       description: Invalid input, ensure object id was specified correctly
     409Conflict:
-      description: Object's current state does not support this operation
+      description: Object's current state does not allow this operation
     500InternalError:
       description: Internal server error, failed to complete operation
 
