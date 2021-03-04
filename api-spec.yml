@@ -242,7 +242,30 @@ paths:
       responses:
         100: # signal that Hub is awaiting further calibration actions
           $ref: "#/components/responses/100Continue"
-        409: # motor is not in the proper state to allow calibration
+        409: # motor is not in the proper state to start calibration
+          $ref: "#/components/responses/409Conflict"
+        400:
+          $ref: "#/components/responses/400InvalidInput"
+        500:
+          $ref: "#/components/responses/500InternalError"
+  /motor/calibrate/stop/{motor_id}:
+    # This request asks the Hub to end the calibration procedure. The Hub should
+    # change the state of the motor to only allow "normal" requests again.
+    patch:
+      tags:
+      - "motor"
+      summary: "Stop motor calibration"
+      operationId: "motor.calibration.stop"
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/id"
+      responses:
+        200:
+          $ref: "#/components/responses/200OK"
+        409: # motor is not in the proper state to end calibration
           $ref: "#/components/responses/409Conflict"
         400:
           $ref: "#/components/responses/400InvalidInput"
