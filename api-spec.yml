@@ -337,6 +337,50 @@ paths:
           $ref: "#/components/responses/400InvalidInput"
         500:
           $ref: "#/components/responses/500InternalError"
+  /motor/calibrate/set_highest_point/{motor_id}:
+    # Request is sent when the user wants to update the highest point
+    patch:
+      tags:
+      - "motor"
+      summary: "Set the highest point for this motor"
+      operationId: "motor.calibration.set_highest_point"
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/id"
+      responses:
+        200:
+          $ref: "#/components/responses/200OK"
+        409: # motor is not in CALIBRATING state
+          $ref: "#/components/responses/409Conflict"
+        400:
+          $ref: "#/components/responses/400InvalidInput"
+        500:
+          $ref: "#/components/responses/500InternalError"
+  /motor/calibrate/set_lowest_point/{motor_id}:
+    # Request is sent when the user wants to update the lowest point
+    patch:
+      tags:
+      - "motor"
+      summary: "Set the lowest point for this motor"
+      operationId: "motor.calibration.set_lowest_point"
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/id"
+      responses:
+        200:
+          $ref: "#/components/responses/200OK"
+        409: # motor is not in CALIBRATING state
+          $ref: "#/components/responses/409Conflict"
+        400:
+          $ref: "#/components/responses/400InvalidInput"
+        500:
+          $ref: "#/components/responses/500InternalError"
   # Motion Sensor
   /motion/{motion_sensor_id}:
     get:
