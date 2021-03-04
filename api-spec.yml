@@ -268,6 +268,75 @@ paths:
           $ref: "#/components/responses/400InvalidInput"
         500:
           $ref: "#/components/responses/500InternalError"
+  /motor/calibrate/start_moving_up/{motor_id}:
+    # Request is sent when the user begins holding down the "up" button on the
+    # calibration page, requesting that the motor begin moving up (slowly).
+    patch:
+      tags:
+      - "motor"
+      summary: "Begin rolling up the blind until the user signals the highest point"
+      operationId: "motor.calibration.start_moving_up"
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/id"
+      responses:
+        100: # motor state set from CALIBRATING to CALIBRATING_MOVING, awaiting /stop_moving/
+          $ref: "#/components/responses/100Continue"
+        409: # motor is not in CALIBRATING state
+          $ref: "#/components/responses/409Conflict"
+        400:
+          $ref: "#/components/responses/400InvalidInput"
+        500:
+          $ref: "#/components/responses/500InternalError"
+  /motor/calibrate/start_moving_down/{motor_id}:
+    # Request is sent when the user begins holding down the "down" button on the
+    # calibration page, requesting that the motor begin moving down (slowly).
+    patch:
+      tags:
+      - "motor"
+      summary: "Begin rolling down the blind until the user signals the lowest point"
+      operationId: "motor.calibration.start_moving_down"
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/id"
+      responses:
+        100: # motor state set from CALIBRATING to CALIBRATING_MOVING, awaiting /stop_moving/
+          $ref: "#/components/responses/100Continue"
+        409: # motor is not in CALIBRATING state
+          $ref: "#/components/responses/409Conflict"
+        400:
+          $ref: "#/components/responses/400InvalidInput"
+        500:
+          $ref: "#/components/responses/500InternalError"
+  /motor/calibrate/stop_moving/{motor_id}:
+    # Request is sent when the user releases the "up" or "down" button on the
+    # calibration page, requesting that the motor stop moving up.
+    patch:
+      tags:
+      - "motor"
+      summary: "Pause rolling the blind for calibration"
+      operationId: "motor.calibration.stop_moving"
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/id"
+      responses:
+        100: # motor state set from CALIBRATING_MOVING to CALIBRATING, awaiting actions
+          $ref: "#/components/responses/100Continue"
+        409: # motor is not in CALIBRATING_MOVING state
+          $ref: "#/components/responses/409Conflict"
+        400:
+          $ref: "#/components/responses/400InvalidInput"
+        500:
+          $ref: "#/components/responses/500InternalError"
   # Motion Sensor
   /motion/{motion_sensor_id}:
     get:
