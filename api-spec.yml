@@ -228,7 +228,7 @@ paths:
       tags:
       - "motor"
       summary: "Initiate motor calibration"
-      operationId: "motor.calibration.start"
+      operationId: "motor.calibration_start"
       parameters:
         - name: motor_id
           in: path
@@ -252,7 +252,7 @@ paths:
       tags:
       - "motor"
       summary: "Stop motor calibration"
-      operationId: "motor.calibration.stop"
+      operationId: "motor.calibration_stop"
       parameters:
         - name: motor_id
           in: path
@@ -268,14 +268,14 @@ paths:
           $ref: "#/components/responses/400InvalidInput"
         500:
           $ref: "#/components/responses/500InternalError"
-  /motor/calibrate/start_moving_up/{motor_id}:
+  /motor/calibrate/move_up/{motor_id}:
     # Request is sent when the user begins holding down the "up" button on the
     # calibration page, requesting that the motor begin moving up (slowly).
     patch:
       tags:
       - "motor"
       summary: "Begin rolling up the blind until the user signals the highest point"
-      operationId: "motor.calibration.start_moving_up"
+      operationId: "motor.calibration_move_up"
       parameters:
         - name: motor_id
           in: path
@@ -291,14 +291,14 @@ paths:
           $ref: "#/components/responses/400InvalidInput"
         500:
           $ref: "#/components/responses/500InternalError"
-  /motor/calibrate/start_moving_down/{motor_id}:
+  /motor/calibrate/move_down/{motor_id}:
     # Request is sent when the user begins holding down the "down" button on the
     # calibration page, requesting that the motor begin moving down (slowly).
     patch:
       tags:
       - "motor"
       summary: "Begin rolling down the blind until the user signals the lowest point"
-      operationId: "motor.calibration.start_moving_down"
+      operationId: "motor.calibration_move_down"
       parameters:
         - name: motor_id
           in: path
@@ -321,7 +321,7 @@ paths:
       tags:
       - "motor"
       summary: "Pause rolling the blind for calibration"
-      operationId: "motor.calibration.stop_moving"
+      operationId: "motor.calibration_stop_moving"
       parameters:
         - name: motor_id
           in: path
@@ -337,13 +337,13 @@ paths:
           $ref: "#/components/responses/400InvalidInput"
         500:
           $ref: "#/components/responses/500InternalError"
-  /motor/calibrate/set_highest_point/{motor_id}:
+  /motor/calibrate/set_highest/{motor_id}:
     # Request is sent when the user wants to update the highest point
     patch:
       tags:
       - "motor"
       summary: "Set the highest point for this motor"
-      operationId: "motor.calibration.set_highest_point"
+      operationId: "motor.calibration_set_highest"
       parameters:
         - name: motor_id
           in: path
@@ -359,13 +359,13 @@ paths:
           $ref: "#/components/responses/400InvalidInput"
         500:
           $ref: "#/components/responses/500InternalError"
-  /motor/calibrate/set_lowest_point/{motor_id}:
+  /motor/calibrate/set_lowest/{motor_id}:
     # Request is sent when the user wants to update the lowest point
     patch:
       tags:
       - "motor"
       summary: "Set the lowest point for this motor"
-      operationId: "motor.calibration.set_lowest_point"
+      operationId: "motor.calibration_set_lowest"
       parameters:
         - name: motor_id
           in: path

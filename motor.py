@@ -153,9 +153,30 @@ def move(motor_id, body):
         return 'Internal server error', 500
 
 
-def start_calibration(motor_id):
-    pass
+def calibration_start(motor_id):
+    print('start calibration')
+    return 'start calibration', 200
 
+def calibration_stop(motor_id):
+    print('stop calibration')
+    return 'stop calibration', 200
 
-def stop_calibration(motor_id):
-    pass
+def calibration_move_up(motor_id):
+    print('moving up calibration')
+    return 'moving up calibration', 200
+
+def calibration_move_down(motor_id):
+    print('moving down calibration')
+    return 'moving down calibration', 200
+
+def calibration_stop_moving(motor_id):
+    print('stop calibration moving')
+    return 'stop calibration moving', 200
+
+def calibration_set_highest(motor_id):
+    print('highest set')
+    return 'highest set', 200
+
+def calibration_set_lowest(motor_id):
+    print('lowest set')
+    return 'lowest set', 200
