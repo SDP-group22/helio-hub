@@ -219,14 +219,20 @@ paths:
           $ref: '#/components/responses/400InvalidInput'
         500:
           $ref: '#/components/responses/500InternalError'
-  /motor/start_calibrate_up/{motor_id}:
-    # request is triggered when user begins holding down "up" button on the
-    # calibration page.
+  /motor/calibrate/start/{motor_id}:
+    # This request asks the Hub to begin the calibration procedure.
+    # The Hub should change the state of the motor to disallow "normal" requests,
+    # and only accept the following:
+    # - /motor/calibrate/start_moving_up/
+    # - /motor/calibrate/stop_moving_up/
+    # - /motor/calibrate/start_moving_down/
+    # - /motor/calibrate/stop_moving_down/
+    # - /motor/calibrate/stop/
     patch:
       tags:
       - "motor"
-      summary: "Initiate calibration of motor's highest point"
-      operationId: "motor.start_calibration_up"
+      summary: "Initiate motor calibration"
+      operationId: "motor.calibration.start"
       parameters:
         - name: motor_id
           in: path
@@ -234,7 +240,7 @@ paths:
           schema:
             $ref: "#/components/schemas/id"
       responses:
-        100: # signal that Hub is awaiting /stop_calibrate_up
+        100: # signal that Hub is awaiting further calibration actions
           $ref: "#/components/responses/100Continue"
         409: # motor is not in the proper state to allow calibration
           $ref: "#/components/responses/409Conflict"
