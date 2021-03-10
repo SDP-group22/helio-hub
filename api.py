@@ -1,5 +1,9 @@
 from flask import render_template
+from db_writer import DbWriter
+from scheduler import Scheduler
 import connexion
+import threading
+
 
 def get_app():
     # Create the app instance
@@ -15,8 +19,20 @@ def get_app():
 
     return app
 
+
 if __name__ == '__main__':
     app = get_app()
+
+    DbWriter.make_instance()
+    DbWriter.get_instance().start()
+
+    Scheduler.make_instance()
+    Scheduler.get_instance().start()
+
+    print('*********************  THREADS  **********************')
+    for thread in threading.enumerate():
+        print(thread.name)
+    print('******************************************************')
 
     # serve the api
     app.run(host='0.0.0.0', port=4310, debug=True)

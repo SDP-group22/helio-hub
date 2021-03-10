@@ -1,4 +1,5 @@
 from tinydb import TinyDB, Query, where
+from db_writer import DbWriter
 import utils
 
 db = TinyDB('./database/light-sensors.json')
@@ -52,7 +53,9 @@ def register(body):
         else:
             body['id'] = 0
 
-        db.insert(body)
+        dbWriter = DbWriter.get_instance()
+        dbWriter.write_to_db(db, body)
+        dbWriter.queue.join()
 
         new_light_sensor = db.search(Query().id == body['id'])[0]
         return new_light_sensor, 200
@@ -65,7 +68,9 @@ def unregister(light_sensor_id):
         light_sensor_exists = db.contains(where('id') == light_sensor_id)
 
         if light_sensor_exists:
-            db.remove(Query().id == light_sensor_id)
+            dbWriter = DbWriter.get_instance()
+            dbWriter.delete_from_db(db, light_sensor_id)
+            dbWriter.queue.join()
             return f"Light sensor {light_sensor_id} unregistered", 200
         else:
             return f"Light sensor {light_sensor_id} does not exist", 404
@@ -94,70 +99,11 @@ def update(light_sensor_id, body):
         light_sensor_exists = db.contains(where('id') == light_sensor_id)
 
         if light_sensor_exists:
-            light_sensor_db_key = db.update(body, Query().id == light_sensor_id)
-            return db.get(doc_id=light_sensor_db_key[0]), 200
+            dbWriter = DbWriter.get_instance()
+            dbWriter.update_db(db, light_sensor_id, body)
+            dbWriter.queue.join()
+            return db.search(Query().id == light_sensor_id)[0], 200
         else:
             return f"Light sensor {light_sensor_id} does not exist", 404
-    except:
-        return 'Internal server error', 500
-
-
-def rename(light_sensor_id, body):
-    try:
-        light_sensor_exists = db.contains(where('id') == light_sensor_id)
-
-        if light_sensor_exists:
-            light_sensor_db_key = db.update({'name': body}, Query().id == light_sensor_id)
-            return db.get(doc_id=light_sensor_db_key[0]), 200
-        else:
-            return f"Light sensor {light_sensor_id} does not exist", 404
-    except:
-        return 'Internal server error', 500
-
-
-def deactivate(light_sensor_id):
-    try:
-        light_sensor_exists = db.contains(where('id') == light_sensor_id)
-
-        if light_sensor_exists:
-            light_sensor_db_key = db.update({'active': False}, Query().id == light_sensor_id)
-            return db.get(doc_id=light_sensor_db_key[0]), 200
-        else:
-            return f"Light sensor {light_sensor_id} does not exist", 404
-    except:
-        return 'Internal server error', 500
-
-
-def activate(light_sensor_id):
-    try:
-        light_sensor_exists = db.contains(where('id') == light_sensor_id)
-
-        if light_sensor_exists:
-            light_sensor_db_key = db.update({'active': True}, Query().id == light_sensor_id)
-            return db.get(doc_id=light_sensor_db_key[0]), 200
-        else:
-            return f"Light sensor {light_sensor_id} does not exist", 404
-    except:
-        return 'Internal server error', 500
-
-
-def change_motors(light_sensor_id, body):
-    try:
-        motor_ids = body
-
-        light_sensor_exists = db.contains(where('id') == light_sensor_id)
-
-        if not light_sensor_exists:
-            return f"Light sensor {light_sensor_id} does not exist", 404
-
-        for motor_id in motor_ids:
-            motor_exists = motor_db.contains(where('id') == motor_id)
-            if not motor_exists:
-                return f"Motor {motor_id} does not exist", 404
-
-        db.update({'motor_ids': motor_ids}, Query().id == light_sensor_id)
-        light_sensor = db.search(Query().id == light_sensor_id)[0]
-        return light_sensor, 200
-
     except:
         return 'Internal server error', 500

@@ -1,4 +1,5 @@
 from tinydb import TinyDB, Query, where
+from db_writer import DbWriter
 import re
 import utils
 
@@ -53,7 +54,9 @@ def register(body):
         else:
             body['id'] = 0
 
-        db.insert(body)
+        dbWriter = DbWriter.get_instance()
+        dbWriter.write_to_db(db, body)
+        dbWriter.queue.join()
 
         new_motion_sensor = db.search(Query().id == body['id'])[0]
         return new_motion_sensor, 200
@@ -66,7 +69,9 @@ def unregister(motion_sensor_id):
         motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
 
         if motion_sensor_exists:
-            db.remove(Query().id == motion_sensor_id)
+            dbWriter = DbWriter.get_instance()
+            dbWriter.delete_from_db(db, motion_sensor_id)
+            dbWriter.queue.join()
             return f"Motion sensor {motion_sensor_id} unregistered", 200
         else:
             return f"Motion sensor {motion_sensor_id} does not exist", 404
@@ -94,87 +99,12 @@ def update(motion_sensor_id, body):
         motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
 
         if motion_sensor_exists:
-            motion_sensor_db_key = db.update(body, Query().id == motion_sensor_id)
-            return db.get(doc_id=motion_sensor_db_key[0]), 200
+            dbWriter = DbWriter.get_instance()
+            dbWriter.update_db(db, motion_sensor_id, body)
+            dbWriter.queue.join()
+
+            return db.get(Query().id == motion_sensor_id), 200
         else:
             return f"Motion sensor {motion_sensor_id} does not exist", 404
     except:
         return 'Internal server error', 500
-
-
-def rename(motion_sensor_id, body):
-    try:
-        motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
-
-        if motion_sensor_exists:
-            motion_sensor_db_key = db.update({'name': body}, Query().id == motion_sensor_id)
-            return db.get(doc_id=motion_sensor_db_key[0]), 200
-        else:
-            return f"Motion sensor {body['id']} does not exist", 404
-    except:
-        return 'Internal server error', 500
-
-
-def deactivate(motion_sensor_id):
-    try:
-        motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
-
-        if motion_sensor_exists:
-            motion_sensor_db_key = db.update({'active': False}, Query().id == motion_sensor_id)
-            return db.get(doc_id=motion_sensor_db_key[0]), 200
-        else:
-            return f"Motion sensor {motion_sensor_id} does not exist", 404
-    except:
-        return 'Internal server error', 500
-
-
-def activate(motion_sensor_id):
-    try:
-        motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
-
-        if motion_sensor_exists:
-            motion_sensor_db_key = db.update({'active': True}, Query().id == motion_sensor_id)
-            return db.get(doc_id=motion_sensor_db_key[0]), 200
-        else:
-            return f"Motion sensor {motion_sensor_id} does not exist", 404
-    except:
-        return 'Internal server error', 500
-
-
-def change_motors(motion_sensor_id, body):
-    try:
-        motor_ids = body
-
-        motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
-
-        if not motion_sensor_exists:
-            return f"Motion sensor {motion_sensor_id} does not exist", 404
-
-        for motor_id in motor_ids:
-            motor_exists = motor_db.contains(where('id') == motor_id)
-            if not motor_exists:
-                return f"Motor {motor_id} does not exist", 404
-
-        db.update({'motor_ids': motor_ids}, Query().id == motion_sensor_id)
-        motion_sensor = db.search(Query().id == motion_sensor_id)[0]
-        return motion_sensor, 200
-
-    except:
-        return 'Internal server error', 500
-    
-
-def change_duration_sensitivity(motion_sensor_id, body):
-    duration_sensitivity = body
-
-    if not db.contains(where('id') == motion_sensor_id):
-        return f"Motion sensor {motion_sensor_id} does not exist", 400
-
-    pattern = re.compile("[0-9][0-9][:][0-9][0-9]")
-    correct_format = pattern.match(duration_sensitivity)
-
-    if not correct_format:
-        return f"{duration_sensitivity} is not a valid hh:mm format", 400
-
-    db.update({'duration_sensitivity': duration_sensitivity}, Query().id == motion_sensor_id)
-    motion_sensor = db.search(Query().id == motion_sensor_id)[0]
-    return motion_sensor
