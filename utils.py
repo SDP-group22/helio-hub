@@ -28,3 +28,8 @@ def valid_day(day):
         return True
     else:
         return False
+
+
+def day_number_to_day_name(day_number):
+    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    return days[day_number]

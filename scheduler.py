@@ -1,7 +1,8 @@
 import threading
 import datetime
+import utils
 from tinydb import TinyDB, Query, where
-from db_writer import DbWriter
+from db_handler import DbHandler
 
 
 class Scheduler(threading.Thread):
@@ -15,6 +16,7 @@ class Scheduler(threading.Thread):
             Scheduler.instance = Scheduler()
             Scheduler.instance.daemon = True
             Scheduler.instance.name = 'SchedulerThread'
+
 
     @staticmethod
     def get_instance():
@@ -33,27 +35,28 @@ class Scheduler(threading.Thread):
 
     def run(self):
         while True:
-            schedules = Scheduler.schedule_db.all()
+            db_handler = DbHandler.get_instance()
+            schedules = db_handler.read_all(Scheduler.schedule_db)
 
             for schedule in schedules:
                 if self.is_time_to_execute(schedule):
-                    motors = [Scheduler.motor_db.get(Query().id == motor_id) for motor_id in schedule['motor_ids']]
+
+                    all_motors = db_handler.read_all(Scheduler.motor_db)
+
+                    motors = [motor for motor in all_motors if motor['id'] in schedule['motor_ids']]
 
                     # move blinds
 
                     for motor in motors:
                         motor['level'] = schedule['target_level']
 
-                        dbWriter = DbWriter.get_instance()
-                        dbWriter.update_db(Scheduler.motor_db, motor['id'], motor)
-                        dbWriter.queue.join()
+                        db_handler.update(Scheduler.motor_db, motor['id'], motor)
 
     def is_time_to_execute(self, schedule):
-        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         time = datetime.datetime.now()
         day_number = datetime.datetime.today().weekday()
 
-        day = days[day_number]
+        day = utils.day_number_to_day_name(day_number)
         hour = time.hour
         minute = time.minute
 

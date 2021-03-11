@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query, where
-from db_writer import DbWriter
+from db_handler import DbHandler
 import utils
 
 db = TinyDB('./database/light-sensors.json')
@@ -8,10 +8,11 @@ motor_db = TinyDB('./database/motors.json')
 
 def get(light_sensor_id):
     try:
-        light_sensor_exists = db.contains(where('id') == light_sensor_id)
+        db_handler = DbHandler.get_instance()
+        light_sensor_exists = db_handler.contains(db, light_sensor_id)
 
         if light_sensor_exists:
-            light_sensor = db.search(Query().id == light_sensor_id)[0]
+            light_sensor = db_handler.read(db, light_sensor_id)
             return light_sensor, 200
         else:
             return f"Light sensor {light_sensor_id} not found", 404
@@ -21,7 +22,8 @@ def get(light_sensor_id):
 
 def get_all():
     try:
-        all_light_sensors = db.all()
+        db_handler = DbHandler.get_instance()
+        all_light_sensors = db_handler.read_all(db)
         return all_light_sensors, 200
     except:
         return 'Internal server error', 500
@@ -39,12 +41,15 @@ def register(body):
         if not (0 <= battery <= 100):
             return f'Could not register: Invalid battery level {battery}', 400
 
+        db_handler = DbHandler.get_instance()
+
         for motor_id in motor_ids:
-            motor_exists = motor_db.contains(where('id') == motor_id)
+            motor_exists = db_handler.contains(motor_db, motor_id)
             if not motor_exists:
                 return f"Could not register: Motor {motor_id} does not exist", 400
 
-        all_light_sensors = db.all()
+        all_light_sensors = db_handler.read_all(db)
+
         ids = [light_sensor['id'] for light_sensor in all_light_sensors]
 
         if ids:
@@ -53,11 +58,9 @@ def register(body):
         else:
             body['id'] = 0
 
-        dbWriter = DbWriter.get_instance()
-        dbWriter.write_to_db(db, body)
-        dbWriter.queue.join()
+        db_handler.write(db, body)
 
-        new_light_sensor = db.search(Query().id == body['id'])[0]
+        new_light_sensor = db_handler.read(db, body['id'])
         return new_light_sensor, 200
     except:
         return 'Internal server error', 500
@@ -65,12 +68,12 @@ def register(body):
 
 def unregister(light_sensor_id):
     try:
-        light_sensor_exists = db.contains(where('id') == light_sensor_id)
+        db_handler = DbHandler.get_instance()
+        light_sensor_exists = db_handler.contains(db, light_sensor_id)
 
         if light_sensor_exists:
-            dbWriter = DbWriter.get_instance()
-            dbWriter.delete_from_db(db, light_sensor_id)
-            dbWriter.queue.join()
+            db_handler.delete(db, light_sensor_id)
+
             return f"Light sensor {light_sensor_id} unregistered", 200
         else:
             return f"Light sensor {light_sensor_id} does not exist", 404
@@ -91,18 +94,21 @@ def update(light_sensor_id, body):
         if not (0 <= battery <= 100):
             return f'Could not register: Invalid battery level {battery}', 400
 
+        db_handler = DbHandler.get_instance()
+
         for motor_id in motor_ids:
-            motor_exists = motor_db.contains(where('id') == motor_id)
+            motor_exists = db_handler.contains(motor_db, motor_id)
             if not motor_exists:
                 return f"Could not register: Motor {motor_id} does not exist", 400
 
-        light_sensor_exists = db.contains(where('id') == light_sensor_id)
+        light_sensor_exists = db_handler.contains(db, light_sensor_id)
 
         if light_sensor_exists:
-            dbWriter = DbWriter.get_instance()
-            dbWriter.update_db(db, light_sensor_id, body)
-            dbWriter.queue.join()
-            return db.search(Query().id == light_sensor_id)[0], 200
+            db_handler.update(db, light_sensor_id, body)
+
+            updated_light_sensor = db_handler.read(db, light_sensor_id)
+
+            return updated_light_sensor, 200
         else:
             return f"Light sensor {light_sensor_id} does not exist", 404
     except:

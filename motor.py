@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query, where
-from db_writer import DbWriter
+from db_handler import DbHandler
 import utils
 
 db = TinyDB('./database/motors.json')
@@ -7,10 +7,11 @@ db = TinyDB('./database/motors.json')
 
 def get(motor_id):
     try:
-        motor_exists = db.contains(where('id') == motor_id)
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, id)
 
         if motor_exists:
-            motor = db.search(Query().id == motor_id)[0]
+            motor = db_handler.read(db, motor_id)
             return motor, 200
         else:
             return f"Motor {motor_id} not found", 404
@@ -20,7 +21,8 @@ def get(motor_id):
 
 def get_all():
     try:
-        all_motors = db.all()
+        db_handler = DbHandler.get_instance()
+        all_motors = db_handler.read_all(db)
         return all_motors, 200
     except:
         return 'Internal server error', 500
@@ -41,7 +43,8 @@ def register(body):
         if not (0 <= level <= 100):
             return f'Could not register: Invalid level {level}', 400
 
-        all_motors = db.all()
+        db_handler = DbHandler.get_instance()
+        all_motors = db_handler.read_all(db)
         ids = [motor['id'] for motor in all_motors]
 
         if ids:
@@ -50,11 +53,9 @@ def register(body):
         else:
             body['id'] = 0
 
-        dbWriter = DbWriter.get_instance()
-        dbWriter.write_to_db(db, body)
-        dbWriter.queue.join()
+        db_handler.write(db, body)
 
-        new_motor = db.search(Query().id == body['id'])[0]
+        new_motor = db_handler.read(db, body['id'])
         return new_motor, 200
     except Exception as e:
         print(str(e))
@@ -63,12 +64,11 @@ def register(body):
 
 def unregister(motor_id):
     try:
-        motor_exists = db.contains(where('id') == motor_id)
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
 
         if motor_exists:
-            dbWriter = DbWriter.get_instance()
-            dbWriter.delete_from_db(db, motor_id)
-            dbWriter.queue.join()
+            db_handler.delete(db, motor_id)
             return f"Motor {motor_id} unregistered", 200
         else:
             return f"Motor {motor_id} does not exist", 404
@@ -91,14 +91,15 @@ def update(motor_id, body):
         if not (0 <= level <= 100):
             return f'Could not register: Invalid level {level}', 400
 
-        motor_exists = db.contains(where('id') == motor_id)
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
 
         if motor_exists:
-            dbWriter = DbWriter.get_instance()
-            dbWriter.update_db(db, motor_id, body)
-            dbWriter.queue.join()
+            db_handler.update(db, motor_id, body)
 
-            return db.get(Query().id == motor_id), 200
+            updated_motor = db_handler.read(db, motor_id)
+
+            return updated_motor, 200
         else:
             return f"Motor {motor_id} does not exist", 404
     except Exception as e:

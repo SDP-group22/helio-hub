@@ -23,9 +23,6 @@ def get_app():
 if __name__ == '__main__':
     app = get_app()
 
-    DbWriter.make_instance()
-    DbWriter.get_instance().start()
-
     Scheduler.make_instance()
     Scheduler.get_instance().start()
 

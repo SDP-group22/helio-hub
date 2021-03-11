@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query, where
-from db_writer import DbWriter
+from db_handler import DbHandler
 import re
 import utils
 
@@ -9,10 +9,11 @@ motor_db = TinyDB('./database/motors.json')
 
 def get(motion_sensor_id):
     try:
-        motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
+        db_handler = DbHandler.get_instance()
+        motion_sensor_exists = db_handler.contains(db, motion_sensor_id)
 
         if motion_sensor_exists:
-            motion_sensor = db.search(Query().id == motion_sensor_id)[0]
+            motion_sensor = db_handler.read(db, motion_sensor_id)
             return motion_sensor, 200
         else:
             return f"Motion sensor {motion_sensor_id} not found", 404
@@ -22,7 +23,8 @@ def get(motion_sensor_id):
 
 def get_all():
     try:
-        all_motion_sensors = db.all()
+        db_handler = DbHandler.get_instance()
+        all_motion_sensors = db_handler.read_all(db)
         return all_motion_sensors, 200
     except:
         return 'Internal server error', 500
@@ -40,12 +42,14 @@ def register(body):
         if not (0 <= battery <= 100):
             return f'Could not register: Invalid battery level {battery}', 400
 
+        db_handler = DbHandler.get_instance()
+
         for motor_id in motor_ids:
-            motor_exists = motor_db.contains(where('id') == motor_id)
+            motor_exists = db_handler.contains(motor_db, motor_id)
             if not motor_exists:
                 return f"Could not register: Motor {motor_id} does not exist", 400
 
-        all_motion_sensors = db.all()
+        all_motion_sensors = db_handler.read_all(db)
         ids = [motion_sensor['id'] for motion_sensor in all_motion_sensors]
 
         if ids:
@@ -54,11 +58,9 @@ def register(body):
         else:
             body['id'] = 0
 
-        dbWriter = DbWriter.get_instance()
-        dbWriter.write_to_db(db, body)
-        dbWriter.queue.join()
+        db_handler.write(db, body)
 
-        new_motion_sensor = db.search(Query().id == body['id'])[0]
+        new_motion_sensor = db_handler.read(db, body['id'])
         return new_motion_sensor, 200
     except:
         return 'Internal server error', 500
@@ -66,12 +68,12 @@ def register(body):
 
 def unregister(motion_sensor_id):
     try:
-        motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
+        db_handler = DbHandler.get_instance()
+        motion_sensor_exists = db_handler.contains(db, motion_sensor_id)
 
         if motion_sensor_exists:
-            dbWriter = DbWriter.get_instance()
-            dbWriter.delete_from_db(db, motion_sensor_id)
-            dbWriter.queue.join()
+            db_handler.delete(db, motion_sensor_id)
+
             return f"Motion sensor {motion_sensor_id} unregistered", 200
         else:
             return f"Motion sensor {motion_sensor_id} does not exist", 404
@@ -91,19 +93,21 @@ def update(motion_sensor_id, body):
         if not (0 <= battery <= 100):
             return f'Could not register: Invalid battery level {battery}', 400
 
+        db_handler = DbHandler.get_instance()
+
         for motor_id in motor_ids:
-            motor_exists = motor_db.contains(where('id') == motor_id)
+            motor_exists = db_handler.contains(motor_db, motor_id)
             if not motor_exists:
                 return f"Could not register: Motor {motor_id} does not exist", 400
 
-        motion_sensor_exists = db.contains(where('id') == motion_sensor_id)
+        motion_sensor_exists = db_handler.contains(db, motion_sensor_id)
 
         if motion_sensor_exists:
-            dbWriter = DbWriter.get_instance()
-            dbWriter.update_db(db, motion_sensor_id, body)
-            dbWriter.queue.join()
+            db_handler.update(db, motion_sensor_id, body)
 
-            return db.get(Query().id == motion_sensor_id), 200
+            updated_motion_sensor = db_handler.read(db, motion_sensor_id)
+
+            return updated_motion_sensor, 200
         else:
             return f"Motion sensor {motion_sensor_id} does not exist", 404
     except:
