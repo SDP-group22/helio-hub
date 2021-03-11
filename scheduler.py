@@ -3,6 +3,7 @@ import datetime
 import utils
 from tinydb import TinyDB, Query, where
 from db_handler import DbHandler
+from random import randrange
 
 
 class Scheduler(threading.Thread):
@@ -11,15 +12,12 @@ class Scheduler(threading.Thread):
     motor_db = TinyDB('./database/motors.json')
 
     @staticmethod
-    def make_instance():
+    def get_instance():
         if Scheduler.instance is None:
             Scheduler.instance = Scheduler()
             Scheduler.instance.daemon = True
             Scheduler.instance.name = 'SchedulerThread'
 
-
-    @staticmethod
-    def get_instance():
         return Scheduler.instance
 
     @staticmethod
@@ -32,25 +30,48 @@ class Scheduler(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
+        self._event = threading.Event()
+        self._event.set()
+        self._fulfilled_schedules_ids = []
 
     def run(self):
         while True:
+            self._event.wait()
+
             db_handler = DbHandler.get_instance()
             schedules = db_handler.read_all(Scheduler.schedule_db)
+            schedule_to_execute = None
 
             for schedule in schedules:
-                if self.is_time_to_execute(schedule):
+                if not self.is_time_to_execute(schedule):
+                    continue
 
-                    all_motors = db_handler.read_all(Scheduler.motor_db)
+                if schedule['id'] in self._fulfilled_schedules_ids:
+                    continue
 
-                    motors = [motor for motor in all_motors if motor['id'] in schedule['motor_ids']]
+                if schedule_to_execute is None:
+                    schedule_to_execute = schedule
+                    continue
 
-                    # move blinds
+                if utils.is_later(schedule['time'], schedule_to_execute['time']):
+                    schedule_to_execute = schedule
 
-                    for motor in motors:
-                        motor['level'] = schedule['target_level']
+            if schedule_to_execute is not None:
+                all_motors = db_handler.read_all(Scheduler.motor_db)
 
-                        db_handler.update(Scheduler.motor_db, motor['id'], motor)
+                motors = [motor for motor in all_motors if motor['id'] in schedule['motor_ids']]
+
+                # move blinds
+
+                for motor in motors:
+                    if not motor['active']:
+                        continue
+
+                    motor['level'] = schedule['target_level']
+
+                    db_handler.update(Scheduler.motor_db, motor['id'], motor)
+
+                self._fulfilled_schedules_ids.append(schedule_to_execute['id'])
 
     def is_time_to_execute(self, schedule):
         time = datetime.datetime.now()
@@ -67,3 +88,9 @@ class Scheduler(threading.Thread):
             scheduled_minute = int(scheduled_minute)
 
             return (scheduled_hour < hour) or (scheduled_hour == hour and scheduled_minute <= minute)
+
+    def pause(self):
+        self._event.clear()
+
+    def resume(self):
+        self._event.set()

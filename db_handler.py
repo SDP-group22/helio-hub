@@ -9,9 +9,8 @@ class DbHandler:
     def get_instance():
         if DbHandler.instance is None:
             DbHandler.instance = DbHandler()
-            return DbHandler.instance
-        else:
-            return DbHandler.instance
+
+        return DbHandler.instance
 
     def __init__(self):
         self.lock = threading.Lock()

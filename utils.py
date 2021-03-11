@@ -33,3 +33,17 @@ def valid_day(day):
 def day_number_to_day_name(day_number):
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     return days[day_number]
+
+
+def is_later(time1, time2):
+    hour1, minute1 = time1.split(':')
+    hour2, minute2 = time2.split(':')
+
+    if hour1 > hour2:
+        return True
+    if hour2 > hour1:
+        return False
+    if minute1 > minute2:
+        return True
+    else:
+        return False

@@ -1,6 +1,16 @@
-def move_blind_to_level(ip, level):
+import requests
+
+def move_up():
     pass
 
 
-def level_to_steps(current_position, target_level):
+def move_down():
+    pass
+
+
+def move(level):
+    pass
+
+
+def level_to_encoder_value(current_position, target_level):
     pass

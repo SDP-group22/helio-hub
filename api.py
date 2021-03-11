@@ -1,5 +1,4 @@
 from flask import render_template
-from db_writer import DbWriter
 from scheduler import Scheduler
 import connexion
 import threading
@@ -23,7 +22,6 @@ def get_app():
 if __name__ == '__main__':
     app = get_app()
 
-    Scheduler.make_instance()
     Scheduler.get_instance().start()
 
     print('*********************  THREADS  **********************')
