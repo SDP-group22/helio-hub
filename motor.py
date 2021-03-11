@@ -1,5 +1,6 @@
 from tinydb import TinyDB, Query, where
 from db_handler import DbHandler
+from scheduler import Scheduler
 import utils
 
 db = TinyDB('./database/motors.json')
@@ -106,14 +107,37 @@ def update(motor_id, body):
         print(str(e))
         return 'Internal server error', 500
 
+
 def calibration_start(motor_id):
-    print('start calibration')
-    return 'start calibration', 200
+    try:
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
+
+        if motor_exists:
+            Scheduler.get_instance().pause()
+
+            return "Calibration started", 200
+        else:
+            return f"Motor {motor_id} does not exist", 404
+    except Exception as e:
+        print(str(e))
+        return 'Internal server error', 500
 
 
 def calibration_stop(motor_id):
-    print('stop calibration')
-    return 'stop calibration', 200
+    try:
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
+
+        if motor_exists:
+            Scheduler.get_instance().resume()
+
+            return "Calibration finished", 200
+        else:
+            return f"Motor {motor_id} does not exist", 404
+    except Exception as e:
+        print(str(e))
+        return 'Internal server error', 500
 
 
 def calibration_move_up(motor_id):
