@@ -79,6 +79,13 @@ class MotorController:
         distance_from_top = highest - (new_level * blinds_total_range)
         return distance_from_top
 
+    # For testing only
+    @staticmethod
+    def move_without_calibartion(motor, encoder_value):
+        url = 'http://' + motor['ip'] + ':4310' + '/move'
+        parameters = {'steps': encoder_value}
+        requests.get(url=url, params=parameters)
+
 
 class UncalibratedMotorError(Exception):
     pass

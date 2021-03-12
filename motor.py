@@ -97,7 +97,7 @@ def update(motor_id, body):
         motor_exists = db_handler.contains(db, motor_id)
 
         if motor_exists:
-            old_blind_level = db_handler.read(db,motor_id)['level']
+            old_blind_level = db_handler.read(db, motor_id)['level']
 
             db_handler.update(db, motor_id, body)
 
@@ -236,3 +236,10 @@ def calibration_set_lowest(motor_id):
     except Exception as e:
         print(str(e))
         return 'Internal server error', 500
+
+
+# For testing only
+def test_motor_movement(motor_id, body):
+    motor = body
+    motor['id'] = motor_id
+    MotorController.move_without_calibartion(motor, 1000)

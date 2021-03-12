@@ -5,6 +5,24 @@ info:
   title: Helio API
 paths:
   #Motor
+  # For testing only
+  /motor/test/move/{motor_id}:
+    get:
+      tags:
+        - motor
+      summary: Get motor state
+      operationId: motor.test_motor_movement
+      parameters:
+        - name: motor_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MotorNoId'
   /motor/{motor_id}:
     get:
       tags:
