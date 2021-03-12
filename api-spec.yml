@@ -7,7 +7,7 @@ paths:
   #Motor
   # For testing only
   /motor/test/move/{motor_id}:
-    get:
+    post:
       tags:
         - motor
       summary: Move motor
