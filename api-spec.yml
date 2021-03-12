@@ -10,7 +10,7 @@ paths:
     get:
       tags:
         - motor
-      summary: Get motor state
+      summary: Move motor
       operationId: motor.test_motor_movement
       parameters:
         - name: motor_id
@@ -23,6 +23,17 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MotorNoId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Motor"
+        400:
+          $ref: '#/components/responses/400InvalidInput'
+        500:
+          $ref: '#/components/responses/500InternalError'
   /motor/{motor_id}:
     get:
       tags:
