@@ -1,6 +1,7 @@
 from tinydb import TinyDB, Query, where
 from db_handler import DbHandler
 from scheduler import Scheduler
+from motor_controller import MotorController, UncalibratedMotorError
 import utils
 
 db = TinyDB('./database/motors.json')
@@ -84,21 +85,31 @@ def update(motor_id, body):
         level = body['level']
 
         if not utils.valid_ip(ip):
-            return f'Could not register: Invalid ip {ip}', 400
+            return f'Could not update: Invalid ip {ip}', 400
 
         if not (0 <= battery <= 100):
-            return f'Could not register: Invalid battery level {battery}', 400
+            return f'Could not update: Invalid battery level {battery}', 400
 
         if not (0 <= level <= 100):
-            return f'Could not register: Invalid level {level}', 400
+            return f'Could not update: Invalid level {level}', 400
 
         db_handler = DbHandler.get_instance()
         motor_exists = db_handler.contains(db, motor_id)
 
         if motor_exists:
+            old_blind_level = db_handler.read(db,motor_id)['level']
+
             db_handler.update(db, motor_id, body)
 
             updated_motor = db_handler.read(db, motor_id)
+
+            new_blind_level = level
+
+            if not old_blind_level == new_blind_level:
+                try:
+                    MotorController.move(updated_motor, new_blind_level)
+                except UncalibratedMotorError:
+                    return f"Motor {motor_id} is not calibrated"
 
             return updated_motor, 200
         else:
@@ -141,25 +152,87 @@ def calibration_stop(motor_id):
 
 
 def calibration_move_up(motor_id):
-    print('moving up calibration')
-    return 'moving up calibration', 200
+    try:
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
+
+        if motor_exists:
+            motor = db_handler.read(db, motor_id)
+            MotorController.move_up(motor)
+
+            return "Blinds moving up", 200
+        else:
+            return f"Motor {motor_id} does not exist", 404
+    except Exception as e:
+        print(str(e))
+        return 'Internal server error', 500
 
 
 def calibration_move_down(motor_id):
-    print('moving down calibration')
-    return 'moving down calibration', 200
+    try:
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
+
+        if motor_exists:
+            motor = db_handler.read(db, motor_id)
+            MotorController.move_down(motor)
+
+            return "Blinds moving down", 200
+        else:
+            return f"Motor {motor_id} does not exist", 404
+    except Exception as e:
+        print(str(e))
+        return 'Internal server error', 500
 
 
 def calibration_stop_moving(motor_id):
-    print('stop calibration moving')
-    return 'stop calibration moving', 200
+    try:
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
+
+        if motor_exists:
+            motor = db_handler.read(db, motor_id)
+            MotorController.stop(motor)
+
+            return "Blinds stopped", 200
+        else:
+            return f"Motor {motor_id} does not exist", 404
+    except Exception as e:
+        print(str(e))
+        return 'Internal server error', 500
 
 
 def calibration_set_highest(motor_id):
-    print('highest set')
-    return 'highest set', 200
+    try:
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
+
+        if motor_exists:
+            motor = db_handler.read(db, motor_id)
+            highest = MotorController.get_highest(motor)
+            MotorController.set_highest(motor, highest)
+
+            return "Highest position set", 200
+        else:
+            return f"Motor {motor_id} does not exist", 404
+    except Exception as e:
+        print(str(e))
+        return 'Internal server error', 500
 
 
 def calibration_set_lowest(motor_id):
-    print('lowest set')
-    return 'lowest set', 200
+    try:
+        db_handler = DbHandler.get_instance()
+        motor_exists = db_handler.contains(db, motor_id)
+
+        if motor_exists:
+            motor = db_handler.read(db, motor_id)
+            lowest = MotorController.get_lowest(motor)
+            MotorController.set_lowest(motor, lowest)
+
+            return "Lowest position set", 200
+        else:
+            return f"Motor {motor_id} does not exist", 404
+    except Exception as e:
+        print(str(e))
+        return 'Internal server error', 500

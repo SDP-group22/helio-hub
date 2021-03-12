@@ -2,64 +2,89 @@ from tinydb import TinyDB
 from db_handler import DbHandler
 import requests
 
-motor_state_db = TinyDB('./database/motor_states.json')
 
+class MotorController:
+    motor_state_db = TinyDB('./database/motor_states.json')
 
-def move_up(motor):
-    url = 'http://' + motor['ip'] + ':4310' + '/calibration_move_up'
-    requests.get(url=url)
+    @staticmethod
+    def move_up(motor):
+        url = 'http://' + motor['ip'] + ':4310' + '/calibration_move_up'
+        requests.get(url=url)
 
+    @staticmethod
+    def move_down(motor):
+        url = 'http://' + motor['ip'] + ':4310' + '/calibration_move_down'
+        requests.get(url=url)
 
-def move_down(motor):
-    url = 'http://' + motor['ip'] + ':4310' + '/calibration_move_down'
-    requests.get(url=url)
+    @staticmethod
+    def stop(motor):
+        url = 'http://' + motor['ip'] + ':4310' + '/calibration_stop_moving'
+        requests.get(url=url)
 
+    @staticmethod
+    def get_highest(motor):
+        url = 'http://' + motor['ip'] + ':4310' + '/calibration_set_highest'
+        response = requests.get(url=url)
+        return response.json()['highest']
 
-def stop(motor):
-    url = 'http://' + motor['ip'] + ':4310' + '/calibration_stop_moving'
-    requests.get(url=url)
+    @staticmethod
+    def set_highest(motor, highest):
+        db_handler = DbHandler.get_instance()
+        motor_has_state = db_handler.contains(MotorController.motor_state_db, motor['id'])
 
+        if motor_has_state:
+            db_handler.update(MotorController.motor_state_db, motor['id'], {'highest': highest})
+        else:
+            db_handler.write(MotorController.motor_state_db, {'id': motor['id'], 'highest': highest, 'lowest': None})
 
-def get_highest(motor):
-    url = 'http://' + motor['ip'] + ':4310' + '/calibration_set_highest'
-    requests.get(url=url)
+    @staticmethod
+    def get_lowest(motor):
+        url = 'http://' + motor['ip'] + ':4310' + '/calibration_set_lowest'
+        response = requests.get(url=url)
+        return response.json()['lowest']
 
+    @staticmethod
+    def set_lowest(motor, lowest):
+        db_handler = DbHandler.get_instance()
+        motor_has_state = db_handler.contains(MotorController.motor_state_db, motor['id'])
 
-def get_lowest(motor):
-    url = 'http://' + motor['ip'] + ':4310' + '/calibration_set_lowest'
-    requests.get(url=url)
+        if motor_has_state:
+            db_handler.update(MotorController.motor_state_db, motor['id'], {'lowest': lowest})
+        else:
+            db_handler.write(MotorController.motor_state_db, {'id': motor['id'], 'highest': None, 'lowest': lowest})
 
+    @staticmethod
+    def move(motor, level):
+        url = 'http://' + motor['ip'] + ':4310' + '/move'
 
-def move(motor, level):
-    url = 'http://' + motor['ip'] + ':4310' + '/move'
+        db_handler = DbHandler.get_instance()
 
-    db_handler = DbHandler.get_instance()
+        motor_has_state = db_handler.contains(MotorController.motor_state_db, motor['id'])
 
-    motor_has_state = db_handler.contains(motor_state_db, motor['id'])
+        if not motor_has_state:
+            raise UncalibratedMotorError
 
-    if not motor_has_state:
-        raise UncalibratedMotorError
+        motor_state = db_handler.read(MotorController.motor_state_db, motor['id'])
 
-    motor_state = db_handler.read(motor_state_db, motor['id'])
+        lowest = motor_state['lowest']
+        highest = motor_state['highest']
 
-    lowest = motor_state['lowest']
-    highest = motor_state['highest']
+        encoder_value = MotorController.level_to_encoder_value(lowest, highest, level)
+        parameters = {'steps': encoder_value}
+        requests.get(url=url, params=parameters)
 
-    encoder_value = level_to_encoder_value(lowest, highest, level)
-    parameters = {'steps': encoder_value}
-    requests.get(url=url, params=parameters)
-
-
-def level_to_encoder_value(lowest, highest, new_level):
-    blinds_total_range = abs(highest - lowest)
-    distance_from_top = highest - (new_level * blinds_total_range)
-    return distance_from_top
+    @staticmethod
+    def level_to_encoder_value(lowest, highest, new_level):
+        blinds_total_range = abs(highest - lowest)
+        distance_from_top = highest - (new_level * blinds_total_range)
+        return distance_from_top
 
 
 class UncalibratedMotorError(Exception):
     pass
 
 # motor_state = {
+#    'id': 0,
 #    'lowest': 0,
 #    'highest': 0
 # }
