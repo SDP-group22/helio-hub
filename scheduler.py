@@ -1,9 +1,11 @@
 import threading
 import datetime
 import utils
+import time
 from tinydb import TinyDB, Query, where
 from db_handler import DbHandler
 from random import randrange
+from motor_controller import MotorController, UncalibratedMotorError
 
 
 class Scheduler(threading.Thread):
@@ -35,8 +37,15 @@ class Scheduler(threading.Thread):
         self._fulfilled_schedules_ids = []
 
     def run(self):
+
+        day_number = datetime.datetime.today().weekday()
+
         while True:
             self._event.wait()
+
+            if not day_number == datetime.datetime.today().weekday():
+                self._fulfilled_schedules_ids = []
+                day_number = datetime.datetime.today().weekday()
 
             db_handler = DbHandler.get_instance()
             schedules = db_handler.read_all(Scheduler.schedule_db)
@@ -61,17 +70,21 @@ class Scheduler(threading.Thread):
 
                 motors = [motor for motor in all_motors if motor['id'] in schedule['motor_ids']]
 
-                # move blinds
-
                 for motor in motors:
                     if not motor['active']:
                         continue
+                    try:
+                        MotorController.move(motor, schedule['target_level'])
+                    except UncalibratedMotorError:
+                        pass
 
                     motor['level'] = schedule['target_level']
 
                     db_handler.update(Scheduler.motor_db, motor['id'], motor)
 
                 self._fulfilled_schedules_ids.append(schedule_to_execute['id'])
+
+            time.sleep(10)
 
     def is_time_to_execute(self, schedule):
         time = datetime.datetime.now()
@@ -88,6 +101,7 @@ class Scheduler(threading.Thread):
             scheduled_minute = int(scheduled_minute)
 
             return (scheduled_hour < hour) or (scheduled_hour == hour and scheduled_minute <= minute)
+        return False
 
     def pause(self):
         self._event.clear()

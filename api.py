@@ -1,5 +1,6 @@
 from flask import render_template
 from scheduler import Scheduler
+from sensor_watcher import SensorWatcher
 import connexion
 import threading
 
@@ -23,6 +24,7 @@ if __name__ == '__main__':
     app = get_app()
 
     Scheduler.get_instance().start()
+    SensorWatcher.get_instance().start()
 
     print('*********************  THREADS  **********************')
     for thread in threading.enumerate():
