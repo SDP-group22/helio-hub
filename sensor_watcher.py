@@ -1,10 +1,7 @@
 import threading
-import datetime
-import utils
 import time
 from tinydb import TinyDB, Query, where
 from db_handler import DbHandler
-from random import randrange
 from motor_controller import MotorController, UncalibratedMotorError
 from sensor_controller import SensorController
 
@@ -37,12 +34,13 @@ class SensorWatcher(threading.Thread):
         threading.Thread.__init__(self)
         self._event = threading.Event()
         self._event.set()
-        self._postponed_schedules_ids = []
+        self._timers = {}
+        self._deactivated_motors = []
 
     def run(self):
         while True:
             self._event.wait()
-
+            self.__schedule_motion_sensors_actions()
             time.sleep(5)
 
     def pause(self):
@@ -54,7 +52,6 @@ class SensorWatcher(threading.Thread):
     def __schedule_motion_sensors_actions(self):
         db_handler = DbHandler.get_instance()
         motion_sensors = db_handler.read_all(SensorWatcher.motion_sensor_db)
-        timers = {}
 
         for motion_sensor in motion_sensors:
             if motion_sensor['active']:
@@ -63,24 +60,29 @@ class SensorWatcher(threading.Thread):
                 if not motion_detected:
                     motion_sensor_id = motion_sensor['id']
 
-                    if motion_sensor_id not in timers:
-                        timers[motion_sensor_id] = time.time()
+                    if motion_sensor_id not in self._timers:
+                        self._timers[motion_sensor_id] = time.time()
 
-                    elif (time.time() - timers[motion_sensor_id]) >= motion_sensor['duration_sensitivity']:
+                    elif (time.time() - self._timers[motion_sensor_id]) >= motion_sensor['duration_sensitivity']:
                         all_motors = db_handler.read_all(SensorWatcher.motor_db)
-                        all_schedules = db_handler.read_all(SensorWatcher.schedule_db)
+
+                        # all_schedules = db_handler.read_all(SensorWatcher.schedule_db)
 
                         motors = [motor for motor in all_motors if motor['id'] in motion_sensor['motor_ids']]
 
-                        for schedule in all_schedules:
-                            scheduled_motors = schedule['motor_ids']
+                        # for schedule in all_schedules:
+                        #    scheduled_motors = schedule['motor_ids']
 
-                            for motor in motors:
-                                if motor['id'] in scheduled_motors and schedule['active']:
-                                    pass
-                                    #postpone schedules
+                        #    for motor in motors:
+                        #        if motor['id'] in scheduled_motors and schedule['active']:
+                        #           postpone schedules
+                        #           schedule['active'] = False
+                        #           db_handler.write(SensorWatcher.schedule_db,schedule)
+                        #           self._postponed_schedules_ids.append(schedule['id'])
 
-                        del timers[motion_sensor_id]
+                        # deactivate motors
+
+                        del self._timers[motion_sensor_id]
 
                         for motor in motors:
                             if not motor['active']:
@@ -90,12 +92,27 @@ class SensorWatcher(threading.Thread):
                             except UncalibratedMotorError:
                                 pass
 
+                            self._deactivated_motors.append({'motor_id': motor['id'], 'level': motor['level']})
+
+                            motor['active'] = False
                             motor['level'] = 100
 
-                            db_handler.update(Scheduler.motor_db, motor['id'], motor)
+                            db_handler.update(SensorWatcher.motor_db, motor['id'], motor)
 
                         # wait until blinds move
-                        time.sleep(5)
+                        time.sleep(3)
                 else:
-                    pass
-                    #what happens when motion detected
+                    # what happens when motion detected
+                    motion_sensor_id = motion_sensor['id']
+
+                    if motion_sensor_id in self._timers:
+                        del self._timers[motion_sensor_id]
+
+                        # activate deactivated motors and move to previous positions
+                        for motor in self._deactivated_motors:
+                            db_handler.update(SensorWatcher.motor_db, motor['id'], {'active':True,'level': motor['level']})
+
+                            try:
+                                MotorController.move(motor, motor['level'])
+                            except UncalibratedMotorError:
+                                pass
