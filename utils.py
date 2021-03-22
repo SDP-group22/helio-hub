@@ -47,3 +47,9 @@ def is_later(time1, time2):
         return True
     else:
         return False
+
+
+def get_sec(time_str):
+    """Get Seconds from time."""
+    h, m= time_str.split(':')
+    return int(h) * 3600 + int(m) * 60
