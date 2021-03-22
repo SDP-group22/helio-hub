@@ -6,7 +6,7 @@ from sensor_watcher import SensorWatcher
 import utils
 
 db = TinyDB('./database/motors.json')
-
+last_calibration_direction = 0 
 
 def get(motor_id):
     try:
@@ -98,6 +98,7 @@ def update(motor_id, body):
         motor_exists = db_handler.contains(db, motor_id)
 
         if motor_exists:
+            print('motor exists')
             old_blind_level = db_handler.read(db, motor_id)['level']
 
             db_handler.update(db, motor_id, body)
@@ -105,7 +106,8 @@ def update(motor_id, body):
             updated_motor = db_handler.read(db, motor_id)
 
             new_blind_level = level
-
+            print('new', new_blind_level)
+            print('old', old_blind_level)
             if not old_blind_level == new_blind_level:
                 try:
                     MotorController.move(updated_motor, new_blind_level)
@@ -144,7 +146,16 @@ def calibration_stop(motor_id):
 
         if motor_exists:
             Scheduler.get_instance().resume()
-            SensorWatcher.get_instance.resume()
+            SensorWatcher.get_instance().resume()
+
+            print('last_calibration_direction', last_calibration_direction)
+            if last_calibration_direction == 'up':
+                level = 0
+            else:
+                level = 100
+            motor = db_handler.read(db, motor_id)
+            motor['level'] = level 
+            db_handler.update(db, motor_id, motor)
 
             return "Calibration finished", 200
         else:
@@ -179,7 +190,6 @@ def calibration_move_down(motor_id):
         if motor_exists:
             motor = db_handler.read(db, motor_id)
             MotorController.move_down(motor)
-
             return "Blinds moving down", 200
         else:
             return f"Motor {motor_id} does not exist", 404
@@ -214,6 +224,9 @@ def calibration_set_highest(motor_id):
             motor = db_handler.read(db, motor_id)
             highest = MotorController.get_highest(motor)
             MotorController.set_highest(motor, highest)
+            global last_calibration_direction
+            last_calibration_direction = 'up'
+            print('last_calibration_direction', last_calibration_direction)
 
             return "Highest position set", 200
         else:
@@ -232,7 +245,9 @@ def calibration_set_lowest(motor_id):
             motor = db_handler.read(db, motor_id)
             lowest = MotorController.get_lowest(motor)
             MotorController.set_lowest(motor, lowest)
-
+            global last_calibration_direction
+            last_calibration_direction = 'down'
+            print('last_calibration_direction', last_calibration_direction)
             return "Lowest position set", 200
         else:
             return f"Motor {motor_id} does not exist", 404

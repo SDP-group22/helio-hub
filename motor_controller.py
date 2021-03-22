@@ -10,13 +10,16 @@ class MotorController:
     def move_up(motor):
         url = 'http://' + motor['ip'] + ':4310' + '/calibration_move_up'
         parameters = {'encoderValue': 100}
-        requests.get(url=url, params=parameters)
+        r = requests.get(url=url, params=parameters)
+        print(r.json())
+
 
     @staticmethod
     def move_down(motor):
         url = 'http://' + motor['ip'] + ':4310' + '/calibration_move_down'
         parameters = {'encoderValue': 100}
-        requests.get(url=url, params=parameters)
+        r = requests.get(url=url, params=parameters)
+        print(r.json())
 
     @staticmethod
     def stop(motor):
@@ -27,6 +30,7 @@ class MotorController:
     def get_highest(motor):
         url = 'http://' + motor['ip'] + ':4310' + '/calibration_set_highest'
         response = requests.get(url=url)
+        print(response.json())
         return response.json()['highest']
 
     @staticmethod
@@ -43,6 +47,7 @@ class MotorController:
     def get_lowest(motor):
         url = 'http://' + motor['ip'] + ':4310' + '/calibration_set_lowest'
         response = requests.get(url=url)
+        print(response.json())
         return response.json()['lowest']
 
     @staticmethod
@@ -72,13 +77,17 @@ class MotorController:
         highest = motor_state['highest']
 
         encoder_value = MotorController.level_to_encoder_value(lowest, highest, level)
+        print(encoder_value)
+
         parameters = {'encoderValue': encoder_value}
-        requests.get(url=url, params=parameters)
+        r = requests.get(url=url, params=parameters)
+
+        print(r.json())
 
     @staticmethod
     def level_to_encoder_value(lowest, highest, new_level):
         blinds_total_range = abs(highest - lowest)
-        distance_from_top = highest - (new_level * blinds_total_range)
+        distance_from_top = highest - ((new_level/100) * blinds_total_range)
         return distance_from_top
 
     # For testing only
