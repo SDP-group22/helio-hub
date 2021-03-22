@@ -41,7 +41,7 @@ class SensorWatcher(threading.Thread):
         while True:
             self._event.wait()
             self.__schedule_motion_sensors_actions()
-            time.sleep(5)
+            time.sleep(2)
 
     def pause(self):
         self._event.clear()
@@ -98,9 +98,6 @@ class SensorWatcher(threading.Thread):
                             motor['level'] = 100
 
                             db_handler.update(SensorWatcher.motor_db, motor['id'], motor)
-
-                        # wait until blinds move
-                        time.sleep(3)
                 else:
                     # what happens when motion detected
                     motion_sensor_id = motion_sensor['id']
@@ -116,3 +113,5 @@ class SensorWatcher(threading.Thread):
                                 MotorController.move(motor, motor['level'])
                             except UncalibratedMotorError:
                                 pass
+        # wait until blinds move
+        time.sleep(3)
