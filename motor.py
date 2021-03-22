@@ -2,6 +2,7 @@ from tinydb import TinyDB, Query, where
 from db_handler import DbHandler
 from scheduler import Scheduler
 from motor_controller import MotorController, UncalibratedMotorError
+from sensor_watcher import SensorWatcher
 import utils
 
 db = TinyDB('./database/motors.json')
@@ -126,6 +127,7 @@ def calibration_start(motor_id):
 
         if motor_exists:
             Scheduler.get_instance().pause()
+            SensorWatcher.get_instance.pause()
 
             return "Calibration started", 200
         else:
@@ -142,6 +144,7 @@ def calibration_stop(motor_id):
 
         if motor_exists:
             Scheduler.get_instance().resume()
+            SensorWatcher.get_instance.resume()
 
             return "Calibration finished", 200
         else:
