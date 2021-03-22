@@ -9,12 +9,14 @@ class MotorController:
     @staticmethod
     def move_up(motor):
         url = 'http://' + motor['ip'] + ':4310' + '/calibration_move_up'
-        requests.get(url=url)
+        parameters = {'encoderValue': 100}
+        requests.get(url=url, params=parameters)
 
     @staticmethod
     def move_down(motor):
         url = 'http://' + motor['ip'] + ':4310' + '/calibration_move_down'
-        requests.get(url=url)
+        parameters = {'encoderValue': 100}
+        requests.get(url=url, params=parameters)
 
     @staticmethod
     def stop(motor):
@@ -70,7 +72,7 @@ class MotorController:
         highest = motor_state['highest']
 
         encoder_value = MotorController.level_to_encoder_value(lowest, highest, level)
-        parameters = {'steps': encoder_value}
+        parameters = {'encoderValue': encoder_value}
         requests.get(url=url, params=parameters)
 
     @staticmethod
