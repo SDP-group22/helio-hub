@@ -127,7 +127,7 @@ def calibration_start(motor_id):
 
         if motor_exists:
             Scheduler.get_instance().pause()
-            SensorWatcher.get_instance.pause()
+            SensorWatcher.get_instance().pause()
 
             return "Calibration started", 200
         else:
