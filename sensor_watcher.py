@@ -4,6 +4,7 @@ from tinydb import TinyDB, Query, where
 from db_handler import DbHandler
 from motor_controller import MotorController, UncalibratedMotorError
 from sensor_controller import SensorController
+import utils
 
 
 class SensorWatcher(threading.Thread):
@@ -41,7 +42,7 @@ class SensorWatcher(threading.Thread):
         while True:
             self._event.wait()
             self.__schedule_motion_sensors_actions()
-            time.sleep(2)
+            # time.sleep(2)
 
     def pause(self):
         self._event.clear()
@@ -63,7 +64,8 @@ class SensorWatcher(threading.Thread):
                     if motion_sensor_id not in self._timers:
                         self._timers[motion_sensor_id] = time.time()
 
-                    elif (time.time() - self._timers[motion_sensor_id]) >= motion_sensor['duration_sensitivity']:
+
+                    elif (time.time() - self._timers[motion_sensor_id]) >= utils.get_sec(motion_sensor['duration_sensitivity']):
                         all_motors = db_handler.read_all(SensorWatcher.motor_db)
 
                         # all_schedules = db_handler.read_all(SensorWatcher.schedule_db)
@@ -88,7 +90,8 @@ class SensorWatcher(threading.Thread):
                             if not motor['active']:
                                 continue
                             try:
-                                MotorController.move(motor, 100)
+                                if motor['level'] != 100:
+                                    MotorController.move(motor, 100)
                             except UncalibratedMotorError:
                                 pass
 
@@ -107,10 +110,12 @@ class SensorWatcher(threading.Thread):
 
                         # activate deactivated motors and move to previous positions
                         for motor in self._deactivated_motors:
-                            db_handler.update(SensorWatcher.motor_db, motor['id'], {'active':True,'level': motor['level']})
+                            db_handler.update(SensorWatcher.motor_db, motor['id'],
+                                              {'active': True, 'level': motor['level']})
 
                             try:
-                                MotorController.move(motor, motor['level'])
+                                if motor['level'] != 0:
+                                    MotorController.move(motor, 0)
                             except UncalibratedMotorError:
                                 pass
         # wait until blinds move

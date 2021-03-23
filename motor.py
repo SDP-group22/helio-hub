@@ -6,6 +6,7 @@ from sensor_watcher import SensorWatcher
 import utils
 
 db = TinyDB('./database/motors.json')
+last_calibration_direction = None
 
 
 def get(motor_id):
@@ -144,7 +145,16 @@ def calibration_stop(motor_id):
 
         if motor_exists:
             Scheduler.get_instance().resume()
-            SensorWatcher.get_instance.resume()
+            SensorWatcher.get_instance().resume()
+
+            if last_calibration_direction == 'up':
+                level = 0
+            else:
+                level = 100
+
+            motor = db_handler.read(db, motor_id)
+            motor['level'] = level
+            db_handler.update(db, motor_id, motor)
 
             return "Calibration finished", 200
         else:
@@ -215,6 +225,9 @@ def calibration_set_highest(motor_id):
             highest = MotorController.get_highest(motor)
             MotorController.set_highest(motor, highest)
 
+            global last_calibration_direction
+            last_calibration_direction = 'up'
+
             return "Highest position set", 200
         else:
             return f"Motor {motor_id} does not exist", 404
@@ -232,6 +245,9 @@ def calibration_set_lowest(motor_id):
             motor = db_handler.read(db, motor_id)
             lowest = MotorController.get_lowest(motor)
             MotorController.set_lowest(motor, lowest)
+
+            global last_calibration_direction
+            last_calibration_direction = 'down'
 
             return "Lowest position set", 200
         else:

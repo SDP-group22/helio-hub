@@ -9,6 +9,6 @@ class SensorController:
 
     @staticmethod
     def check_motion(motion_sensor):
-        url = 'http://' + motion_sensor['ip'] + ':4310' + '/motion'
+        url = 'http://' + motion_sensor['ip'] + ':4310' + '/get_motion'
         response = requests.get(url=url)
         return response.json()['motion']

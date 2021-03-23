@@ -78,7 +78,7 @@ class MotorController:
     @staticmethod
     def level_to_encoder_value(lowest, highest, new_level):
         blinds_total_range = abs(highest - lowest)
-        distance_from_top = highest - (new_level * blinds_total_range)
+        distance_from_top = highest - ((new_level/100) * blinds_total_range)
         return distance_from_top
 
     # For testing only
