@@ -12,7 +12,7 @@ last_calibration_direction = None
 def get(motor_id):
     try:
         db_handler = DbHandler.get_instance()
-        motor_exists = db_handler.contains(db, id)
+        motor_exists = db_handler.contains(db, motor_id)
 
         if motor_exists:
             motor = db_handler.read(db, motor_id)

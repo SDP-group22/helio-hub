@@ -12,3 +12,9 @@ class SensorController:
         url = 'http://' + motion_sensor['ip'] + ':4310' + '/get_motion'
         response = requests.get(url=url)
         return response.json()['motion']
+
+    @staticmethod
+    def check_uv(light_sensor):
+        url = 'http://' + light_sensor['ip'] + ':4310' + '/get_light'
+        response = requests.get(url=url)
+        return response.json()['uv']

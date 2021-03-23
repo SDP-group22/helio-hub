@@ -41,14 +41,41 @@ class SensorWatcher(threading.Thread):
     def run(self):
         while True:
             self._event.wait()
+            self.__schedule_light_sensor_actions()
             self.__schedule_motion_sensors_actions()
-            # time.sleep(2)
 
     def pause(self):
         self._event.clear()
 
     def resume(self):
         self._event.set()
+
+    def __schedule_light_sensor_actions(self):
+        db_handler = DbHandler.get_instance()
+        light_sensors = db_handler.read_all(SensorWatcher.light_sensor_db)
+
+        for light_sensor in light_sensors:
+            if light_sensor['active']:
+                uv_value = SensorController.check_uv(light_sensor)
+
+                if uv_value >= 1:
+                    all_motors = db_handler.read_all(SensorWatcher.motor_db)
+                    motors = [motor for motor in all_motors if motor['id'] in light_sensor['motor_ids']]
+
+                    for motor in motors:
+                        if not motor['active']:
+                            continue
+                        try:
+                            if motor['level'] != 100:
+                                MotorController.move(motor, 100)
+                        except UncalibratedMotorError:
+                            pass
+
+                        motor['level'] = 100
+
+                        db_handler.update(SensorWatcher.motor_db, motor['id'], motor)
+        # wait for blinds to move
+        time.sleep(3)
 
     def __schedule_motion_sensors_actions(self):
         db_handler = DbHandler.get_instance()
@@ -118,5 +145,5 @@ class SensorWatcher(threading.Thread):
                                     MotorController.move(motor, 0)
                             except UncalibratedMotorError:
                                 pass
-        # wait until blinds move
+        # wait for blinds to move
         time.sleep(3)
